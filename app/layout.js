@@ -2,7 +2,7 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 
 // Components
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import Footer from "./components/Footer";
 
 const roboto = Roboto({ weight: ["400", "700"], subsets: ["latin"] });

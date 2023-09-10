@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FcShop } from "react-icons/fc";
+import CategoryList from "../category-list/CategoryList";
 
 const Header = () => {
-  // Define a state variable 'isFixed' to manage header positioning.
   const [isFixed, setIsFixed] = useState(true);
+  const [showCatMenu, setShowCatMenu] = useState(false);
 
   // Listen to scroll events and update 'isFixed' accordingly.
   useEffect(() => {
@@ -67,9 +68,22 @@ const Header = () => {
             >
               Products
             </Link>
-            <Link href={""} class="mr-5  text-gray-300 hover:text-gray-400">
+
+            {/* Category Menu and it's sub menus - start */}
+            <Link
+              href={""}
+              class="mr-5  text-gray-300 hover:text-gray-400 relative"
+              onMouseEnter={() => setShowCatMenu(true)}
+              onMouseLeave={() => setShowCatMenu(false)}
+            >
               Categories
+              {/* If showCatMenu state comes true, then show the CategoryList component */}
+              {showCatMenu && (
+                <CategoryList show={showCatMenu} setShow={setShowCatMenu} />
+              )}
             </Link>
+            {/* Category Menu and it's sub menus - end */}
+
             <Link
               href={"/contact"}
               class="mr-5  text-gray-300 hover:text-gray-400"
