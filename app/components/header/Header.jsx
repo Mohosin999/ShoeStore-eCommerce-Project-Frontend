@@ -43,7 +43,7 @@ const Header = () => {
       <header
         class={`${
           isFixed ? "top-0" : "top-[-100px]"
-        } text-gray-600 body-font fixed w-full bg-gray-700 shadow-lg shadow-gray-900`}
+        } text-gray-600 body-font fixed w-full bg-gray-700 shadow-lg shadow-gray-900 z-50`}
       >
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           {/* Left section of header */}
