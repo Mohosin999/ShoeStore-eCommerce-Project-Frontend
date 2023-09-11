@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import Shoe from "../../public/shoe.jpg";
+import Shoe from "../../../public/shoe.jpg";
 
-const Text = () => {
+const ProductDetails = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -28,4 +28,4 @@ const Text = () => {
   );
 };
 
-export default Text;
+export default ProductDetails;

@@ -1,12 +1,19 @@
 import React from "react";
-import Layout from "../components/Layout";
+import ProductDetails from "../components/product-details/ProductDetails";
 
-const products = () => {
+const Products = () => {
+  // Create an array with 15 elements
+  const textComponents = Array.from({ length: 15 }, (_, index) => (
+    <div key={index}>
+      <ProductDetails />
+    </div>
+  ));
+
   return (
-    <Layout>
-      <h2>This is product page</h2>
-    </Layout>
+    <div class="flex flex-wrap justify-center items-center  mt-[100px]">
+      {textComponents}
+    </div>
   );
 };
 
-export default products;
+export default Products;
