@@ -1,10 +1,11 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FcShop } from "react-icons/fc";
 import CategoryList from "../category-list/CategoryList";
 
-const Header = () => {
+const Navbar = () => {
   const [isFixed, setIsFixed] = useState(true);
   const [showCatMenu, setShowCatMenu] = useState(false);
 
@@ -43,7 +44,7 @@ const Header = () => {
       <header
         class={`${
           isFixed ? "top-0" : "top-[-100px]"
-        } text-gray-600 body-font fixed w-full bg-gray-700 shadow-lg shadow-gray-900 z-50`}
+        } text-gray-600 body-font fixed w-full bg-gray-700 z-50`}
       >
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           {/* Left section of header */}
@@ -85,10 +86,10 @@ const Header = () => {
             {/* Category Menu and it's sub menus - end */}
 
             <Link
-              href={"/contact"}
+              href={"/about"}
               class="mr-5  text-gray-300 hover:text-gray-400"
             >
-              Contact us
+              About Us
             </Link>
           </nav>
           {/* Right section of header */}
@@ -98,4 +99,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;

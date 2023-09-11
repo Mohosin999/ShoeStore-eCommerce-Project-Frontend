@@ -1,12 +1,14 @@
 import React from "react";
-import Layout from "./components/Layout";
+// import Layout from "./components/Layout";
 import CarouselComponent from "./components/carousel-component/CarouselComponent";
+import HeaderArea from "./components/header-area/HeaderArea";
 
 const Home = () => {
   return (
-    <Layout>
+    <div>
+      <HeaderArea />
       <CarouselComponent />
-    </Layout>
+    </div>
   );
 };
 
