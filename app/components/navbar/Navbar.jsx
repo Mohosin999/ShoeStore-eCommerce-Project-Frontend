@@ -47,7 +47,7 @@ const Navbar = () => {
         } text-gray-600 body-font fixed w-full bg-gray-700 z-50`}
       >
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          {/* Left section of header */}
+          {/* Left section of the header - start */}
           <Link
             href="/"
             class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
@@ -58,14 +58,19 @@ const Navbar = () => {
             </span>{" "}
             {/* Company name */}
           </Link>
-          {/* Middle section of header */}
+          {/* Left section of the header - end */}
+
+          {/* Middle section of the header - start */}
           <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-            <Link href={"/"} class="mr-5  text-gray-300 hover:text-gray-400">
+            <Link
+              href="/"
+              class="text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
+            >
               Home
             </Link>
             <Link
-              href={"/products"}
-              class="mr-5  text-gray-300 hover:text-gray-400"
+              href="/products"
+              class="text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
             >
               Products
             </Link>
@@ -73,26 +78,36 @@ const Navbar = () => {
             {/* Category Menu and it's sub menus - start */}
             <Link
               href={""}
-              class="mr-5  text-gray-300 hover:text-gray-400 relative"
+              class="relative text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
               onMouseEnter={() => setShowCatMenu(true)}
               onMouseLeave={() => setShowCatMenu(false)}
             >
               Categories
               {/* If showCatMenu state comes true, then show the CategoryList component */}
               {showCatMenu && (
-                <CategoryList show={showCatMenu} setShow={setShowCatMenu} />
+                <div class="absolute top-10 left-4">
+                  <CategoryList show={showCatMenu} setShow={setShowCatMenu} />
+                </div>
               )}
             </Link>
             {/* Category Menu and it's sub menus - end */}
-
-            <Link
-              href={"/about"}
-              class="mr-5  text-gray-300 hover:text-gray-400"
-            >
-              About Us
-            </Link>
           </nav>
-          {/* Right section of header */}
+          {/* Middle section of the header - end */}
+
+          {/* Right section of the header - start */}
+          <Link
+            href="/"
+            class="text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
+          >
+            Login
+          </Link>
+          <Link
+            href="/"
+            class="text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
+          >
+            Register
+          </Link>
+          {/* Right section of the header - end */}
         </div>
       </header>
     </div>

@@ -10,27 +10,28 @@ const moreMenuData = [
 const CategoryList = ({ show, setShow }) => {
   return (
     <ul class="absolute w-[20rem]">
-      {moreMenuData.map(({ name, url, id }) => {
+      {moreMenuData.map(({ name, url, id }, index) => {
+        // Get last item
+        const isLastItem = index === moreMenuData.length - 1;
+
         return (
-          <Link
-            key={id}
-            href={url || ""}
-            //   className="flex justify-between items-center"
-            onClick={() => {
-              // onClick && onClick();
-              // setMoreMenu(false);
-            }}
-          >
+          <li key={id}>
             {/* Render menu item name */}
             <Link
               href="/welcome"
-              class="flex items-center justify-between  bg-gray-500 hover:bg-gray-600 text-gray-300 p-3 border-b border-gray-400 hover:border-gray-600"
+              class={`flex items-center justify-between bg-gray-500 hover:bg-gray-600 text-gray-300 p-3 
+              ${
+                // If item will last, no border shown below it
+                isLastItem
+                  ? ""
+                  : "border-b border-gray-400 hover:border-gray-600"
+              }`}
               onClick={() => setShow(!show)}
             >
               {name}
               <span>10</span>
             </Link>
-          </Link>
+          </li>
         );
       })}
     </ul>

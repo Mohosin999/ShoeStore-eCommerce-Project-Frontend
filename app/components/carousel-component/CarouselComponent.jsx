@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
@@ -13,6 +12,7 @@ const CarouselComponent = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const images = [Shoes, Shoes2, Shoes3, Shoes4]; // Add more images as needed
 
+  // This hook is for moving the slide automatically - start
   useEffect(() => {
     const interval = setInterval(() => {
       // Automatically move to the next slide
@@ -23,7 +23,9 @@ const CarouselComponent = () => {
       clearInterval(interval);
     };
   }, [images]);
+  // This hook is for moving the slide automatically - end
 
+  // These functions are to maintain the slides properly - start
   const goToSlide = (slideIndex) => {
     setCurrentSlide(slideIndex);
   };
@@ -37,14 +39,16 @@ const CarouselComponent = () => {
       prevSlide === 0 ? images.length - 1 : prevSlide - 1
     );
   };
+  // These functions are to maintain the slides properly - end
 
   return (
     <div
+      // Full slide body style like, slide position, slide background color etc
       class="relative overflow-hidden w-96 h-96 rounded-full bg-white ml-auto top-[-18rem] right-[6rem] "
       data-carousel="slide"
     >
+      {/* This portion is for the images of the slide - start */}
       <div class="relative h-56 marker:rounded-lg md:h-96">
-        {/* Map all images to show image - start */}
         {images.map((image, index) => (
           <div
             key={index}
@@ -60,10 +64,12 @@ const CarouselComponent = () => {
             />
           </div>
         ))}
-        {/* Map all images to show image - end */}
       </div>
+      {/* This portion is for the images of the slide - end */}
+
+      {/* This portion is for the dot button of the image position - start */}
       <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-        {/* Map all images to show dot button below image - start */}
+        {/* _ because the serial is value, index and arr. Since I'm skipping the value, I put a dash */}
         {images.map((_, index) => (
           <button
             key={index}
@@ -77,12 +83,13 @@ const CarouselComponent = () => {
             data-carousel-slide-to={index}
           ></button>
         ))}
-        {/* Map all images to show dot button below image - end */}
       </div>
+      {/* This portion is for the dot button of the image position - end */}
 
+      {/* This portion is for the previous button of the slide - start */}
       <button
         type="button"
-        class="absolute top-[18.5rem] left-[18rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-gray-400 hover:bg-orange-500 cursor-pointer group focus:outline-none"
+        class="absolute top-[18.5rem] left-[18rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-gray-400 hover:bg-green-500 cursor-pointer group focus:outline-none"
         onClick={prevSlide}
         data-carousel-prev
       >
@@ -103,10 +110,12 @@ const CarouselComponent = () => {
         </svg>
         <span class="sr-only bg-orange-500">Previous</span>
       </button>
+      {/* This portion is for the previous button of the slide - end */}
 
+      {/* This portion is for the next button of the slide - start */}
       <button
         type="button"
-        class="absolute top-[16rem] left-[20rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-gray-400 hover:bg-orange-500 cursor-pointer group focus:outline-none"
+        class="absolute top-[16rem] left-[20rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-orange-400 hover:bg-green-500 cursor-pointer group focus:outline-none"
         onClick={nextSlide}
         data-carousel-next
       >
@@ -127,6 +136,7 @@ const CarouselComponent = () => {
         </svg>
         <span class="sr-only">Next</span>
       </button>
+      {/* This portion is for the next button of the slide - end */}
     </div>
   );
 };
