@@ -19,7 +19,7 @@ const CategoryList = ({ show, setShow }) => {
             {/* Render menu item name */}
             <Link
               href="/welcome"
-              class={`flex items-center justify-between bg-gray-500 hover:bg-gray-600 text-gray-300 p-3 
+              class={`flex items-center justify-between bg-green-700 hover:bg-gray-700 text-gray-200 p-3 
               ${
                 // If item will last, no border shown below it
                 isLastItem

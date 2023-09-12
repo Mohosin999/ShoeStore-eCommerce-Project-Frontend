@@ -43,7 +43,6 @@ const CarouselComponent = () => {
 
   return (
     <div
-      // Full slide body style like, slide position, slide background color etc
       class="relative overflow-hidden w-96 h-96 rounded-full bg-white ml-auto top-[-18rem] right-[6rem] "
       data-carousel="slide"
     >
@@ -89,7 +88,7 @@ const CarouselComponent = () => {
       {/* This portion is for the previous button of the slide - start */}
       <button
         type="button"
-        class="absolute top-[18.5rem] left-[18rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-gray-400 hover:bg-green-500 cursor-pointer group focus:outline-none"
+        class="absolute top-[18.5rem] left-[18rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-gray-400 hover:bg-gray-700 cursor-pointer group focus:outline-none"
         onClick={prevSlide}
         data-carousel-prev
       >
@@ -115,7 +114,7 @@ const CarouselComponent = () => {
       {/* This portion is for the next button of the slide - start */}
       <button
         type="button"
-        class="absolute top-[16rem] left-[20rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-orange-400 hover:bg-green-500 cursor-pointer group focus:outline-none"
+        class="absolute top-[16rem] left-[20rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-green-700 hover:bg-gray-700 cursor-pointer group focus:outline-none"
         onClick={nextSlide}
         data-carousel-next
       >

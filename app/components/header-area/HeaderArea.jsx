@@ -10,16 +10,16 @@ const HeaderArea = () => {
       {/* The heading of the header area - start */}
       <div>
         <h1 class="text-gray-300 text-[2rem] text-left uppercase font-bold">
-          All <span class="text-green-600">Branding</span>
+          All <span class="text-green-500">Branding</span>
         </h1>
-        <h1 class="text-gray-300 text-[2rem] text-left uppercase font-bold">
-          <span class="text-green-600">Shoes</span> Collection
+        <h1 class="text-gray-200 text-[2rem] text-left uppercase font-bold">
+          <span class="text-green-500">Shoes</span> Collection
         </h1>
       </div>
       {/* The heading of the header area - end */}
 
       {/* The paragraph of the header area */}
-      <p class="text-gray-300 text-[1rem] text-left w-2/3 mt-3 mb-10 leading-7">
+      <p class="text-gray-200 text-[1rem] text-left w-2/3 mt-3 mb-10 leading-7">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, veniam
         dolores harum aut a animi temporibus nostrum fugit? Pariatur non
         voluptate quasi voluptatum esse similique quam, ipsum numquam architecto
@@ -31,14 +31,14 @@ const HeaderArea = () => {
         {/* About us button */}
         <Link
           href="/contact"
-          class="bg-orange-400 hover:bg-orange-500 px-6 py-3 rounded-full mr-3"
+          class="bg-green-700 hover:bg-green-600 text-gray-200  px-6 py-3 rounded-full mr-3"
         >
           About Us
         </Link>
         {/* Contact us button */}
         <Link
           href="/contact"
-          class="bg-orange-400 hover:bg-orange-500 px-6 py-3 rounded-full"
+          class="bg-green-700 hover:bg-green-600 text-gray-200  px-6 py-3 rounded-full"
         >
           Contact Us
         </Link>

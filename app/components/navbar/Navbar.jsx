@@ -53,7 +53,7 @@ const Navbar = () => {
             class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
           >
             <FcShop size={32} /> {/* Shop icon */}
-            <span class="text-gray-300 ml-3 text-xl hover:scale-105 duration-300">
+            <span class="text-gray-300 font-bold text-green-500 ml-3 text-xl hover:scale-105 duration-300">
               ShoeStore
             </span>{" "}
             {/* Company name */}
@@ -64,13 +64,13 @@ const Navbar = () => {
           <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
             <Link
               href="/"
-              class="text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
+              class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
             >
               Home
             </Link>
             <Link
               href="/products"
-              class="text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
+              class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
             >
               Products
             </Link>
@@ -78,14 +78,14 @@ const Navbar = () => {
             {/* Category Menu and it's sub menus - start */}
             <Link
               href={""}
-              class="relative text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
+              class="relative text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
               onMouseEnter={() => setShowCatMenu(true)}
               onMouseLeave={() => setShowCatMenu(false)}
             >
               Categories
               {/* If showCatMenu state comes true, then show the CategoryList component */}
               {showCatMenu && (
-                <div class="absolute top-10 left-4">
+                <div class="absolute top-10 left-0">
                   <CategoryList show={showCatMenu} setShow={setShowCatMenu} />
                 </div>
               )}
@@ -97,13 +97,13 @@ const Navbar = () => {
           {/* Right section of the header - start */}
           <Link
             href="/"
-            class="text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
+            class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
           >
             Login
           </Link>
           <Link
             href="/"
-            class="text-gray-300 hover:text-gray-900 hover:bg-orange-400 px-4 py-2 rounded-full"
+            class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
           >
             Register
           </Link>
