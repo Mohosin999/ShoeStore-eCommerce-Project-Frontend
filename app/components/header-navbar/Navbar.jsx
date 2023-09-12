@@ -1,9 +1,13 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+// Icons
 import { FcShop } from "react-icons/fc";
-import CategoryList from "../category-list/CategoryList";
+import { BsCartFill } from "react-icons/bs";
+import { MdFavorite } from "react-icons/md";
+// Components
+import CategoryMenu from "../shared/cat-menu/CategoryMenu";
+import NavLink from "../UI/nav-link/NavLink";
 
 const Navbar = () => {
   const [isFixed, setIsFixed] = useState(true);
@@ -41,7 +45,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <header
+      <nav
         class={`${
           isFixed ? "top-0" : "top-[-100px]"
         } text-gray-600 body-font fixed w-full bg-gray-700 z-50`}
@@ -61,55 +65,33 @@ const Navbar = () => {
           {/* Left section of the header - end */}
 
           {/* Middle section of the header - start */}
-          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-            <Link
-              href="/"
-              class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
-            >
-              Home
-            </Link>
-            <Link
-              href="/products"
-              class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
-            >
-              Products
-            </Link>
-
-            {/* Category Menu and it's sub menus - start */}
-            <Link
-              href={""}
-              class="relative text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
+          <div class="md:ml-auto md:mr-auto flex flex-wrap items-center justify-center text-base">
+            <NavLink href="/" label="Home" />
+            <NavLink href="/products" label="Products" />
+            <NavLink
+              href=""
+              label="Categories"
               onMouseEnter={() => setShowCatMenu(true)}
               onMouseLeave={() => setShowCatMenu(false)}
-            >
-              Categories
-              {/* If showCatMenu state comes true, then show the CategoryList component */}
-              {showCatMenu && (
-                <div class="absolute top-10 left-0">
-                  <CategoryList show={showCatMenu} setShow={setShowCatMenu} />
-                </div>
-              )}
-            </Link>
-            {/* Category Menu and it's sub menus - end */}
-          </nav>
+              showSubMenu={showCatMenu}
+              subMenuComponent={<CategoryMenu />}
+            />
+          </div>
           {/* Middle section of the header - end */}
 
           {/* Right section of the header - start */}
-          <Link
-            href="/"
-            class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
-          >
-            Login
+          <NavLink href="/login" label="Login" />
+          <NavLink href="/register" label="Register" />
+          {/* Favorite & Cart Icons */}
+          <Link href="" class="text-gray-200 px-4 py-2">
+            <MdFavorite size={22} />
           </Link>
-          <Link
-            href="/"
-            class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full"
-          >
-            Register
+          <Link href="" class="text-gray-200 px-4 py-2">
+            <BsCartFill size={22} />
           </Link>
           {/* Right section of the header - end */}
         </div>
-      </header>
+      </nav>
     </div>
   );
 };

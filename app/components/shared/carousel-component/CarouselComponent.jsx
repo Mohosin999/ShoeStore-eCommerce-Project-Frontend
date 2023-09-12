@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 // Image from public directory
-import Shoes from "../../../public/shoe.jpg";
-import Shoes2 from "../../../public/img2.jpg";
-import Shoes3 from "../../../public/shoe.jpg";
-import Shoes4 from "../../../public/img2.jpg";
+import Shoes from "../../../../public/shoe.jpg";
+import Shoes2 from "../../../../public/img2.jpg";
+import Shoes3 from "../../../../public/shoe.jpg";
+import Shoes4 from "../../../../public/img2.jpg";
 
 const CarouselComponent = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -43,7 +43,7 @@ const CarouselComponent = () => {
 
   return (
     <div
-      class="relative overflow-hidden w-96 h-96 rounded-full bg-white ml-auto top-[-18rem] right-[6rem] "
+      class="relative overflow-hidden w-96 h-96 rounded-full bg-white ml-auto top-[-15rem] right-0"
       data-carousel="slide"
     >
       {/* This portion is for the images of the slide - start */}

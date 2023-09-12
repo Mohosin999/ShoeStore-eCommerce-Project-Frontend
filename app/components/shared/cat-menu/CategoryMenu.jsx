@@ -7,7 +7,7 @@ const moreMenuData = [
   { id: 3, name: "Football Shoes", url: "" },
 ];
 
-const CategoryList = ({ show, setShow }) => {
+const CategoryMenu = ({ show, setShow }) => {
   return (
     <ul class="absolute w-[20rem]">
       {moreMenuData.map(({ name, url, id }, index) => {
@@ -38,4 +38,4 @@ const CategoryList = ({ show, setShow }) => {
   );
 };
 
-export default CategoryList;
+export default CategoryMenu;
