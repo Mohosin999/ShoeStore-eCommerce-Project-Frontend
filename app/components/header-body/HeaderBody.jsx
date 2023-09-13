@@ -30,15 +30,16 @@ const HeaderBody = () => {
         </p>
 
         {/* The buttons of the header area */}
-        <div class="flex flex-wrap">
+        <div class="relative flex flex-wrap">
           <Button href="/about" label="About Us" />
           <Button href="/contact" label="Contact Us" />
+          <div class="absolute ml-auto z-50 top-24 right-56">
+            <Button href="/ps" label="Buy Now" />
+          </div>
         </div>
       </div>
 
-      <div>
-        <CarouselComponent />
-      </div>
+      <CarouselComponent />
     </header>
   );
 };
