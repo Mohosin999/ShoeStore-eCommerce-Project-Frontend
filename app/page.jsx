@@ -1,14 +1,12 @@
 import React from "react";
-// import Layout from "./components/Layout";
-// import CarouselComponent from "./components/shared/carousel-component/CarouselComponent";
 import HeaderBody from "./components/header-body/HeaderBody";
+import HotDiscountProducts from "./components/hot-discount-products/HotDiscountProducts";
 
 const Home = () => {
   return (
     <div>
       <HeaderBody />
-      {/* <CarouselComponent /> */}
-      <h2 class="m-10 bg-white">Hello</h2>
+      <HotDiscountProducts />
     </div>
   );
 };
