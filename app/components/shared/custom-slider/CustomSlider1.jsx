@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Navigation, Pagination, A11y } from "swiper";
+import axios from "axios";
+import { Navigation, Pagination, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -10,14 +11,14 @@ import Image from "next/image";
 import NavSlideBtn from "./SlideNavButton";
 
 // External Data Import
-const url = "http://fakeapi.com/products";
+const url = "http://127.0.0.1:1337/api/products?populate=*";
 
 const CustomSlider1 = () => {
   const [products, setProducts] = useState([]);
 
   const getProductsFromBackend = async () => {
-    const data = await fetch(url);
-    const products = await data.json();
+    const fetchData = await axios.get(url);
+    const products = fetchData.data;
 
     setProducts(products);
   };
@@ -25,6 +26,9 @@ const CustomSlider1 = () => {
   useEffect(() => {
     getProductsFromBackend();
   }, []);
+
+  // const fetchData = await axios.get(url);
+  // const products = fetchData.data;
 
   return (
     <div>
@@ -41,21 +45,23 @@ const CustomSlider1 = () => {
           1280: { slidesPerView: 4 },
         }}
       >
-        {products.map((item) => (
-          <SwiperSlide
-            key={item.id}
-            className="bg-red-200 !flex justify-center items-center "
-          >
-            <div className="border-2 border-blue-500 rounded-lg overflow-hidden w-[200px] h-[300px] flex justify-center items-center">
-              <Image
-                src={item.image}
-                width={150}
-                height={150}
-                alt={item.title}
-              />
-            </div>
-          </SwiperSlide>
-        ))}
+        {products?.data &&
+          products?.data.map((item) => (
+            <SwiperSlide
+              key={item.id}
+              className="bg-red-200 !flex justify-center items-center "
+            >
+              <div className="border-2 border-blue-500 rounded-lg overflow-hidden w-[200px] h-[300px] flex justify-center items-center">
+                <Image
+                  src={item.attributes.thumbnail.data.attributes.url}
+                  width={150}
+                  height={150}
+                  alt={item.name}
+                />
+                <h3>{item.attributes.name}</h3>
+              </div>
+            </SwiperSlide>
+          ))}
 
         <NavSlideBtn />
       </Swiper>
