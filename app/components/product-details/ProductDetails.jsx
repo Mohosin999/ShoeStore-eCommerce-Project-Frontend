@@ -15,7 +15,7 @@ const ProductDetails = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Image src={Shoe} alt="Image description" width={500} height={500} />
+      <Image src={Shoe} alt="Image description" width={400} height={400} />
 
       {isHovered && (
         <div class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-60 text-white text-center backdrop-blur-sm">
