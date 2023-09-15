@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../components/Wrapper";
+import Layout from "../components/wrapper/Wrapper";
 
 const Welcome = () => {
   return (

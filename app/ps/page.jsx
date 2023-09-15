@@ -1,5 +1,5 @@
 import React from "react";
-import CustomSlider1 from "../components/shared/custom-slider/CustomSlider1";
+import CustomSlider1 from "../components/custom-slider/CustomSlider1";
 
 const SliderPage = () => {
   return (

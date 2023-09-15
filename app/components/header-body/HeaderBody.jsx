@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../UI/button/Button";
-import CarouselComponent from "../shared/carousel-component/CarouselComponent";
+import CarouselComponent from "../../components/carousel-component/CarouselComponent";
 
 const HeaderBody = () => {
   return (

@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 // Image from public directory
-import Shoes from "../../../../public/shoe.jpg";
-import Shoes2 from "../../../../public/img2.jpg";
-import Shoes3 from "../../../../public/shoe.jpg";
-import Shoes4 from "../../../../public/img2.jpg";
+import Shoe1 from "../../../public/shoe1.jpg";
+import Shoe2 from "../../../public/shoe2.jpg";
+import Shoe3 from "../../../public/shoe3.jpg";
+import Shoe4 from "../../../public/shoe4.jpg";
 
 const CarouselComponent = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const images = [Shoes, Shoes2, Shoes3, Shoes4]; // Add more images as needed
+  const images = [Shoe1, Shoe2, Shoe3, Shoe4]; // Add more images as needed
 
   // This hook is for moving the slide automatically - start
   useEffect(() => {

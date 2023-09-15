@@ -8,8 +8,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
 import NavSlideBtn from "./SlideNavButton";
-import Button from "../../UI/button/Button";
-import Wrapper from "../../Wrapper";
+import Button from "../UI/button/Button";
+import Wrapper from "../wrapper/Wrapper";
 
 // External Data Import
 const url = "http://127.0.0.1:1337/api/products/hot-discount?populate=*";
