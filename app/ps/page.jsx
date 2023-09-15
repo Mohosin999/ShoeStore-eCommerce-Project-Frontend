@@ -1,5 +1,7 @@
 import React from "react";
-import CustomSlider1 from "../components/custom-slider/CustomSlider1";
+import HotDiscountSlider from "../components/hot-discount-slider/HotDiscountSlider";
+import TestSlider from "../components/TestSlider";
+// import DataSlider from "../components/data-slider/DataSlider";
 
 const SliderPage = () => {
   return (
@@ -8,7 +10,9 @@ const SliderPage = () => {
       <br />
 
       {/* Slider Component */}
-      <CustomSlider1 />
+      {/* <DataSlider />             */}
+      <HotDiscountSlider />
+      <TestSlider />
     </div>
   );
 };

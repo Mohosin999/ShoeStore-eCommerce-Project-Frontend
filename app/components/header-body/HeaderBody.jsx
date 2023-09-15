@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../UI/button/Button";
+import ButtonLink from "../UI/button-link/ButtonLink";
 import CarouselComponent from "../../components/carousel-component/CarouselComponent";
 
 const HeaderBody = () => {
@@ -31,14 +31,17 @@ const HeaderBody = () => {
 
         {/* The buttons of the header area */}
         <div class="relative flex flex-wrap">
-          <Button href="/about" label="About Us" />
-          <Button href="/contact" label="Contact Us" />
-          <div class="absolute ml-auto z-50 top-24 right-56">
-            <Button href="/ps" label="Buy Now" />
+          <ButtonLink href="/about" label="About Us" />
+          <ButtonLink href="/contact" label="Contact Us" />
+
+          {/* Button above the carousel component */}
+          <div class="absolute ml-auto z-50 top-24 right-52">
+            <ButtonLink href="/ps" label="Buy Now" />
           </div>
         </div>
       </div>
 
+      {/* Carousel component */}
       <CarouselComponent />
     </header>
   );
