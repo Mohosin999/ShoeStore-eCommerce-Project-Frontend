@@ -36,7 +36,7 @@ const HeaderBody = () => {
 
           {/* Button above the carousel component */}
           <div class="absolute ml-auto z-50 top-24 right-52">
-            <ButtonLink href="/ps" label="Buy Now" />
+            <ButtonLink href="/ps" label="Shop Now" className="bg-yellow-500" />
           </div>
         </div>
       </div>

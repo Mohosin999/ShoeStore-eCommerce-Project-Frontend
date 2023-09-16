@@ -14,7 +14,7 @@ const SlideNavButton = () => {
   const swiper = useSwiper();
 
   return (
-    <div className="flex items-center justify-end mt-2">
+    <div className="flex items-center justify-end mt-4">
       {/* Navigation Button for Previous Slide */}
       <button
         className="bg-blue-300 px-2 py-1 rounded-md"
