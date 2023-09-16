@@ -1,7 +1,5 @@
 import React from "react";
 import HotDiscountSlider from "../components/hot-discount-slider/HotDiscountSlider";
-import TestSlider from "../components/TestSlider";
-// import DataSlider from "../components/data-slider/DataSlider";
 
 const SliderPage = () => {
   return (
@@ -10,9 +8,7 @@ const SliderPage = () => {
       <br />
 
       {/* Slider Component */}
-      {/* <DataSlider />             */}
       <HotDiscountSlider />
-      <TestSlider />
     </div>
   );
 };
