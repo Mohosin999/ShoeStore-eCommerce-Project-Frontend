@@ -2,47 +2,58 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ButtonLink from "../UI/button-link/ButtonLink";
 
+/**
+ * A reusable component to display product information and an image.
+ *
+ * @param {Object} item - The product item to display.
+ * @returns {JSX.Element} - Returns a component to display product card with information.
+ */
 function ProductCard({ item }) {
+  // State to track whether the product is being hovered.
   const [hoveredProduct, setHoveredProduct] = useState(null);
 
   return (
     <div
-      className="w-fit rounded overflow-hidden shadow-lg shadow-gray-900 relative border border-gray-700 m-2"
+      class="w-full rounded overflow-hidden shadow-lg shadow-gray-900 relative border border-gray-700 select-none"
       onMouseEnter={() => setHoveredProduct(item.id)}
       onMouseLeave={() => setHoveredProduct(null)}
     >
+      {/* Product image */}
       <Image
         src={item.attributes.thumbnail.data.attributes.url}
-        width={350}
-        height={350}
+        width={400}
+        height={300}
+        objectFit="cover"
         alt={item.name}
       />
 
-      <div className="bg-gray-800 p-4 text-center">
-        <h2 className="text-xl text-gray-200 font-semibold mb-2">
+      {/* Product details (name, price) - start */}
+      <div class="bg-gray-800 p-4 text-center">
+        <h2 class="text-xl text-gray-200 font-semibold mb-2">
           {item.attributes.name}
         </h2>
-        <p className="text-lg text-red-400">
+        <p class="text-lg text-red-400">
           Original Price:{" "}
-          <span className="font-bold pl-3">
-            ${item.attributes.original_price}
-          </span>
+          <span class="font-bold pl-3">${item.attributes.original_price}</span>
         </p>
-        <p className="text-lg text-green-500">
+        <p class="text-lg text-green-500">
           Discounted Price:{" "}
-          <span className="font-bold pl-3">
+          <span class="font-bold pl-3">
             ${item.attributes.discounted_price}
           </span>
         </p>
       </div>
+      {/* Product details (name, price) - start */}
 
+      {/* If the product is hovered, buy_now button will show - start */}
       {hoveredProduct === item.id && (
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center backdrop-blur-sm">
-          <div className="text-center">
+        <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center backdrop-blur-sm">
+          <div class="text-center">
             <ButtonLink href="/" label="Buy Now" />
           </div>
         </div>
       )}
+      {/* If the product is hovered, buy_now button will show - end */}
     </div>
   );
 }

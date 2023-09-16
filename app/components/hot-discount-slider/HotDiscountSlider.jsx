@@ -6,7 +6,7 @@ const url = "http://127.0.0.1:1337/api/products/hot-discount?populate=*";
 const HotDiscountSlider = () => {
   return (
     <div>
-      <DataSlider apiUrl={url} />
+      <DataSlider apiUrl={url} title="Hot Discount Products" />
     </div>
   );
 };

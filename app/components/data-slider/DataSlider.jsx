@@ -3,20 +3,34 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 
+// Swiper related
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import SlideNavButton from "./SlideNavButton";
+// Components
 import Wrapper from "../wrapper/Wrapper";
+import SlideNavButton from "./SlideNavButton";
 import ProductCard from "../product-card/ProductCard";
+import Title from "../UI/title/Title";
 
-const DataSlider = ({ apiUrl }) => {
+/**
+ * A reusable component for fetching and displaying data in a Swiper carousel.
+ *
+ * @param {string} apiUrl - The URL for fetching data from an external API.
+ * @param {string} title - Give your desire title here.
+ * @returns {JSX.Element} - Returns a component to display fetched data.
+ */
+const DataSlider = ({ apiUrl, title }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  /**
+   * fetchDataFromBackend is an asynchronous function that fetches data
+   * from the specified API URL and updates the component's state.
+   */
   const fetchDataFromBackend = async () => {
     try {
       const response = await axios.get(apiUrl);
@@ -30,6 +44,7 @@ const DataSlider = ({ apiUrl }) => {
   };
 
   useEffect(() => {
+    // Fetch data when the component mounts or when apiUrl changes.
     fetchDataFromBackend();
   }, [apiUrl]);
 
@@ -38,100 +53,41 @@ const DataSlider = ({ apiUrl }) => {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <Swiper
-          modules={[Navigation, Pagination, A11y]}
-          slidesPerView={3}
-          spaceBetween={15}
-          breakpoints={{
-            480: { slidesPerView: 1 },
-            780: { slidesPerView: 2 },
-            1280: { slidesPerView: 3 },
-          }}
-        >
-          {(data?.filteredData || data?.data)?.map((item) => (
-            <SwiperSlide key={item.id}>
-              <ProductCard item={item} />
-            </SwiperSlide>
-          ))}
-          <SlideNavButton />
-        </Swiper>
+        <div>
+          {/* Title component for the swiper carousel */}
+          <Title title={title} />
+          <Swiper
+            modules={[Navigation, Pagination, A11y]}
+            slidesPerView={1}
+            spaceBetween={15}
+            breakpoints={{
+              320: { slidesPerView: 1 }, // Smallest screens (e.g., mobile phones)
+              640: { slidesPerView: 1 }, // Larger phones and small tablets
+              768: { slidesPerView: 2 }, // Tablets
+              1024: { slidesPerView: 3, spaceBetween: 20 }, // Small desktop screens
+              1280: { slidesPerView: 3, spaceBetween: 20 }, // Standard desktop screens
+              1920: { slidesPerView: 4, spaceBetween: 20 }, // Large screens (e.g., 4k displays)
+            }}
+          >
+            {(data?.filteredData || data?.data)?.map((item) => (
+              <SwiperSlide key={item.id}>
+                {/* Render each item as a SwiperSlide using the ProductCard component. */}
+                <ProductCard item={item} />
+              </SwiperSlide>
+            ))}
+            {/* Render navigation buttons for the Swiper carousel. */}
+            <SlideNavButton />
+          </Swiper>
+        </div>
       )}
     </Wrapper>
   );
 };
 
+// Define PropTypes for the component
 DataSlider.propTypes = {
-  apiUrl: PropTypes.string.isRequired, // Expect apiUrl to be a required string.
+  apiUrl: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default DataSlider;
-
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-
-// import { Navigation, Pagination, A11y } from "swiper/modules";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/css";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-
-// import NavSlideBtn from "./SlideNavButton";
-// import Wrapper from "../wrapper/Wrapper";
-// import ProductCard from "../product-card/ProductCard";
-
-// // External Data Import
-// const url = "http://127.0.0.1:1337/api/products/hot-discount?populate=*";
-
-// const CustomSlider1 = () => {
-//   const [products, setProducts] = useState([]);
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   const getProductsFromBackend = async () => {
-//     try {
-//       const fetchData = await axios.get(url);
-//       const products = fetchData.data;
-//       setProducts(products);
-//       setIsLoading(false); // Set loading to false once data is fetched
-//     } catch (error) {
-//       console.error("Error fetching data:", error);
-//       setIsLoading(false); // Set loading to false in case of an error
-//     }
-//   };
-
-//   useEffect(() => {
-//     getProductsFromBackend();
-//   }, []);
-
-//   // Create individual hover states for each product
-//   const [hoveredProduct, setHoveredProduct] = useState(null);
-
-//   return (
-//     <Wrapper className="mt-10">
-//       {isLoading ? (
-//         // Show loading indicator while data is being fetched
-//         <p>Loading...</p>
-//       ) : (
-//         <Swiper
-//           modules={[Navigation, Pagination, A11y]}
-//           slidesPerView={3}
-//           spaceBetween={15}
-//           breakpoints={{
-//             480: { slidesPerView: 1 },
-//             780: { slidesPerView: 2 },
-//             1280: { slidesPerView: 3 },
-//           }}
-//         >
-//           {products?.filteredData &&
-//             products?.filteredData.map((item) => (
-//               <SwiperSlide key={item.id}>
-//                 <ProductCard item={item} />
-//               </SwiperSlide>
-//             ))}
-//           <NavSlideBtn />
-//         </Swiper>
-//       )}
-//     </Wrapper>
-//   );
-// };
-
-// export default CustomSlider1;
