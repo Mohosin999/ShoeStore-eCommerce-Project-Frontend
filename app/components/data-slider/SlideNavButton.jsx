@@ -1,22 +1,34 @@
+import React from "react";
 import { useSwiper } from "swiper/react";
+import { GrPrevious } from "react-icons/gr";
+import { GrNext } from "react-icons/gr";
 
+/**
+ * A reusable component for navigation buttons in a swiper/slider component.
+ *
+ * This component provides buttons to navigate to the previous and next slides.
+ *
+ * @returns {JSX.Element} - Returns a component with navigation buttons.
+ */
 const SlideNavButton = () => {
   const swiper = useSwiper();
 
   return (
-    <div class="flex items-center justify-end">
-      {/* <div class="border-2 border-gray-200 w-fit px-2 py-1 rounded-xl mt-4 space-x-4"> */}
+    <div className="flex items-center justify-end mt-2">
+      {/* Navigation Button for Previous Slide */}
       <button
-        class="bg-blue-300 p-1 rounded-md"
+        className="bg-blue-300 px-2 py-1 rounded-md"
         onClick={() => swiper.slidePrev()}
       >
-        Prev
+        <GrPrevious />
       </button>
+
+      {/* Navigation Button for Next Slide */}
       <button
-        class="bg-blue-300 p-1 rounded-md"
+        className="bg-blue-300 px-2 py-1 ml-3 rounded-md"
         onClick={() => swiper.slideNext()}
       >
-        Next
+        <GrNext />
       </button>
     </div>
   );
