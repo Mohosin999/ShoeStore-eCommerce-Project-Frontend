@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import ButtonLink from "../UI/button-link/ButtonLink";

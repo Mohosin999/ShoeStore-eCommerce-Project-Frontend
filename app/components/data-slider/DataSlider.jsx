@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
 
 // Swiper related
@@ -19,39 +18,26 @@ import Title from "../UI/title/Title";
 /**
  * A reusable component for fetching and displaying data in a Swiper carousel.
  *
- * @param {string} apiUrl - The URL for fetching data from an external API.
+ * @param {Object} data - Give here a data object.
  * @param {string} title - Give your desire title here.
  * @returns {JSX.Element} - Returns a component to display fetched data.
  */
-const DataSlider = ({ apiUrl, title }) => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  /**
-   * fetchDataFromBackend is an asynchronous function that fetches data
-   * from the specified API URL and updates the component's state.
-   */
-  const fetchDataFromBackend = async () => {
-    try {
-      const response = await axios.get(apiUrl);
-      const fetchedData = response.data;
-      setData(fetchedData);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setIsLoading(false);
-    }
-  };
+const DataSlider = ({ data, title }) => {
+  const [isLoading, setIsLoading] = useState(true); // Initially set to true
 
   useEffect(() => {
-    // Fetch data when the component mounts or when apiUrl changes.
-    fetchDataFromBackend();
-  }, [apiUrl]);
+    // Check if data is empty (or null, or undefined) and set isLoading accordingly
+    if (!data || Object.keys(data).length === 0) {
+      setIsLoading(true); // Set to true when data is empty
+    } else {
+      setIsLoading(false); // Set to false when data is not empty
+    }
+  }, [data]); // Run this effect whenever 'data' prop changes
 
   return (
     <Wrapper className="mt-10">
       {isLoading ? (
-        <p>Loading...</p>
+        <p class="text-white text-3xl py-10 ">Loading...</p>
       ) : (
         <div>
           {/* Title component for the swiper carousel */}
@@ -69,7 +55,7 @@ const DataSlider = ({ apiUrl, title }) => {
               1920: { slidesPerView: 4, spaceBetween: 20 }, // Large screens (e.g., 4k displays)
             }}
           >
-            {(data?.filteredData || data?.data)?.map((item) => (
+            {(data?.data || data?.filteredData)?.map((item) => (
               <SwiperSlide key={item.id}>
                 {/* Render each item as a SwiperSlide using the ProductCard component. */}
                 <ProductCard item={item} />
@@ -86,7 +72,7 @@ const DataSlider = ({ apiUrl, title }) => {
 
 // Define PropTypes for the component
 DataSlider.propTypes = {
-  apiUrl: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
 };
 
