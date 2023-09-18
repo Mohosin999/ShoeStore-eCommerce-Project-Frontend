@@ -41,7 +41,7 @@ const DataSlider = ({ data, title }) => {
       ) : (
         <div>
           {/* Title component for the swiper carousel */}
-          <Title title={title} />
+          <Title title={title} className="mt-20" />
           <Swiper
             modules={[Navigation, Pagination, A11y]}
             slidesPerView={1}
