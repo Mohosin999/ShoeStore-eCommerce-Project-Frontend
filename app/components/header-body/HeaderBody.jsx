@@ -31,12 +31,16 @@ const HeaderBody = () => {
 
         {/* The buttons of the header area */}
         <div class="relative flex flex-wrap">
-          <ButtonLink href="/about" label="About Us" />
+          <ButtonLink href="/about" label="About Us" className="mr-4" />
           <ButtonLink href="/contact" label="Contact Us" />
 
           {/* Button above the carousel component */}
           <div class="absolute ml-auto z-40 top-24 right-52">
-            <ButtonLink href="/ps" label="Shop Now" className="bg-yellow-500" />
+            <ButtonLink
+              href="/ps"
+              label="Shop Now"
+              className="bg-orange-400 hover:bg-orange-500"
+            />
           </div>
         </div>
       </div>

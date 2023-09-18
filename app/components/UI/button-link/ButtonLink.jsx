@@ -7,7 +7,7 @@ const ButtonLink = ({ href, label, className }) => {
     <div>
       <Link
         href={href}
-        class={`bg-green-700 hover:bg-green-600 text-gray-200 mr-4 px-6 py-3 rounded-full ${
+        class={`bg-green-700 hover:bg-green-600 text-gray-200 px-6 py-3 rounded-full ${
           className || ""
         }`}
       >

@@ -3,6 +3,7 @@ import HeaderBody from "./components/header-body/HeaderBody";
 import HotDiscountSlider from "./components/hot-discount-slider/HotDiscountSlider";
 import BannerCard from "./components/banner-card/BannerCard";
 import AllProducts from "./components/all-products/AllProducts";
+import TestimonialCard from "./components/testimonial-card/TestimonialCard";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <HotDiscountSlider />
       <BannerCard />
       <AllProducts />
+      <TestimonialCard />
     </div>
   );
 };

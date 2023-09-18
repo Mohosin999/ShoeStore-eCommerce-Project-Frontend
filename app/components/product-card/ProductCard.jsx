@@ -50,7 +50,11 @@ function ProductCard({ item }) {
       {hoveredProduct === item.id && (
         <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center backdrop-blur-sm">
           <div class="text-center">
-            <ButtonLink href="/" label="Buy Now" />
+            <ButtonLink
+              href="/"
+              label="Buy Now"
+              className="bg-orange-400 hover:bg-orange-500"
+            />
           </div>
         </div>
       )}
