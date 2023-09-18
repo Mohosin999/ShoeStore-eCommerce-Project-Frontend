@@ -1,15 +1,16 @@
 "use client";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Image from "next/image";
 import ButtonLink from "../UI/button-link/ButtonLink";
 
 /**
  * A reusable component to display product information and an image.
  *
- * @param {Object} item - The product item to display.
+ * @param {Object} item - Gives your expected item object.
  * @returns {JSX.Element} - Returns a component to display product card with information.
  */
-function ProductCard({ item }) {
+const ProductCard = ({ item }) => {
   // State to track whether the product is being hovered.
   const [hoveredProduct, setHoveredProduct] = useState(null);
 
@@ -61,6 +62,10 @@ function ProductCard({ item }) {
       {/* If the product is hovered, buy_now button will show - end */}
     </div>
   );
-}
+};
+
+ProductCard.propTypes = {
+  item: PropTypes.object.isRequired,
+};
 
 export default ProductCard;
