@@ -2,7 +2,7 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 
 // Components
-import Navbar from "./components/header-navbar/Navbar";
+import Navbar from "./components/full-header-area/header-navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 
 const roboto = Roboto({ weight: ["400", "700"], subsets: ["latin"] });

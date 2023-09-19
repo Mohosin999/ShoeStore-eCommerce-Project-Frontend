@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 // Image from public directory
-import Shoe1 from "../../../public/shoe1.jpg";
-import Shoe2 from "../../../public/shoe2.jpg";
-import Shoe3 from "../../../public/shoe3.jpg";
-import Shoe4 from "../../../public/shoe4.jpg";
+import Shoe1 from "../../../../public/shoe1.jpg";
+import Shoe2 from "../../../../public/shoe2.jpg";
+import Shoe3 from "../../../../public/shoe3.jpg";
+import Shoe4 from "../../../../public/shoe4.jpg";
 
 const CarouselComponent = () => {
   const [currentSlide, setCurrentSlide] = useState(0);

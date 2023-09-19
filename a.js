@@ -1,122 +1,24 @@
-// "use client";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import ProductCard from "../components/product-card/ProductCard";
-// import Wrapper from "../components/wrapper/Wrapper";
-
-// const ProductList = () => {
-//   const [products, setProducts] = useState([]);
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const itemsPerPage = 6;
-
-//   useEffect(() => {
-//     const fetchProducts = async () => {
-//       try {
-//         const response = await axios.get(
-//           `http://127.0.0.1:1337/api/products?pagination[start]=${
-//             (currentPage - 1) * itemsPerPage
-//           }&pagination[limit]=${itemsPerPage}&populate=*`
-//         );
-//         setProducts(response.data);
-//       } catch (error) {
-//         console.error("Error fetching products:", error);
-//       }
-//     };
-
-//     fetchProducts();
-//   }, [currentPage]);
-
-//   const totalProducts = products?.meta?.pagination?.total;
-//   const totalPages = Math.ceil(totalProducts / itemsPerPage);
-
-//   const handlePageChange = (newPage) => {
-//     if (newPage >= 1 && newPage <= totalPages) {
-//       setCurrentPage(newPage);
-//     }
-//   };
-
-//   const handlePreviousPage = () => {
-//     if (currentPage > 1) {
-//       setCurrentPage(currentPage - 1);
-//     }
-//   };
-
-//   const handleNextPage = () => {
-//     if (currentPage < totalPages) {
-//       setCurrentPage(currentPage + 1);
-//     }
-//   };
-
-//   return (
-//     <Wrapper>
-//       <div className="grid grid-cols-1 gap-4 mt-28">
-//         <div>
-//           <div className="grid grid-cols-3 gap-x-5 gap-y-10">
-//             {products?.data?.map((item) => (
-//               <ProductCard key={item.id} item={item} />
-//             ))}
-//           </div>
-//         </div>
-
-//         <div className="bg-white mt-4 flex justify-center items-center">
-//           <button
-//             onClick={handlePreviousPage}
-//             className={`mx-2 px-3 py-2 rounded-full focus:outline-none ${
-//               currentPage === 1
-//                 ? "bg-gray-300 text-gray-700 cursor-not-allowed"
-//                 : "bg-blue-500 text-white"
-//             }`}
-//             disabled={currentPage === 1}
-//           >
-//             Previous
-//           </button>
-//           {Array.from({ length: totalPages }).map((_, index) => (
-//             <button
-//               key={index}
-//               onClick={() => handlePageChange(index + 1)}
-//               className={`mx-2 px-3 py-2 rounded-full focus:outline-none ${
-//                 currentPage === index + 1
-//                   ? "bg-blue-500 text-white"
-//                   : "bg-gray-300 text-gray-700"
-//               }`}
-//             >
-//               {index + 1}
-//             </button>
-//           ))}
-//           <button
-//             onClick={handleNextPage}
-//             className={`mx-2 px-3 py-2 rounded-full focus:outline-none ${
-//               currentPage === totalPages
-//                 ? "bg-gray-300 text-gray-700 cursor-not-allowed"
-//                 : "bg-blue-500 text-white"
-//             }`}
-//             disabled={currentPage === totalPages}
-//           >
-//             Next
-//           </button>
-//         </div>
-//       </div>
-//     </Wrapper>
-//   );
-// };
-
-// export default ProductList;
-
-"use client";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { useTheme } from "next-themes";
+import { useRouter } from "next/router";
 import useSWR from "swr";
-import ProductCard from "../components/product-card/ProductCard";
-import Wrapper from "../components/wrapper/Wrapper";
+import ProductCard from "@/components/ProductCard";
+import Wrapper from "@/components/Wrapper";
+import { fetchDataFromApi } from "@/utils/api";
+import useButtonClickedEvent from "@/hooks/useButtonClickedEvent";
 
 const maxResult = 6;
 
-const ProductList = () => {
-  const [products, setProducts] = useState([]);
+const ProductsPage = ({ products }) => {
   let [pageIndex, setPageIndex] = useState(1);
   const [sortOption, setSortOption] = useState("");
   const [filterOption, setFilterOption] = useState();
   const [searchOption, setSearchOption] = useState("");
+
+  const { handleClick, highlighted } = useButtonClickedEvent();
+
+  const { theme } = useTheme();
+  const router = useRouter();
 
   // Pagination logic - start
   const { data, isLoading } = useSWR(
@@ -131,6 +33,7 @@ const ProductList = () => {
       ? `/api/products?populate=*&pagination[page]=${pageIndex}&pagination[pageSize]=${maxResult}&filters[name][$eq]=${searchOption}`
       : // Root endpoint
         `/api/products?populate=*&pagination[page]=${pageIndex}&pagination[pageSize]=${maxResult}`,
+    fetchDataFromApi,
     { fallbackData: products }
   );
   // Pagination logic - end
@@ -146,6 +49,16 @@ const ProductList = () => {
               <h2 className="text-bold text-[24px] text-orange-600">
                 More Actions <span className="text-gray-300">/</span>
               </h2>
+              {/* Back button */}
+              <button
+                className={`ml-2 mt-auto text-sm text-blue-600 hover:text-blue-700
+                cursor-pointer rounded-full px-2 py-1 ${
+                  highlighted ? "bg-gray-300" : ""
+                }`}
+                onClick={() => handleClick("")}
+              >
+                Go Back
+              </button>
             </div>
 
             {/* Features area */}
@@ -202,7 +115,7 @@ const ProductList = () => {
 
         {/* Show fetching products grid - start */}
         <div className="w-2/3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 mt-5 mb-5 px-5 md:px-0">
-          {products?.data?.map((product) => {
+          {data?.data?.map((product) => {
             return <ProductCard key={product?.id} data={product} />;
           })}
         </div>
@@ -212,17 +125,31 @@ const ProductList = () => {
         {data?.meta?.pagination?.total > maxResult && (
           <div className="flex gap-3 items-center justify-center my-16 md:mb-8 md:mt-0 ml-auto">
             <button
+              className={`${
+                theme === "dark"
+                  ? "bg-gray-200 disabled:bg-gray-500 text-gray-800 disabled:text-gray-300"
+                  : "bg-gray-800 disabled:bg-gray-500 text-gray-200 disabled:text-gray-300"
+              } rounded py-2 px-4 `}
               disabled={pageIndex === 1}
               onClick={() => setPageIndex(pageIndex - 1)}
             >
               Previous
             </button>
 
-            <span>{`${pageIndex} of ${
+            <span
+              className={`${
+                theme === "dark" ? "text-gray-200" : "text-gray-800"
+              } font-bold`}
+            >{`${pageIndex} of ${
               data && data.meta.pagination.pageCount
             }`}</span>
 
             <button
+              className={`${
+                theme === "dark"
+                  ? "bg-gray-200 disabled:bg-gray-500 text-gray-800 disabled:text-gray-300"
+                  : "bg-gray-800 disabled:bg-gray-500 text-gray-200 disabled:text-gray-300"
+              } rounded py-2 px-4`}
               disabled={pageIndex === (data && data.meta.pagination.pageCount)}
               onClick={() => setPageIndex(pageIndex + 1)}
             >
@@ -244,4 +171,15 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default ProductsPage;
+
+export async function getServerSideProps(context) {
+  // Fetch all products for products page - pagination
+  const products = await fetchDataFromApi(
+    "/api/products?populate=*&pagination[page]=1&pagination[pageSize]=6"
+  );
+
+  return {
+    props: { products },
+  };
+}
