@@ -7,27 +7,15 @@ import Wrapper from "../components/wrapper/Wrapper";
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState({
-    name: "", // Filter by name
-    price: "", // Filter by price
-  });
-  const [sortOrder, setSortOrder] = useState("asc"); // Sort order, "asc" or "desc"
   const itemsPerPage = 6;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const filterParams = {
-          ...(filters.name && { name_contains: filters.name }),
-          ...(filters.price && { price_gte: filters.price }),
-        };
-
         const response = await axios.get(
           `http://127.0.0.1:1337/api/products?pagination[start]=${
             (currentPage - 1) * itemsPerPage
-          }&pagination[limit]=${itemsPerPage}&sort=price:${sortOrder}&populate=*&${new URLSearchParams(
-            filterParams
-          ).toString()}`
+          }&pagination[limit]=${itemsPerPage}&populate=*`
         );
         setProducts(response.data);
       } catch (error) {
@@ -36,7 +24,7 @@ const ProductList = () => {
     };
 
     fetchProducts();
-  }, [currentPage, filters, sortOrder]);
+  }, [currentPage]);
 
   const totalProducts = products?.meta?.pagination?.total;
   const totalPages = Math.ceil(totalProducts / itemsPerPage);
@@ -59,69 +47,12 @@ const ProductList = () => {
     }
   };
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters({
-      ...filters,
-      [name]: value,
-    });
-  };
-
-  const handleSortChange = (e) => {
-    setSortOrder(e.target.value);
-  };
-
   return (
     <Wrapper>
       <div className="flex flex-wrap mt-28">
         {/* Left side */}
         <div className="w-1/3">
           <h1>Left Side</h1>
-          <div>
-            <label htmlFor="nameFilter">Filter by Name:</label>
-            <input
-              type="text"
-              id="nameFilter"
-              name="name"
-              value={filters.name}
-              onChange={handleFilterChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="priceFilter">Filter by Price:</label>
-            <input
-              type="text"
-              id="priceFilter"
-              name="price"
-              value={filters.price}
-              onChange={handleFilterChange}
-            />
-          </div>
-          <div>
-            <label>Sort by Price:</label>
-            <div>
-              <input
-                type="radio"
-                id="ascSort"
-                name="sortOrder"
-                value="asc"
-                checked={sortOrder === "asc"}
-                onChange={handleSortChange}
-              />
-              <label htmlFor="ascSort">Ascending</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="descSort"
-                name="sortOrder"
-                value="desc"
-                checked={sortOrder === "desc"}
-                onChange={handleSortChange}
-              />
-              <label htmlFor="descSort">Descending</label>
-            </div>
-          </div>
         </div>
 
         {/* Right side */}
