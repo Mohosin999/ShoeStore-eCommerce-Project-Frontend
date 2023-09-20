@@ -8,7 +8,11 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("");
-  const [filterOption, setFilterOption] = useState("");
+  const [filterOption, setFilterOption] = useState({
+    name: "",
+    original_price: "",
+    discounted_price: "",
+  });
 
   const itemsPerPage = 6;
 
@@ -17,8 +21,12 @@ const ProductList = () => {
       try {
         let url = `http://127.0.0.1:1337/api/products?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}&populate=*`;
 
-        if (filterOption) {
-          url += `&filters[name][$containsi]=${filterOption}`;
+        if (filterOption.name) {
+          url += `&filters[name][$containsi]=${filterOption.name}`;
+        } else if (filterOption.original_price) {
+          url += `&filters[original_price][$lte]=${filterOption.original_price}`;
+        } else if (filterOption.discounted_price) {
+          url += `&filters[discounted_price][$lte]=${filterOption.discounted_price}`;
         } else if (sortOption) {
           url += `&sort[0]=name:${sortOption}`;
         }
@@ -55,11 +63,22 @@ const ProductList = () => {
   };
 
   const handleFilterChange = (e) => {
-    setFilterOption(e.target.value);
+    const { name, value } = e.target;
+    setFilterOption({
+      ...filterOption,
+      [name]: value,
+    });
   };
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
+  };
+
+  const clearFilter = (property) => {
+    setFilterOption({
+      ...filterOption,
+      [property]: "",
+    });
   };
 
   return (
@@ -68,29 +87,77 @@ const ProductList = () => {
         {/* Left side */}
         <div class="w-1/3 bg-gray-600 p-10">
           <h1>Left Side</h1>
+          <h1 class="text-gray-200 text-lg">Filtering:</h1>
+          {/* Filtering */}
           <div>
-            <label htmlFor="nameFilter">Filter by Name:</label>
-            <input
-              type="text"
-              id="nameFilter"
-              name="name"
-              value={filterOption}
-              onChange={handleFilterChange}
-            />
+            <div>
+              <label htmlFor="nameFilter">Filter by Name:</label>
+              <input
+                type="text"
+                id="nameFilter"
+                name="name"
+                value={filterOption.name}
+                onChange={handleFilterChange}
+              />
+              {filterOption.name && (
+                <button onClick={() => clearFilter("name")}>
+                  &#x2716; {/* Unicode for a cross sign */}
+                </button>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="originalPriceFilter">
+                Filter by Original Price:
+              </label>
+              <input
+                type="text"
+                id="originalPriceFilter"
+                name="original_price"
+                value={filterOption.original_price}
+                onChange={handleFilterChange}
+              />
+              {filterOption.original_price && (
+                <button onClick={() => clearFilter("original_price")}>
+                  &#x2716; {/* Unicode for a cross sign */}
+                </button>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="discountedPriceFilter">
+                Filter by Discounted Price:
+              </label>
+              <input
+                type="text"
+                id="discountedPriceFilter"
+                name="discounted_price"
+                value={filterOption.discounted_price}
+                onChange={handleFilterChange}
+              />
+              {filterOption.discounted_price && (
+                <button onClick={() => clearFilter("discounted_price")}>
+                  &#x2716; {/* Unicode for a cross sign */}
+                </button>
+              )}
+            </div>
+
+            {/* Your component's content */}
           </div>
 
-          <div>
+          {/* Sorting */}
+          <div class="bg-green-400 mt-10">
             <label>Sorting:</label>
             <div>
               <input
                 type="radio"
-                id="ascSort"
+                id="none"
                 name="sortOption"
                 value=""
                 checked={false}
                 onChange={handleSortChange}
               />
-              <label htmlFor="ascSort">None</label>
+              <label htmlFor="none">None</label>
             </div>
             <div>
               <input
