@@ -1,0 +1,9 @@
+/* ProductImagesSlider.css */
+.product-images-slider {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-thumbs-slider {
+  margin-top: 10px; /* Adjust the margin as needed */
+}
