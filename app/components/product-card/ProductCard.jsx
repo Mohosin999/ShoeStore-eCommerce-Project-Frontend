@@ -52,7 +52,7 @@ const ProductCard = ({ item }) => {
         <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center backdrop-blur-sm">
           <div class="text-center">
             <ButtonLink
-              href="/"
+              href={`/products/${item.attributes.slug}`}
               label="Buy Now"
               className="bg-orange-400 hover:bg-orange-500"
             />
