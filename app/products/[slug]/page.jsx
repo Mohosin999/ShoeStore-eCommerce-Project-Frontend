@@ -1,13 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Wrapper from "@/app/components/wrapper/Wrapper";
-import ProductImagesSlider from "@/app/components/product-images-slider";
-
 // Swiper related styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+
+// Components
+import Wrapper from "@/app/components/wrapper/Wrapper";
+import ProductImagesSlider from "@/app/components/product-images-slider";
+import Title from "@/app/components/UI/title/Title";
 
 const ProductPage = ({ params }) => {
   const slug = params.slug;
@@ -32,15 +34,18 @@ const ProductPage = ({ params }) => {
 
   return (
     <Wrapper>
-      <div class="mt-24">
-        <div class="w-full">
+      <div class="flex mt-24">
+        <div class="w-2/4 px-10 py-4">
           <ProductImagesSlider images={commonUrl?.images?.data} />
         </div>
 
-        <div class="w-1/3 text-white">
+        <div class="w-2/4 px-10 py-4 text-white">
           {product?.data ? (
             <>
-              <h1>Product is - {commonUrl?.name}</h1>
+              <div>
+                <Title title={commonUrl?.name} />
+                {/* <h1>Product is - {commonUrl?.name}</h1> */}
+              </div>
               <p class="my-5 p-5 bg-orange-600">
                 Description: {commonUrl?.description}
               </p>{" "}

@@ -11,7 +11,6 @@ import "swiper/css/pagination";
 
 // Components
 import Wrapper from "../wrapper/Wrapper";
-import SlideNavButton from "./SlideNavButton";
 import ProductCard from "../product-card/ProductCard";
 import Title from "../UI/title/Title";
 
@@ -43,6 +42,7 @@ const DataSlider = ({ data, title }) => {
           {/* Title component for the swiper carousel */}
           <Title title={title} className="mt-20" />
           <Swiper
+            navigation={true}
             modules={[Navigation, Pagination, A11y]}
             slidesPerView={1}
             spaceBetween={15}
@@ -61,8 +61,6 @@ const DataSlider = ({ data, title }) => {
                 <ProductCard item={item} />
               </SwiperSlide>
             ))}
-            {/* Render navigation buttons for the Swiper carousel. */}
-            <SlideNavButton />
           </Swiper>
         </div>
       )}
