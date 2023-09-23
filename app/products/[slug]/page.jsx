@@ -23,7 +23,10 @@ const ProductPage = ({ params }) => {
   // Initialize cart state as an empty array
   const [cart, setCart] = useState([]);
 
-  const { cartFunc } = useCart();
+  const { addToCart1 } = useCart();
+
+  console.log("console from page --> ", cart);
+  console.log("console from page product --> ", product);
 
   const slug = params.slug;
   const commonUrl = product?.data?.data?.[0]?.attributes;
@@ -33,7 +36,7 @@ const ProductPage = ({ params }) => {
     // Create a copy of the current cart and add the product to it
     const updatedCart = [...cart, product];
     setCart(updatedCart);
-    cartFunc(updatedCart);
+    addToCart1(product);
   };
 
   // Hook function for fetching specific product's data
@@ -69,7 +72,7 @@ const ProductPage = ({ params }) => {
     };
 
     fetchRelatedProducts();
-  });
+  }, []);
 
   return (
     <Wrapper>
