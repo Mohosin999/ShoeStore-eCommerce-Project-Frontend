@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Link from "next/link";
+
 // Swiper related styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -13,13 +15,26 @@ import Title from "@/app/components/UI/title/Title";
 import Heading from "@/app/components/UI/heading";
 import Button from "@/app/components/UI/button";
 import DataSlider from "@/app/components/data-slider/DataSlider";
+import useCart from "@/app/hooks/useCart";
 
 const ProductPage = ({ params }) => {
-  const slug = params.slug;
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
+  // Initialize cart state as an empty array
+  const [cart, setCart] = useState([]);
 
+  const { cartFunc } = useCart();
+
+  const slug = params.slug;
   const commonUrl = product?.data?.data?.[0]?.attributes;
+
+  // Function to add a product to the cart
+  const addToCart = () => {
+    // Create a copy of the current cart and add the product to it
+    const updatedCart = [...cart, product];
+    setCart(updatedCart);
+    cartFunc(updatedCart);
+  };
 
   // Hook function for fetching specific product's data
   useEffect(() => {
@@ -102,7 +117,7 @@ const ProductPage = ({ params }) => {
 
               {/* Buttons */}
               <div class="flex items-center mt-10">
-                <Button label="Add to Cart" />
+                <Button label="Add to Cart" onClick={addToCart} />
                 <Button label="Add to Wishlist" className="ml-3" />
                 <Button label="Continue Shopping" className="ml-3" />
               </div>
@@ -112,6 +127,10 @@ const ProductPage = ({ params }) => {
           )}
         </div>
       </div>
+
+      <Link href="/cart">
+        <Button label="View Cart" />
+      </Link>
 
       <div class="mt-5">
         <DataSlider data={relatedProducts?.data} title="Related Products" />
