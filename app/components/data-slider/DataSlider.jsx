@@ -34,13 +34,13 @@ const DataSlider = ({ data, title }) => {
   }, [data]); // Run this effect whenever 'data' prop changes
 
   return (
-    <Wrapper className="mt-10">
+    <Wrapper>
       {isLoading ? (
         <p class="text-white text-3xl py-10 ">Loading...</p>
       ) : (
         <div>
           {/* Title component for the swiper carousel */}
-          <Title title={title} className="mt-20" />
+          <Title title={title} class="mt-20" />
           <Swiper
             navigation={true}
             modules={[Navigation, Pagination, A11y]}

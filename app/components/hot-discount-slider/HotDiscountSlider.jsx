@@ -10,7 +10,7 @@ const HotDiscountSlider = async () => {
   const fetchedData = response.data;
 
   return (
-    <div>
+    <div class="mt-16">
       <DataSlider data={fetchedData} title="Hot Discount Products" />
     </div>
   );
