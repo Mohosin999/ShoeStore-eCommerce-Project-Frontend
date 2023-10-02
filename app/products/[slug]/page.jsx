@@ -9,12 +9,12 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
 // Components
-import Wrapper from "@/app/components/wrapper/Wrapper";
+import Wrapper from "@/app/components/wrapper";
 import ProductImagesSlider from "@/app/components/product-images-slider";
-import Title from "@/app/components/UI/title/Title";
+import Title from "@/app/components/UI/title";
 import Heading from "@/app/components/UI/heading";
 import Button from "@/app/components/UI/button";
-import DataSlider from "@/app/components/data-slider/DataSlider";
+import DataSlider from "@/app/components/data-slider";
 import useCart from "@/app/hooks/useCart";
 
 const ProductPage = ({ params }) => {

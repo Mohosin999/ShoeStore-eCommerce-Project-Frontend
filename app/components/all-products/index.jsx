@@ -1,9 +1,9 @@
 import axios from "axios";
 import React from "react";
-import Wrapper from "../wrapper/Wrapper";
-import ProductCard from "../product-card/ProductCard";
-import Title from "../UI/title/Title";
-import ButtonLink from "../UI/button-link/ButtonLink";
+import Wrapper from "../wrapper";
+import ProductCard from "../product-card";
+import Title from "../UI/title";
+import ButtonLink from "../UI/button-link";
 
 const url =
   "http://127.0.0.1:1337/api/products?pagination[start]=0&pagination[limit]=6&populate=*";

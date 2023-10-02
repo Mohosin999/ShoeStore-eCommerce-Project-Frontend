@@ -1,5 +1,5 @@
 import React from "react";
-import HotDiscountSlider from "../components/hot-discount-slider/HotDiscountSlider";
+import HotDiscountSlider from "../components/hot-discount-slider";
 
 const SliderPage = () => {
   return (

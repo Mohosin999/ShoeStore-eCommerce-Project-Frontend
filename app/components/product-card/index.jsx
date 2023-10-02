@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
-import ButtonLink from "../UI/button-link/ButtonLink";
+import ButtonLink from "../UI/button-link";
 
 /**
  * A reusable component to display product information and an image.

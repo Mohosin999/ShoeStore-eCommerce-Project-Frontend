@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "./components/wrapper/Wrapper";
+import Layout from "./components/wrapper";
 
 const NotFound = () => {
   return (

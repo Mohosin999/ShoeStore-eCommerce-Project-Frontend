@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import bannerImage from "../../../public/watch.jpg";
-import Wrapper from "../wrapper/Wrapper";
-import ButtonLink from "../UI/button-link/ButtonLink";
+import Wrapper from "../wrapper";
+import ButtonLink from "../UI/button-link";
 
 const BannerCard = () => {
   return (

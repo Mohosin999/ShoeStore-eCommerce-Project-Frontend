@@ -10,9 +10,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 // Components
-import Wrapper from "../wrapper/Wrapper";
-import ProductCard from "../product-card/ProductCard";
-import Title from "../UI/title/Title";
+import Wrapper from "../wrapper";
+import ProductCard from "../product-card";
+import Title from "../UI/title";
 
 /**
  * A reusable component for fetching and displaying data in a Swiper carousel.

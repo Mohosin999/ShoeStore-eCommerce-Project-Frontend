@@ -1,9 +1,9 @@
 import React from "react";
-import HeaderBody from "./components/full-header-area/header-body/HeaderBody";
-import HotDiscountSlider from "./components/hot-discount-slider/HotDiscountSlider";
-import BannerCard from "./components/banner-card/BannerCard";
-import AllProducts from "./components/all-products/AllProducts";
-import TestimonialCard from "./components/testimonial-card/TestimonialCard";
+import HeaderBody from "./components/full-header-area/header-body";
+import HotDiscountSlider from "./components/hot-discount-slider";
+import BannerCard from "./components/banner-card";
+import AllProducts from "./components/all-products";
+import TestimonialCard from "./components/testimonial-card";
 
 const Home = () => {
   return (

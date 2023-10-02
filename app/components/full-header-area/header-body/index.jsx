@@ -1,6 +1,6 @@
 import React from "react";
-import ButtonLink from "../../UI/button-link/ButtonLink";
-import CarouselComponent from "../carousel-component/CarouselComponent";
+import ButtonLink from "../../UI/button-link";
+import CarouselComponent from "../carousel-component";
 
 const HeaderBody = () => {
   return (

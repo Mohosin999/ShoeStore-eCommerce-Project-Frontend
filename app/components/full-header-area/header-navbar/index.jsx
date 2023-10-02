@@ -6,8 +6,8 @@ import { FcShop } from "react-icons/fc";
 import { BsCartFill } from "react-icons/bs";
 import { MdFavorite } from "react-icons/md";
 // Components
-import CategoryMenu from "../cat-menu/CategoryMenu";
-import NavLink from "../../UI/nav-link/NavLink";
+import CategoryMenu from "../category-menu";
+import NavLink from "../../UI/nav-link";
 
 const Navbar = () => {
   const [isFixed, setIsFixed] = useState(true);

@@ -1,8 +1,8 @@
 import React from "react";
 import A1 from "../../../public/shoe2.jpg";
 import Image from "next/image";
-import Wrapper from "../wrapper/Wrapper";
-import Title from "../UI/title/Title";
+import Wrapper from "../wrapper";
+import Title from "../UI/title";
 
 const TestimonialCard = () => {
   return (

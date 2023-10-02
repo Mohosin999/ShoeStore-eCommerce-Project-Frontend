@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ProductCard from "../components/product-card/ProductCard";
-import Wrapper from "../components/wrapper/Wrapper";
+import ProductCard from "../components/product-card";
+import Wrapper from "../components/wrapper";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
