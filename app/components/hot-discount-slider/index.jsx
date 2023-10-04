@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import DataSlider from "../data-slider";
 
+// Hot discounted product endpoint
 const url = "http://127.0.0.1:1337/api/products/hot-discount?populate=*";
 
 const HotDiscountSlider = async () => {
