@@ -15,18 +15,12 @@ import Title from "@/app/components/UI/title";
 import Heading from "@/app/components/UI/heading";
 import Button from "@/app/components/UI/button";
 import DataSlider from "@/app/components/data-slider";
-import useCart from "@/app/hooks/useCart";
 
 const ProductPage = ({ params }) => {
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
   // Initialize cart state as an empty array
   const [cart, setCart] = useState([]);
-
-  const { addToCart1 } = useCart();
-
-  console.log("console from page --> ", cart);
-  console.log("console from page product --> ", product);
 
   const slug = params.slug;
   const commonUrl = product?.data?.data?.[0]?.attributes;
@@ -36,7 +30,6 @@ const ProductPage = ({ params }) => {
     // Create a copy of the current cart and add the product to it
     const updatedCart = [...cart, product];
     setCart(updatedCart);
-    addToCart1(product);
   };
 
   // Hook function for fetching specific product's data
@@ -84,7 +77,7 @@ const ProductPage = ({ params }) => {
 
         {/* Right side product's details */}
         <div class="w-2/4 px-6 py-3 text-white">
-          {product?.data ? (
+          {product?.data && (
             <>
               {/* Product title area */}
               <div>
@@ -125,8 +118,6 @@ const ProductPage = ({ params }) => {
                 <Button label="Continue Shopping" className="ml-3" />
               </div>
             </>
-          ) : (
-            <p>Loading...</p>
           )}
         </div>
       </div>
