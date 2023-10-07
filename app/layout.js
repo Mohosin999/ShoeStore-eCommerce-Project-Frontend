@@ -1,5 +1,9 @@
+"use client";
 import "./globals.css";
 import { Roboto } from "next/font/google";
+
+import { StoreProvider } from "easy-peasy";
+import store from "./store";
 
 // Components
 import Navbar from "./components/full-header-area/header-navbar";
@@ -16,9 +20,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={roboto.className} style={{ backgroundColor: "#001C30" }}>
-        <Navbar />
-        {children}
-        <Footer />
+        <StoreProvider store={store}>
+          <Navbar />
+          {children}
+          <Footer />
+        </StoreProvider>
       </body>
     </html>
   );
