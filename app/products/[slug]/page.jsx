@@ -30,11 +30,9 @@ const ProductPage = ({ params }) => {
   const commonUrl = product?.data?.data?.[0]?.attributes;
 
   // Function to add a product to the cart
-  // const addToCart = () => {
-  //   // Create a copy of the current cart and add the product to it
-  //   const updatedCart = [...cart, product];
-  //   setCart(updatedCart);
-  // };
+  const addToCartFunc = () => {
+    addToCart(product?.data?.data?.[0]);
+  };
 
   // Hook function for fetching specific product's data
   useEffect(() => {
@@ -117,7 +115,7 @@ const ProductPage = ({ params }) => {
 
               {/* Buttons */}
               <div class="flex items-center mt-10">
-                <Button label="Add to Cart" onClick={addToCart} />
+                <Button label="Add to Cart" onClick={addToCartFunc} />
                 <Button label="Add to Wishlist" className="ml-3" />
                 <Button label="Continue Shopping" className="ml-3" />
               </div>

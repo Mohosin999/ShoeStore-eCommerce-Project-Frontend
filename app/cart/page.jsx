@@ -1,8 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Wrapper from "../components/wrapper";
+import { useStoreState } from "easy-peasy";
 
 const CartPage = () => {
+  const { items } = useStoreState((state) => state.cartPortion);
+  console.log("Items from cart page's log ->", items);
+
   return (
     <Wrapper>
       <div className="mt-28 bg-gray-100 p-4">

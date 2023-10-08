@@ -1,13 +1,10 @@
-"use client";
 import "./globals.css";
 import { Roboto } from "next/font/google";
-
-import { StoreProvider } from "easy-peasy";
-import store from "./store";
 
 // Components
 import Navbar from "./components/full-header-area/header-navbar";
 import Footer from "./components/Footer";
+import EasypeasyProvider from "./lib/EasypeasyProvider";
 
 const roboto = Roboto({ weight: ["400", "700"], subsets: ["latin"] });
 
@@ -20,11 +17,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={roboto.className} style={{ backgroundColor: "#001C30" }}>
-        <StoreProvider store={store}>
+        <EasypeasyProvider>
           <Navbar />
           {children}
           <Footer />
-        </StoreProvider>
+        </EasypeasyProvider>
       </body>
     </html>
   );
