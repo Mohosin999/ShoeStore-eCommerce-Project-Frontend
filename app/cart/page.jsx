@@ -5,7 +5,7 @@ import { useStoreState } from "easy-peasy";
 
 const CartPage = () => {
   const { items } = useStoreState((state) => state.cartPortion);
-  console.log("Items from cart page's log ->", items);
+  // console.log("Items from cart page's log ->", items);
 
   return (
     <Wrapper>

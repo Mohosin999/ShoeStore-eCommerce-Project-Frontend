@@ -36,8 +36,6 @@ const cartPortion = {
       // Push the new item inside items
       state.items.push(newItem);
     }
-
-    console.log("Updated Cart Items:", Array.from(state.items));
   }),
   updateCart: action((state, payload) => {}),
   removeCart: action((state, payload) => {}),
