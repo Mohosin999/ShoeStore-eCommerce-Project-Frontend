@@ -37,8 +37,26 @@ const cartPortion = persist({
       state.items.push(newItem);
     }
   }),
-  updateCart: action((state, payload) => {}),
-  removeCart: action((state, payload) => {}),
+  updateCart: action((state, payload) => {
+    // Find the item that you want to update in the cart.
+    const itemToUpdate = state.items.find((item) => item.id === payload.id);
+
+    if (itemToUpdate) {
+      // Update the quantity of the item.
+      itemToUpdate.quantity = payload.quantity;
+
+      // Update the price based on the new quantity.
+      itemToUpdate.price = itemToUpdate.attributes.discounted_price
+        ? itemToUpdate.attributes.discounted_price * itemToUpdate.quantity
+        : itemToUpdate.attributes.original_price * itemToUpdate.quantity;
+    }
+  }),
+  removeCart: action((state, payload) => {
+    state.items = state.items.filter((item) => item.id !== payload);
+  }),
+  clearAllCart: action((state, payload) => {
+    state.items = []; // Set the items array to an empty array to clear the cart.
+  }),
 });
 
 export default cartPortion;

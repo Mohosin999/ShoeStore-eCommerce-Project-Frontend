@@ -153,10 +153,6 @@ const ProductPage = ({ params }) => {
         {/* Right side product's details - end. */}
       </div>
 
-      <Link href="/cart">
-        <Button label="View Cart" />
-      </Link>
-
       {/* The following "div" shows the related product part. */}
       <div className="mt-5">
         <DataSlider data={relatedProducts?.data} title="Related Products" />

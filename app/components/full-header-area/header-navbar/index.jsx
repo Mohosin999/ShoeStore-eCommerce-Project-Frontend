@@ -86,7 +86,7 @@ const Navbar = () => {
           <Link href="" class="text-gray-200 px-4 py-2">
             <MdFavorite size={22} />
           </Link>
-          <Link href="" class="text-gray-200 px-4 py-2">
+          <Link href="/cart" class="text-gray-200 px-4 py-2">
             <BsCartFill size={22} />
           </Link>
           {/* Right section of the header - end */}
