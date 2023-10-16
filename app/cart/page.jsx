@@ -5,7 +5,7 @@ import { useStoreState } from "easy-peasy";
 
 const CartPage = () => {
   const { items } = useStoreState((state) => state.cartPortion);
-  // console.log("Items from cart page's log ->", items);
+  console.log("Items from cart page's log ->", items);
 
   return (
     <Wrapper>
@@ -22,7 +22,18 @@ const CartPage = () => {
               <th className="py-2">Actions</th>
             </tr>
           </thead>
+
           <tbody>
+            {items.map((item) => (
+              <tr key={item.id}>
+                <td>{item.attributes.name}</td>
+                <td>{item.quantity}</td>
+                <td>{item.price}</td>
+              </tr>
+            ))}
+          </tbody>
+
+          {/* <tbody>
             <tr>
               <td className="py-2"></td>
               <td className="py-2"></td>
@@ -38,7 +49,7 @@ const CartPage = () => {
               <td className="py-2 font-bold"></td>
               <td className="py-2 font-bold"></td>
             </tr>
-          </tbody>
+          </tbody> */}
         </table>
       </div>
     </Wrapper>
