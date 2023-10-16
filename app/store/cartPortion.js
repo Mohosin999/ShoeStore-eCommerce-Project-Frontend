@@ -1,7 +1,7 @@
 "use client";
-import { action } from "easy-peasy";
+import { action, persist } from "easy-peasy";
 
-const cartPortion = {
+const cartPortion = persist({
   items: [],
   addToCart: action((state, payload) => {
     // Check if the item is already exist.
@@ -39,6 +39,6 @@ const cartPortion = {
   }),
   updateCart: action((state, payload) => {}),
   removeCart: action((state, payload) => {}),
-};
+});
 
 export default cartPortion;

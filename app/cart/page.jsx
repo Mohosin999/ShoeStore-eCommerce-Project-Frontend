@@ -1,56 +1,45 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Wrapper from "../components/wrapper";
 import { useStoreState } from "easy-peasy";
 
 const CartPage = () => {
   const { items } = useStoreState((state) => state.cartPortion);
-  console.log("Items from cart page's log ->", items);
 
   return (
     <Wrapper>
-      <div className="mt-28 bg-gray-100 p-4">
-        <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
+      <div className="mt-32 text-gray-200 text-center">
+        <h1 className="text-4xl font-bold">Shopping Cart</h1>
 
-        <table className="w-full">
-          <thead>
-            <tr>
-              <th className="py-2">Product</th>
-              <th className="py-2">Quantity</th>
-              <th className="py-2">Price</th>
-              <th className="py-2">Total</th>
-              <th className="py-2">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {items.map((item) => (
-              <tr key={item.id}>
-                <td>{item.attributes.name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.price}</td>
+        <div className="w-4/5 mx-auto">
+          <table className="w-full text-center mt-6">
+            <thead>
+              <tr className="text-2xl text-green-500">
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
+            </thead>
 
-          {/* <tbody>
-            <tr>
-              <td className="py-2"></td>
-              <td className="py-2"></td>
-              <td className="py-2"></td>
-              <td className="py-2"></td>
-              <td className="py-2">
-                <button className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 mr-2"></button>
-                <button className="bg-red-500 hover:bg-red-600 text-white px-2 py-1"></button>
-              </td>
-            </tr>
-            <tr>
-              <td className="py-2" colSpan="3"></td>
-              <td className="py-2 font-bold"></td>
-              <td className="py-2 font-bold"></td>
-            </tr>
-          </tbody> */}
-        </table>
+            <tbody>
+              {items.map((item) => (
+                <tr key={item.id} className="text-lg shadow-sm shadow-gray-700">
+                  <td className=" py-4">{item.attributes.name}</td>
+                  <td className=" py-4">{item.quantity}</td>
+                  <td className=" py-4">
+                    {item.attributes.discounted_price
+                      ? item.attributes.discounted_price
+                      : item.attributes.original_price}
+                  </td>
+                  <td className=" py-4">{item.price}</td>
+                  <td className=" py-4">Your actions here</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </Wrapper>
   );
