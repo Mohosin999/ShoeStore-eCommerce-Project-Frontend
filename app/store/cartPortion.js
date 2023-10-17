@@ -12,13 +12,14 @@ const cartPortion = persist({
      * Otherwise set it inside the items.
      */
     if (existingItem) {
-      existingItem.quantity++;
-      // Overwrite the previous price
-      existingItem.price = existingItem.attributes.discounted_price
-        ? // If there is discount price, multiply it by the quantity
-          existingItem.attributes.discounted_price * existingItem.quantity
-        : // Else multiply the original price by the quantity
-          existingItem.attributes.original_price * existingItem.quantity;
+      return;
+      // existingItem.quantity++;
+      // // Overwrite the previous price
+      // existingItem.price = existingItem.attributes.discounted_price
+      //   ? // If there is discount price, multiply it by the quantity
+      //     existingItem.attributes.discounted_price * existingItem.quantity
+      //   : // Else multiply the original price by the quantity
+      //     existingItem.attributes.original_price * existingItem.quantity;
     } else {
       const newItem = {
         ...payload,
@@ -52,7 +53,7 @@ const cartPortion = persist({
     }
   }),
   removeCart: action((state, payload) => {
-    state.items = state.items.filter((item) => item.id !== payload);
+    state.items = state.items.filter((item) => item.id !== payload.id);
   }),
   clearAllCart: action((state, payload) => {
     state.items = []; // Set the items array to an empty array to clear the cart.

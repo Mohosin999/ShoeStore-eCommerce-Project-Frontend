@@ -6,11 +6,11 @@ const Button = ({ label, onClick, className }) => {
     <div>
       <button
         onClick={onClick}
-        class={`bg-yellow-700 hover:bg-green-600 text-gray-200 px-6 py-3 rounded-full ${
+        class={`bg-yellow-700 hover:bg-green-600 text-gray-200 px-6 py-3 rounded-full group ${
           className || ""
         }`}
       >
-        {label}
+        <div className="group-active:scale-95">{label}</div>
       </button>
     </div>
   );

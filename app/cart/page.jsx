@@ -121,7 +121,7 @@ const CartPage = () => {
                               "Are you sure you want to delete the product?"
                             );
                             if (shouldDelete) {
-                              removeCart(item.id);
+                              removeCart(item);
                             }
                           }}
                           title="Delete the product"
@@ -135,6 +135,7 @@ const CartPage = () => {
                 </tbody>
               </table>
             </div>
+
             <div>
               <button
                 onClick={() => {

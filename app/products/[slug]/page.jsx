@@ -17,7 +17,7 @@ import Heading from "@/app/components/UI/heading";
 import Button from "@/app/components/UI/button";
 import DataSlider from "@/app/components/data-slider";
 
-import { useStoreActions } from "easy-peasy";
+import { useStoreActions, useStoreState } from "easy-peasy";
 
 /**
  * Single product page component.
@@ -27,11 +27,12 @@ import { useStoreActions } from "easy-peasy";
 const ProductPage = ({ params }) => {
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
-  // Initialize cart state as an empty array
-  // const [cart, setCart] = useState([]);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [isExist, setIsExist] = useState(false);
 
   // Destructure addToCart from the store.
   const { addToCart } = useStoreActions((actions) => actions.cartPortion);
+  const { items } = useStoreState((state) => state.cartPortion);
 
   /**
    * Define a variable and store your desired slug.
@@ -49,7 +50,31 @@ const ProductPage = ({ params }) => {
    * When the function is called, product will be added to the cart.
    */
   const addToCartFunc = () => {
-    addToCart(product?.data?.data?.[0]);
+    const addedProduct = product?.data?.data?.[0];
+
+    // Check if the product with the same ID is already in the cart
+    const isProductInCart = items.some((item) => item.id === addedProduct.id);
+
+    if (isProductInCart) {
+      // If the product is already in the cart, set isExist to true and hide the success popup
+      setIsExist(true);
+      setShowSuccessPopup(false);
+
+      // Automatically hide the success popup after 3 seconds (3000 milliseconds)
+      setTimeout(() => {
+        setIsExist(false);
+      }, 3000);
+    } else {
+      // If the product is not in the cart, add it to the cart, set isExist to false, and show the success popup
+      addToCart(addedProduct);
+      setIsExist(false);
+      setShowSuccessPopup(true);
+
+      // Automatically hide the success popup after 3 seconds (3000 milliseconds)
+      setTimeout(() => {
+        setShowSuccessPopup(false);
+      }, 3000);
+    }
   };
 
   /**
@@ -142,10 +167,24 @@ const ProductPage = ({ params }) => {
               {/* Product price area - end */}
 
               {/* Buttons */}
-              <div className="flex items-center mt-10">
+              <div className="relative flex items-center mt-10">
                 <Button label="Add to Cart" onClick={addToCartFunc} />
                 <Button label="Add to Wishlist" className="ml-3" />
                 <Button label="Continue Shopping" className="ml-3" />
+
+                {/* After clicking addToCart button, show success popup message */}
+                {showSuccessPopup && (
+                  <div className="absolute bg-purple-600 text-gray-900 text-lg py-6 px-12 text-center top-20 left-0 z-10">
+                    Product added successfully!
+                  </div>
+                )}
+
+                {/* If product already added, show the following popup */}
+                {isExist && (
+                  <div className="absolute bg-red-500 text-gray-900 text-lg py-6 px-12 text-center top-20 left-0 z-10">
+                    Product already added!
+                  </div>
+                )}
               </div>
             </>
           )}
