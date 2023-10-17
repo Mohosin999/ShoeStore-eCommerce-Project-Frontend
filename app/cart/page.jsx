@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useStoreState, useStoreActions } from "easy-peasy";
@@ -13,9 +13,49 @@ const CartPage = () => {
     (actions) => actions.cartPortion
   );
 
+  const [isUnAvailable, setIsUnAvailable] = useState(false);
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  const calculateGrandTotal = () => {
+    let total = 0;
+    items.forEach((item) => {
+      total += item.price;
+    });
+    setGrandTotal(total);
+  };
+
+  useEffect(() => {
+    calculateGrandTotal();
+  }, [items]);
+
+  const handleIncrement = (item) => {
+    if (item.quantity === item.attributes.available_product) {
+      setIsUnAvailable(true);
+
+      setTimeout(() => {
+        setIsUnAvailable(false);
+      }, 3000);
+    } else {
+      updateCart({
+        id: item.id,
+        quantity: item.quantity + 1,
+      });
+    }
+  };
+
+  const handleDecrement = (item) => {
+    if (item.quantity > 1) {
+      // Check if quantity is greater than 0 before decrementing
+      updateCart({
+        id: item.id,
+        quantity: item.quantity - 1,
+      });
+    }
+  };
+
   return (
     <Wrapper>
-      <div className="mt-32 h-screen text-gray-200 text-center">
+      <div className="relative mt-32 h-screen text-gray-200 text-center">
         {items.length === 0 ? (
           <div className="flex flex-col items-center justify-center my-16">
             <h1 className="text-4xl font-bold">Empty Product</h1>
@@ -33,7 +73,8 @@ const CartPage = () => {
           </div>
         ) : (
           <>
-            <h1 className="text-4xl font-bold mb-12">Shopping Cart</h1>
+            <h1 className=" text-4xl font-bold mb-12">Shopping Cart</h1>
+
             <div className="w-4/5 mx-auto">
               <table className="w-full text-center mt-6">
                 <thead>
@@ -77,19 +118,14 @@ const CartPage = () => {
                         {/* Decrease quantity button - start */}
                         <button
                           title={
-                            item.quantity === 0
-                              ? "No product exist"
+                            item.quantity === 1
+                              ? "Minimum number of products"
                               : "Decrease the product quantity"
                           }
-                          onClick={() =>
-                            updateCart({
-                              id: item.id,
-                              quantity: item.quantity - 1,
-                            })
-                          }
-                          disabled={item.quantity === 0}
-                          className={`py-1 px-3 mr-2 text-lg rounded-md ${
-                            item.quantity === 0 ? "bg-gray-400" : "bg-green-700"
+                          onClick={() => handleDecrement(item)}
+                          disabled={item.quantity === 1}
+                          className={`px-3 mr-2 text-lg rounded-md ${
+                            item.quantity === 1 ? "bg-gray-400" : "bg-green-700"
                           }`}
                         >
                           -
@@ -98,14 +134,13 @@ const CartPage = () => {
 
                         {/* Increase quantity button - start */}
                         <button
-                          title="Increase the product quantity"
-                          onClick={() =>
-                            updateCart({
-                              id: item.id,
-                              quantity: item.quantity + 1,
-                            })
+                          title={
+                            item.quantity === item.attributes.available_product
+                              ? "No more product exist!"
+                              : "Increase the product quantity"
                           }
-                          className="py-1 px-3 bg-green-700 text-lg rounded-md"
+                          onClick={() => handleIncrement(item)}
+                          className="px-3 mr-2 text-lg rounded-md bg-green-700"
                         >
                           +
                         </button>
@@ -136,6 +171,13 @@ const CartPage = () => {
               </table>
             </div>
 
+            {/* If product already added, show the following popup */}
+            {isUnAvailable && (
+              <div className="absolute bg-red-500 text-gray-100 text-lg py-2 px-4 text-center top-2 right-0 z-10">
+                Sorry! no more product available
+              </div>
+            )}
+
             <div>
               <button
                 onClick={() => {
@@ -149,6 +191,11 @@ const CartPage = () => {
               >
                 Clear All
               </button>
+
+              {/* Grand Total Display */}
+              <div className="text-xl font-bold mt-6">
+                Grand Total: ${grandTotal.toFixed(2)}
+              </div>
             </div>
           </>
         )}
