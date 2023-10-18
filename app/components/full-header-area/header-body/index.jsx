@@ -37,7 +37,7 @@ const HeaderBody = () => {
           {/* Button above the carousel component */}
           <div class="absolute ml-auto z-40 top-24 right-52">
             <ButtonLink
-              href="/ps"
+              href="/products"
               label="Shop Now"
               className="bg-orange-400 hover:bg-orange-500"
             />

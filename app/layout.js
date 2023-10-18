@@ -2,7 +2,7 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 
 // Components
-import Navbar from "./components/full-header-area/header-navbar";
+import Navbar from "./components/full-header-area/navbar";
 import Footer from "./components/Footer";
 import EasypeasyProvider from "./lib/EasypeasyProvider";
 

@@ -6,6 +6,7 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import Wrapper from "../components/wrapper";
 import emptyBox from "../../public/emptyBox.jpg";
+import ButtonLink from "../components/UI/button-link";
 
 const CartPage = () => {
   const { items } = useStoreState((state) => state.cartPortion);
@@ -56,22 +57,7 @@ const CartPage = () => {
   return (
     <Wrapper>
       <div className="relative mt-32 h-screen text-gray-200 text-center">
-        {items.length === 0 ? (
-          <div className="flex flex-col items-center justify-center my-16">
-            <h1 className="text-4xl font-bold">Empty Product</h1>
-            <Image
-              src={emptyBox}
-              alt="empty-box"
-              className="w-96 h-auto my-10"
-            />
-            <Link
-              href="/products"
-              className="text-lg bg-green-700 hover:bg-green-800 py-2 px-6 rounded-md"
-            >
-              Continue Shopping
-            </Link>
-          </div>
-        ) : (
+        {items.length > 0 && (
           <>
             <h1 className=" text-4xl font-bold mb-12">Shopping Cart</h1>
 
@@ -178,7 +164,9 @@ const CartPage = () => {
               </div>
             )}
 
-            <div>
+            {/* Grand total, clear all and checkout button's portion - start */}
+            <div className="mt-12">
+              {/* Clear all product button */}
               <button
                 onClick={() => {
                   const isClearAll = window.confirm(
@@ -188,16 +176,47 @@ const CartPage = () => {
                     clearAllCart();
                   }
                 }}
+                className="bg-green-700 hover:bg-green-800 text-gray-100 text-lg py-2 px-4 rounded-md"
               >
                 Clear All
               </button>
 
               {/* Grand Total Display */}
-              <div className="text-xl font-bold mt-6">
-                Grand Total: ${grandTotal.toFixed(2)}
+              <div className="relative text-2xl font-bold my-6 flex items-center justify-center">
+                Grand Total:{" "}
+                <span className="absolute ml-72 text-4xl text-yellow-400">
+                  <span className="text-green-500">$</span>
+                  {grandTotal.toFixed(2)}
+                </span>
               </div>
+
+              {/* Checkout page */}
+              <ButtonLink
+                href="/checkout"
+                label="Checkout"
+                className="rounded-md"
+              />
             </div>
+            {/* Grand total, clear all and checkout button's portion - end */}
           </>
+        )}
+
+        {/* This is empty screen */}
+        {items.length < 1 && (
+          <div className="flex flex-col items-center justify-center my-16">
+            <h1 className="text-4xl font-bold">Empty Product</h1>
+            <Image
+              src={emptyBox}
+              alt="empty-box"
+              className="w-96 h-auto my-10"
+            />
+            <Link
+              href="/products"
+              className="text-lg bg-green-700 hover:bg-green-800 py-2 px-6 rounded-md"
+            >
+              Continue Shopping
+            </Link>
+          </div>
         )}
       </div>
     </Wrapper>

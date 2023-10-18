@@ -83,10 +83,16 @@ const Navbar = () => {
           <NavLink href="/login" label="Login" />
           <NavLink href="/register" label="Register" />
           {/* Favorite & Cart Icons */}
-          <Link href="" class="text-gray-200 px-4 py-2">
+          <Link
+            href="/favorite"
+            class="text-red-200 hover:text-red-300 px-4 py-2"
+          >
             <MdFavorite size={22} />
           </Link>
-          <Link href="/cart" class="text-gray-200 px-4 py-2">
+          <Link
+            href="/cart"
+            class="text-gray-200 hover:text-gray-100 px-4 py-2"
+          >
             <BsCartFill size={22} />
           </Link>
           {/* Right section of the header - end */}
