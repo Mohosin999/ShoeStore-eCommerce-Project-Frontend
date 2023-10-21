@@ -1,6 +1,6 @@
 // pages/register.js
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -19,19 +19,22 @@ const Register = () => {
         "http://127.0.0.1:1337/api/auth/local/register",
         formData
       );
-      // Check if the login was successful on the server-side
-      if (response.data.jwt) {
-        // Save the authentication token to a secure location (e.g., localStorage)
-        localStorage.setItem("token", response.data.jwt);
 
-        // Redirect to the user's dashboard or another authenticated route
-        router.push("/dashboard"); // Replace '/dashboard' with the actual dashboard route.
+      if (response.data.jwt) {
+        // Registration success
+        localStorage.setItem("token", response.data.jwt);
+        router.push("/dashboard");
       } else {
-        // Handle login error (e.g., show an error message indicating incorrect credentials)
+        // Handle registration error (e.g., show an error message)
+        console.log("No jwt found!");
       }
     } catch (error) {
-      // Handle registration error (e.g., show an error message)
-      console.log(error);
+      if (error.response) {
+        alert(error.response.data.error.message);
+      } else {
+        // Network error or other unexpected errors
+        console.log("An error occurred:", error.message);
+      }
     }
   };
 
@@ -45,12 +48,14 @@ const Register = () => {
           onChange={(e) =>
             setFormData({ ...formData, username: e.target.value })
           }
-        />
+        />{" "}
+        <br />
         <input
           type="email"
           placeholder="Email"
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-        />
+        />{" "}
+        <br />
         <input
           type="password"
           placeholder="Password"
@@ -58,6 +63,7 @@ const Register = () => {
             setFormData({ ...formData, password: e.target.value })
           }
         />
+        <br />
         <button type="button" onClick={handleRegister}>
           Register
         </button>

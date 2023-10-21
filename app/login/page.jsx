@@ -42,7 +42,12 @@ const Login = () => {
         // Handle login error (e.g., show an error message indicating incorrect credentials)
       }
     } catch (error) {
-      // Handle other login errors (e.g., network issues)
+      if (error.response) {
+        alert(error.response.data.error.message);
+      } else {
+        // Network error or other unexpected errors
+        console.log("An error occurred:", error.message);
+      }
     }
   };
 
