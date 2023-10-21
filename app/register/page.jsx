@@ -2,6 +2,7 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,13 +11,24 @@ const Register = () => {
     password: "",
   });
 
+  const router = useRouter();
+
   const handleRegister = async () => {
     try {
       const response = await axios.post(
         "http://127.0.0.1:1337/api/auth/local/register",
         formData
       );
-      // Handle success (e.g., show a success message)
+      // Check if the login was successful on the server-side
+      if (response.data.jwt) {
+        // Save the authentication token to a secure location (e.g., localStorage)
+        localStorage.setItem("token", response.data.jwt);
+
+        // Redirect to the user's dashboard or another authenticated route
+        router.push("/dashboard"); // Replace '/dashboard' with the actual dashboard route.
+      } else {
+        // Handle login error (e.g., show an error message indicating incorrect credentials)
+      }
     } catch (error) {
       // Handle registration error (e.g., show an error message)
       console.log(error);

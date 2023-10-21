@@ -1,15 +1,11 @@
 // pages/dashboard.js
 
-import ProtectedRoute from "../components/protected-route";
-
 const Dashboard = () => {
   return (
-    <ProtectedRoute>
-      <div>
-        <h2>Dashboard</h2>
-        {/* Dashboard content */}
-      </div>
-    </ProtectedRoute>
+    <div className="mt-32 text-center text-8xl">
+      <h2>Dashboard</h2>
+      {/* Dashboard content */}
+    </div>
   );
 };
 

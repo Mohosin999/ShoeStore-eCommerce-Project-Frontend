@@ -43,6 +43,13 @@ const Navbar = () => {
     };
   }, []);
 
+  const handleLogout = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      localStorage.removeItem("token");
+    }
+  };
+
   return (
     <div>
       <nav
@@ -81,6 +88,7 @@ const Navbar = () => {
 
           {/* Right section of the header - start */}
           <NavLink href="/login" label="Login" />
+          <button onClick={handleLogout}>Logout</button>
           <NavLink href="/register" label="Register" />
           {/* Favorite & Cart Icons */}
           <Link
