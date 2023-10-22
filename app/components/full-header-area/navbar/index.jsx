@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import Link from "next/link";
 // Icons
 import { FcShop } from "react-icons/fc";
@@ -44,9 +45,11 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
     if (token) {
-      localStorage.removeItem("token");
+      Cookies.set("id", response.data.user.id);
+      Cookies.set("username", response.data.user.username);
+      Cookies.set("token", response.data.jwt);
     }
   };
 
