@@ -18,6 +18,7 @@ import Button from "@/app/components/UI/button";
 import DataSlider from "@/app/components/data-slider";
 
 import { useStoreActions, useStoreState } from "easy-peasy";
+import TostifyMessage from "@/app/components/tostify-message";
 
 /**
  * Single product page component.
@@ -61,9 +62,9 @@ const ProductPage = ({ params }) => {
       setShowSuccessPopup(false);
 
       // Automatically hide the success popup after 3 seconds (3000 milliseconds)
-      setTimeout(() => {
-        setIsExist(false);
-      }, 3000);
+      // setTimeout(() => {
+      //   setIsExist(false);
+      // }, 9000);
     } else {
       // If the product is not in the cart, add it to the cart, set isExist to false, and show the success popup
       addToCart(addedProduct);
@@ -71,9 +72,9 @@ const ProductPage = ({ params }) => {
       setShowSuccessPopup(true);
 
       // Automatically hide the success popup after 3 seconds (3000 milliseconds)
-      setTimeout(() => {
-        setShowSuccessPopup(false);
-      }, 3000);
+      // setTimeout(() => {
+      //   setShowSuccessPopup(false);
+      // }, 9000);
     }
   };
 
@@ -174,16 +175,19 @@ const ProductPage = ({ params }) => {
 
                 {/* After clicking addToCart button, show success popup message */}
                 {showSuccessPopup && (
-                  <div className="absolute bg-purple-600 text-gray-900 text-lg py-6 px-12 text-center top-20 left-0 z-10">
-                    Product added successfully!
-                  </div>
+                  <TostifyMessage
+                    message={"Product added successfully !"}
+                    className="bg-green-600"
+                    setState={setShowSuccessPopup}
+                  />
                 )}
 
                 {/* If product already added, show the following popup */}
                 {isExist && (
-                  <div className="absolute bg-red-500 text-gray-900 text-lg py-6 px-12 text-center top-20 left-0 z-10">
-                    Product already added!
-                  </div>
+                  <TostifyMessage
+                    message={"The product exist in the cart !"}
+                    setState={setIsExist}
+                  />
                 )}
               </div>
             </>

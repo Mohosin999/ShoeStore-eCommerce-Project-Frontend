@@ -5,6 +5,7 @@ const Button = ({ label, onClick, className }) => {
   return (
     <div>
       <button
+        type="button"
         onClick={onClick}
         class={`bg-yellow-700 hover:bg-green-600 text-gray-200 px-6 py-3 rounded-full group ${
           className || ""

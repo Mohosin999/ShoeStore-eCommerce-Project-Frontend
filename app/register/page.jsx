@@ -1,32 +1,52 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import TostifyMessage from "../components/tostify-message";
+import Button from "../components/UI/button";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  // Router
+  const router = useRouter();
 
   const handleRegister = async () => {
-    const registerInfo = {
-      username: username,
-      email: email,
-      password: password,
-    };
+    try {
+      const registerInfo = {
+        username: username,
+        email: email,
+        password: password,
+      };
 
-    const register = await axios.post(
-      "http://127.0.0.1:1337/api/auth/local/register",
-      registerInfo,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+      const register = await axios.post(
+        "http://127.0.0.1:1337/api/auth/local/register",
+        registerInfo,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const registerResponse = await register.data;
+
+      if (registerResponse) {
+        Cookies.set("id", registerResponse.user.id);
+        Cookies.set("username", registerResponse.user.username);
+        Cookies.set("jwt", registerResponse.jwt);
+
+        router.push("/dashboard");
       }
-    );
-
-    const registerResponse = await register.data;
-    console.log("Register Response ->", registerResponse);
+    } catch (error) {
+      // alert(error.message);
+      setError(error.response.data.error.message);
+    }
   };
 
   return (
@@ -34,107 +54,36 @@ const Register = () => {
       <form>
         <input
           type="text"
+          placeholder="Username"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
         <br />
+        <br />
         <input
           type="email"
+          placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
         />
         <br />
+        <br />
         <input
           type="password"
+          placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
         <br />
-        <button type="button" onClick={() => handleRegister()}>
-          Submit
-        </button>
+        <br />
+
+        <Button label="Submit" onClick={handleRegister} />
       </form>
+
+      {/* If error occured, show the toast message. */}
+      {error && <TostifyMessage message={error} setState={setError} />}
     </div>
   );
 };
 
 export default Register;
-
-// // pages/register.js
-// "use client";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { useRouter } from "next/navigation";
-
-// const Register = () => {
-//   const [formData, setFormData] = useState({
-//     username: "",
-//     email: "",
-//     password: "",
-//   });
-
-//   const router = useRouter();
-
-//   const handleRegister = async () => {
-//     try {
-//       const response = await axios.post(
-//         "http://127.0.0.1:1337/api/auth/local/register",
-//         formData
-//       );
-
-//       console.log("Registered User -> ", response);
-
-//       if (response.data.jwt) {
-//         // Registration success
-//         // localStorage.setItem("token", response.data.jwt);
-//         // router.push("/dashboard");
-//         router.push("/login");
-//       } else {
-//         // Handle registration error (e.g., show an error message)
-//         console.log("No jwt found!");
-//       }
-//     } catch (error) {
-//       if (error.response) {
-//         alert(error.response.data.error.message);
-//       } else {
-//         // Network error or other unexpected errors
-//         console.log("An error occurred:", error.message);
-//       }
-//     }
-//   };
-
-//   return (
-//     <div className="mt-32">
-//       <h2 className="text-8xl text-white">Register</h2>
-//       <form className="flex flex-col items-center justify-center w-full">
-//         <input
-//           type="text"
-//           placeholder="Username"
-//           onChange={(e) =>
-//             setFormData({ ...formData, username: e.target.value })
-//           }
-//         />{" "}
-//         <br />
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-//         />{" "}
-//         <br />
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           onChange={(e) =>
-//             setFormData({ ...formData, password: e.target.value })
-//           }
-//         />
-//         <br />
-//         <button type="button" onClick={handleRegister}>
-//           Register
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Register;
