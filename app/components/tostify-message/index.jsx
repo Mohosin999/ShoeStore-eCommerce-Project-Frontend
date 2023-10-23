@@ -39,7 +39,7 @@ const TostifyMessage = ({ message, className, setState, duration = 3000 }) => {
 
   return (
     <div
-      className={`absolute bg-red-600 text-gray-100 text-lg py-6 px-12 text-center top-20 left-0 z-10 ${className}`}
+      className={`absolute bg-red-600 text-gray-100 text-lg py-6 px-12 text-center top-0 left-0 z-50 ${className}`}
     >
       <span>{message}</span>
       {/* <button className="float-right" onClick={handleClose}> */}

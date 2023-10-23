@@ -177,7 +177,7 @@ const ProductPage = ({ params }) => {
                 {showSuccessPopup && (
                   <TostifyMessage
                     message={"Product added successfully !"}
-                    className="bg-green-600"
+                    className="!bg-green-600 top-20"
                     setState={setShowSuccessPopup}
                   />
                 )}
@@ -187,6 +187,7 @@ const ProductPage = ({ params }) => {
                   <TostifyMessage
                     message={"The product exist in the cart !"}
                     setState={setIsExist}
+                    className="top-20"
                   />
                 )}
               </div>

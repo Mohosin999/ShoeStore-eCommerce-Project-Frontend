@@ -58,7 +58,7 @@ const Navbar = () => {
     Cookies.remove("username");
     Cookies.remove("jwt");
 
-    router.push("/register");
+    router.push("/login");
   };
 
   return (
