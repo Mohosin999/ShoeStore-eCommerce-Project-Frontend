@@ -1,9 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import Link from "next/link";
-// import Router from "next/router";
-
+import { useRouter, usePathname } from "next/navigation";
 // Icons
 import { FcShop } from "react-icons/fc";
 import { BsCartFill } from "react-icons/bs";
@@ -11,15 +9,28 @@ import { MdFavorite } from "react-icons/md";
 // Components
 import CategoryMenu from "../category-menu";
 import NavLink from "../../UI/nav-link";
-import { useRouter } from "next/navigation";
+import { getUserFromLocalCookie, unsetToken } from "@/app/lib/auth";
 
+/**
+ * Navbar component.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const Navbar = () => {
   const [isFixed, setIsFixed] = useState(true);
   const [showCatMenu, setShowCatMenu] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
+  const pathname = usePathname();
 
-  // Listen to scroll events and update 'isFixed' accordingly.
+  useEffect(() => {
+    const user = getUserFromLocalCookie();
+    setIsLoggedIn(!!user);
+  }, [pathname]);
+
+  // This hook is for hidden and showing the navbar at the time of scrolling.
   useEffect(() => {
     // Initialize 'prevScrollY' to keep track of previous scroll position.
     let prevScrollY = 0;
@@ -49,16 +60,11 @@ const Navbar = () => {
     };
   }, []);
 
+  // Logout function
   const handleLogout = () => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    Cookies.remove("id");
-    Cookies.remove("username");
-    Cookies.remove("jwt");
-
-    router.push("/login");
+    // unsetToken for removing data from Cookies.
+    unsetToken();
+    setIsLoggedIn(false); // Update login status when user logs out
   };
 
   return (
@@ -69,7 +75,7 @@ const Navbar = () => {
         } text-gray-600 body-font fixed w-full bg-gray-700 z-50`}
       >
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          {/* Left section of the header - start */}
+          {/* Left section of the navbar - start */}
           <Link
             href="/"
             class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
@@ -80,9 +86,9 @@ const Navbar = () => {
             </span>{" "}
             {/* Company name */}
           </Link>
-          {/* Left section of the header - end */}
+          {/* Left section of the navbar - end */}
 
-          {/* Middle section of the header - start */}
+          {/* Middle section of the navbar - start */}
           <div class="md:ml-auto md:mr-auto flex flex-wrap items-center justify-center text-base">
             <NavLink href="/" label="Home" />
             <NavLink href="/products" label="Products" />
@@ -95,14 +101,26 @@ const Navbar = () => {
               subMenuComponent={<CategoryMenu />}
             />
           </div>
-          {/* Middle section of the header - end */}
+          {/* Middle section of the navbar - end */}
 
-          {/* Right section of the header - start */}
-          <NavLink href="/login" label="Login" />
-          <button type="button" onClick={handleLogout}>
-            Logout
-          </button>
-          <NavLink href="/register" label="Register" />
+          {/* Right section of the navbar - start */}
+          {isLoggedIn ? (
+            // Display "Dashboard" and "Logout" links when logged in
+            <>
+              <NavLink href="/dashboard" label="Dashboard" />
+              <NavLink
+                href="/login"
+                label="Logout Please"
+                onClick={handleLogout}
+              />
+            </>
+          ) : (
+            // Display "Login" and "Register" links when not logged in
+            <>
+              <NavLink href="/login" label="Login" />
+              <NavLink href="/register" label="Register" />
+            </>
+          )}
           {/* Favorite & Cart Icons */}
           <Link
             href="/favorite"
@@ -116,7 +134,7 @@ const Navbar = () => {
           >
             <BsCartFill size={22} />
           </Link>
-          {/* Right section of the header - end */}
+          {/* Right section of the navbar - end */}
         </div>
       </nav>
     </div>

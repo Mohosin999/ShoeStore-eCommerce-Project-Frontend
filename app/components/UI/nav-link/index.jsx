@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 const NavLink = ({
   href,
   label,
+  onClick,
   onMouseEnter,
   onMouseLeave,
   showSubMenu,
@@ -17,6 +18,7 @@ const NavLink = ({
         class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full relative"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        onClick={onClick}
       >
         {label}
         {showSubMenu && (
@@ -30,6 +32,7 @@ const NavLink = ({
 NavLink.propTypes = {
   href: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   showSubMenu: PropTypes.bool,

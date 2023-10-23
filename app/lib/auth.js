@@ -1,6 +1,6 @@
-import Router from "next/router";
 import Cookies from "js-cookie";
 
+// Function for set token.
 export const setToken = (data) => {
   if (typeof window === "undefined") {
     return;
@@ -9,12 +9,9 @@ export const setToken = (data) => {
   Cookies.set("id", data.user.id);
   Cookies.set("username", data.user.username);
   Cookies.set("jwt", data.jwt);
-
-  if (Cookies.get("username")) {
-    Router.reload("/");
-  }
 };
 
+// Function for unset token.
 export const unsetToken = () => {
   if (typeof window === "undefined") {
     return;
@@ -23,57 +20,9 @@ export const unsetToken = () => {
   Cookies.remove("id");
   Cookies.remove("username");
   Cookies.remove("jwt");
-
-  Router.reload("/");
 };
 
 // Get data from local cookie - start
 export const getUserFromLocalCookie = () => {
   return Cookies.get("username");
 };
-
-export const getIdFromLocalCookie = () => {
-  return Cookies.get("id");
-};
-
-export const getTokenFromLocalCookie = () => {
-  return Cookies.get("jwt");
-};
-// Get data from local cookie - end
-
-// Get data from server cookie - start
-export const getTokenFromServerCookie = (req) => {
-  if (!req.headers.cookie || "") {
-    return undefined;
-  }
-
-  const jwtCookie = req.headers.cookie
-    .split(";")
-    .find((c) => c.trim().startsWith("jwt="));
-
-  if (!jwtCookie) {
-    return undefined;
-  }
-
-  const jwt = jwtCookie.split("=")[1];
-  return jwt;
-};
-
-export const getIdFromServerCookie = (req) => {
-  if (!req.headers.cookie || "") {
-    return undefined;
-  }
-
-  const idCookie = req.headers.cookie
-    .split(";")
-    .find((c) => c.trim().startsWith("id="));
-
-  if (!idCookie) {
-    return undefined;
-  }
-
-  const id = idCookie.split("=")[1];
-  return id;
-};
-
-// Get data from server cookie - end

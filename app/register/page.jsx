@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 // Components
@@ -9,7 +8,14 @@ import TostifyMessage from "../components/tostify-message";
 import Button from "../components/UI/button";
 import Wrapper from "../components/wrapper";
 import Input from "../components/UI/input";
+import { setToken } from "../lib/auth";
 
+/**
+ * Register component.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -42,10 +48,9 @@ const Register = () => {
       const registerResponse = await register.data;
 
       if (registerResponse) {
-        Cookies.set("id", registerResponse.user.id);
-        Cookies.set("username", registerResponse.user.username);
-        Cookies.set("jwt", registerResponse.jwt);
-
+        // setToken for saving data in Cookies.
+        setToken(registerResponse);
+        // After saving data in Cookies, direct push in dashboard.
         router.push("/dashboard");
       }
     } catch (error) {
@@ -128,7 +133,7 @@ const Register = () => {
               <TostifyMessage
                 message={error}
                 setState={setError}
-                className="top-80 -left-[26rem]"
+                className="top-80"
               />
             )}
           </div>

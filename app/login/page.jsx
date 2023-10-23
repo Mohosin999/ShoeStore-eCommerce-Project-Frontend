@@ -2,14 +2,21 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
-import Wrapper from "../components/wrapper";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+// Components
+import Wrapper from "../components/wrapper";
 import Input from "../components/UI/input";
 import Button from "../components/UI/button";
 import TostifyMessage from "../components/tostify-message";
+import { setToken } from "../lib/auth";
 
+/**
+ * Login component.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +25,7 @@ const Login = () => {
   // Router
   const router = useRouter();
 
-  // Handle register function for handling register activities
+  // Handle login function for handling login activities
   const handleLogin = async () => {
     try {
       const loginInfo = {
@@ -38,13 +45,11 @@ const Login = () => {
       );
 
       const loginResponse = await login.data;
-      console.log(loginResponse);
 
       if (loginResponse) {
-        Cookies.set("id", loginResponse.user.id);
-        Cookies.set("username", loginResponse.user.username);
-        Cookies.set("jwt", loginResponse.jwt);
-
+        // setToken for saving data in Cookies.
+        setToken(loginResponse);
+        // After saving data in Cookies, direct push in dashboard.
         router.push("/dashboard");
       }
     } catch (error) {
@@ -104,7 +109,7 @@ const Login = () => {
                   If not have an account?
                   <Link
                     href="/register"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    className="font-medium text-primary-600 hover:underline"
                   >
                     Sign Up
                   </Link>
@@ -117,7 +122,7 @@ const Login = () => {
               <TostifyMessage
                 message={error}
                 setState={setError}
-                className="top-80 -left-[26rem]"
+                className="top-80 -left-96"
               />
             )}
           </div>
