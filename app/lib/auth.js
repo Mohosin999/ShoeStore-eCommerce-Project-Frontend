@@ -22,7 +22,11 @@ export const unsetToken = () => {
   Cookies.remove("jwt");
 };
 
-// Get data from local cookie - start
+// Get data from local cookie
 export const getUserFromLocalCookie = () => {
   return Cookies.get("username");
+};
+
+export const getJwtFromLocalCookie = () => {
+  return Cookies.get("jwt");
 };

@@ -1,14 +1,13 @@
-// pages/login.js
 "use client";
 import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 // Components
 import Wrapper from "../components/wrapper";
 import Input from "../components/UI/input";
 import Button from "../components/UI/button";
-import TostifyMessage from "../components/tostify-message";
 import { setToken } from "../lib/auth";
 
 /**
@@ -20,7 +19,6 @@ import { setToken } from "../lib/auth";
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
   // Router
   const router = useRouter();
@@ -47,14 +45,24 @@ const Login = () => {
       const loginResponse = await login.data;
 
       if (loginResponse) {
+        toast.error("Login Successfull!", {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: "success",
+          position: "bottom-left",
+        });
         // setToken for saving data in Cookies.
         setToken(loginResponse);
         // After saving data in Cookies, direct push in dashboard.
         router.push("/dashboard");
       }
     } catch (error) {
-      // alert(error.message);
-      setError(error.response.data.error.message);
+      toast.error(error?.response?.data?.error?.message, {
+        hideProgressBar: true,
+        autoClose: 3000,
+        type: "error",
+        position: "bottom-left",
+      });
     }
   };
 
@@ -116,15 +124,6 @@ const Login = () => {
                 </p>
               </form>
             </div>
-
-            {/* If error occured, show the toast message. */}
-            {error && (
-              <TostifyMessage
-                message={error}
-                setState={setError}
-                className="top-80 -left-96"
-              />
-            )}
           </div>
         </div>
       </div>

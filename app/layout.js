@@ -1,6 +1,8 @@
 import "./globals.css";
 import { Roboto } from "next/font/google";
-
+// React toastify
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 // Components
 import Navbar from "./components/full-header-area/navbar";
 import Footer from "./components/Footer";
@@ -21,6 +23,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           {children}
           <Footer />
+          <ToastContainer />
         </EasypeasyProvider>
       </body>
     </html>

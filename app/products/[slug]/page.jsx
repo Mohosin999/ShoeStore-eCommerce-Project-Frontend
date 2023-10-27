@@ -18,7 +18,6 @@ import Button from "@/app/components/UI/button";
 import DataSlider from "@/app/components/data-slider";
 
 import { useStoreActions, useStoreState } from "easy-peasy";
-import TostifyMessage from "@/app/components/tostify-message";
 
 /**
  * Single product page component.
@@ -175,20 +174,16 @@ const ProductPage = ({ params }) => {
 
                 {/* After clicking addToCart button, show success popup message */}
                 {showSuccessPopup && (
-                  <TostifyMessage
-                    message={"Product added successfully !"}
-                    className="!bg-green-600 top-20"
-                    setState={setShowSuccessPopup}
-                  />
+                  <div>
+                    <h2>Hello</h2>
+                  </div>
                 )}
 
                 {/* If product already added, show the following popup */}
                 {isExist && (
-                  <TostifyMessage
-                    message={"The product exist in the cart !"}
-                    setState={setIsExist}
-                    className="top-20"
-                  />
+                  <div>
+                    <h2>Hello</h2>
+                  </div>
                 )}
               </div>
             </>

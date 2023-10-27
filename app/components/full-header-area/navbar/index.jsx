@@ -9,7 +9,7 @@ import { MdFavorite } from "react-icons/md";
 // Components
 import CategoryMenu from "../category-menu";
 import NavLink from "../../UI/nav-link";
-import { getUserFromLocalCookie, unsetToken } from "@/app/lib/auth";
+import { getJwtFromLocalCookie, unsetToken } from "@/app/lib/auth";
 
 /**
  * Navbar component.
@@ -23,12 +23,23 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
+  // Current pathname
   const pathname = usePathname();
 
+  // Hook for set "isLoggedIn" state's value.
   useEffect(() => {
-    const user = getUserFromLocalCookie();
-    setIsLoggedIn(!!user);
+    if (pathname === "/dashboard") {
+      const token = getJwtFromLocalCookie();
+      setIsLoggedIn(!!token);
+    }
   }, [pathname]);
+
+  // Logout function
+  const handleLogout = () => {
+    unsetToken(); // unsetToken for removing data from Cookies.
+    setIsLoggedIn(false); // Update login status when user logs out
+    router.push("/login");
+  };
 
   // This hook is for hidden and showing the navbar at the time of scrolling.
   useEffect(() => {
@@ -59,13 +70,6 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  // Logout function
-  const handleLogout = () => {
-    // unsetToken for removing data from Cookies.
-    unsetToken();
-    setIsLoggedIn(false); // Update login status when user logs out
-  };
 
   return (
     <div>
@@ -108,11 +112,7 @@ const Navbar = () => {
             // Display "Dashboard" and "Logout" links when logged in
             <>
               <NavLink href="/dashboard" label="Dashboard" />
-              <NavLink
-                href="/login"
-                label="Logout Please"
-                onClick={handleLogout}
-              />
+              <NavLink href="/login" label="Logout" onClick={handleLogout} />
             </>
           ) : (
             // Display "Login" and "Register" links when not logged in
@@ -121,6 +121,7 @@ const Navbar = () => {
               <NavLink href="/register" label="Register" />
             </>
           )}
+
           {/* Favorite & Cart Icons */}
           <Link
             href="/favorite"
