@@ -199,6 +199,7 @@ const CartPage = () => {
                 </span>
               </div>
 
+              {/* Checkout button */}
               <ButtonLink
                 href={token ? "/checkout" : "/login"}
                 label="Checkout"
