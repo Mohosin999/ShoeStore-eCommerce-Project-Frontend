@@ -8,6 +8,7 @@ export const setToken = (data) => {
 
   Cookies.set("id", data.user.id);
   Cookies.set("username", data.user.username);
+  Cookies.set("email", data.user.email);
   Cookies.set("jwt", data.jwt);
 };
 
@@ -25,6 +26,10 @@ export const unsetToken = () => {
 // Get data from local cookie
 export const getUserFromLocalCookie = () => {
   return Cookies.get("username");
+};
+
+export const getEmailFromLocalCookie = () => {
+  return Cookies.get("email");
 };
 
 export const getJwtFromLocalCookie = () => {

@@ -1,24 +1,36 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import axios from "axios";
-import { useStoreState } from "easy-peasy";
-import { getUserFromLocalCookie } from "../lib/auth";
+import { useRouter } from "next/navigation";
+import { useStoreActions, useStoreState } from "easy-peasy";
+import { getEmailFromLocalCookie, getUserFromLocalCookie } from "../lib/auth";
 import Wrapper from "../components/wrapper";
-import Image from "next/image";
 
 const CheckOut = () => {
-  // const [username, setUsername] = useState("");
-  // const [email, setEmail] = useState("");
   const [data, setData] = useState({
     full_name: null,
     email: null,
     upazila: null,
-    zila: "",
+    zila: null,
     zip_code: null,
+    division: null,
     country: null,
   });
 
-  console.log(data.country);
+  const router = useRouter();
+
+  // Get items and action from  store (easy-peasy).
+  const { items } = useStoreState((state) => state.cartPortion);
+  const { clearAllCart } = useStoreActions((actions) => actions.cartPortion);
+
+  // Get user and email from local cookies.
+  const username = getUserFromLocalCookie();
+  const email = getEmailFromLocalCookie();
+
+  // Define the calculateGrandTotal function, but don't call it here.
+  const grandTotal = useMemo(() => {
+    return items.reduce((total, val) => total + val.price, 0);
+  }, [items]);
 
   // Handle register function for handling register activities
   const handleCheckout = async () => {
@@ -26,11 +38,15 @@ const CheckOut = () => {
       const checkoutInfo = {
         data: {
           full_name: data.full_name,
-          email: data.email,
+          username: username,
+          email: email,
           upazila: data.upazila,
           zila: data.zila,
           zip_code: data.zip_code,
+          division: data.division,
           country: data.country,
+          product_quantity: items.length,
+          grand_total: grandTotal,
         },
       };
 
@@ -39,6 +55,7 @@ const CheckOut = () => {
         checkoutInfo,
         {
           headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
             Accept: "application/json",
             "Content-Type": "application/json",
           },
@@ -46,7 +63,16 @@ const CheckOut = () => {
       );
 
       const checkoutResponse = await checkout.data;
-      console.log("checkoutResponse", checkoutResponse);
+
+      /**
+       * If order created -
+       * Clear all cart from cart page and
+       * Go to products page.
+       */
+      if (checkoutResponse) {
+        clearAllCart();
+        router.push("/products");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -54,9 +80,9 @@ const CheckOut = () => {
 
   return (
     <Wrapper>
-      <section className="mt-14 body-font relative">
+      <section className="mt-12 body-font relative">
         <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-col text-center w-full mb-8">
+          <div className="flex flex-col text-center w-full mb-6">
             <h1 className="text-4xl font-medium title-font mb-4 text-gray-200">
               Checkout Page
             </h1>
@@ -79,29 +105,6 @@ const CheckOut = () => {
                     name="full_name"
                     placeholder="Example Name"
                     value={data.full_name}
-                    onChange={(e) =>
-                      setData({ ...data, [e.target.name]: e.target.value })
-                    }
-                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  />
-                </div>
-              </div>
-
-              {/* Email */}
-              <div className="p-2 w-1/2">
-                <div className="relative">
-                  <label
-                    htmlFor="email"
-                    className="leading-7 text-base text-gray-300"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="example@test.com"
-                    value={data.email}
                     onChange={(e) =>
                       setData({ ...data, [e.target.name]: e.target.value })
                     }
@@ -179,6 +182,33 @@ const CheckOut = () => {
                 </div>
               </div>
 
+              {/* Division */}
+              <div className="p-2 w-1/2">
+                <div className="relative">
+                  <label
+                    htmlFor="division"
+                    className="leading-7 text-base text-gray-300"
+                  >
+                    Division
+                  </label>
+                  <select
+                    id="division"
+                    name="division"
+                    value={data.division}
+                    onChange={(e) =>
+                      setData({ ...data, [e.target.name]: e.target.value })
+                    }
+                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-[0.6rem] px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  >
+                    <option value="">Select</option>
+                    <option value="Bangladesh">Bangladesh</option>
+                    <option value="India">India</option>
+                    <option value="Pakistan">Pakistan</option>
+                    {/* Add more country options as needed */}
+                  </select>
+                </div>
+              </div>
+
               {/* Country */}
               <div className="p-2 w-1/2">
                 <div className="relative">
@@ -240,38 +270,3 @@ const CheckOut = () => {
 };
 
 export default CheckOut;
-
-{
-  /* <section className="w-1/3 text-gray-100 mt-32">
-<h2>Customer Username: {customerName}</h2>
-<p>Customer has ordered {items.length} products.</p>
-
-{/* Product image and title - start */
-}
-{
-  /* <div className="grid grid-cols-1 gap-4 mt-4">
-  {items.map((item) => (
-    <div key={item.id} className="bg-gray-800 rounded-lg">
-      {/* <div className="w-16 h-16 mr-4"> */
-}
-//   <div className="py-4 px-4 flex items-center justify-start">
-//     <Image
-//       width={200}
-//       height={200}
-//       src={item?.attributes?.thumbnail?.data?.attributes?.url}
-//       alt="product-image"
-//       className="w-16 h-auto pr-4"
-//     />
-//     {item.attributes.name}
-//   </div>
-// </div>
-// ))}
-// </div>
-{
-  /* Product image and title - start */
-}
-
-{
-  /* <p className="mt-4">Total Price - ${grandTotal.toFixed(2)}</p> */
-}
-// </section>

@@ -38,6 +38,7 @@ const Register = () => {
         registerInfo,
         {
           headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
             Accept: "application/json",
             "Content-Type": "application/json",
           },
