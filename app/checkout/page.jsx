@@ -71,7 +71,7 @@ const CheckOut = () => {
        */
       if (checkoutResponse) {
         clearAllCart();
-        router.push("/products");
+        router.push("/success");
       }
     } catch (error) {
       console.log(error);
