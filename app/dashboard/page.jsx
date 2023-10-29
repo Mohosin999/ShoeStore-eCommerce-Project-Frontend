@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Wrapper from "../components/wrapper";
 import { getEmailFromLocalCookie, getUserFromLocalCookie } from "../lib/auth";
+import Button from "../components/UI/button";
 
 const CheckOut = () => {
   const [userDetails, setUserDetails] = useState({
@@ -13,11 +14,10 @@ const CheckOut = () => {
     user_status: null,
     userId: null,
   });
-  const [editUserInfo, setEditUserInfo] = useState(false);
+  const [userOrderInfo, setUserOrderInfo] = useState(null);
 
   const user = getUserFromLocalCookie();
   const emailFromCookies = getEmailFromLocalCookie();
-  // console.log("user data -> ", userData?.data[0]?.attributes?.email);
   const router = useRouter();
 
   // Hook for get user.
@@ -86,29 +86,30 @@ const CheckOut = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const getOrderInfo = async () => {
-  //     try {
-  //       const user = await axios.get("http://127.0.0.1:1337/api/orders", {
-  //         headers: {
-  //           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
-  //           Accept: "application/json",
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
+  // Hook for get user's order and it's information.
+  useEffect(() => {
+    const getOrderInfo = async () => {
+      try {
+        const user = await axios.get("http://127.0.0.1:1337/api/orders", {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
 
-  //       const userInfo = await user.data;
+        const orderInfo = await user.data;
 
-  //       if (userInfo) {
-  //         setUserOrderInfo(userInfo);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+        if (orderInfo) {
+          setUserOrderInfo(orderInfo);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  //   getOrderInfo();
-  // }, []);
+    getOrderInfo();
+  }, []);
 
   return (
     <Wrapper>
@@ -117,7 +118,7 @@ const CheckOut = () => {
           Dashboard
         </h2>
 
-        <div className="flex items-center justify-start mt-6">
+        <div className="flex">
           <section className="w-1/2">
             <h2 className="text-2xl text-center font-medium text-green-600">
               Profile Information
@@ -125,7 +126,7 @@ const CheckOut = () => {
             <div>
               {/* User name */}
               <div className="flex flex-col mt-3">
-                <label className="text-base text-gray-200 mb-1">
+                <label className="text-lg text-gray-200 mb-1">
                   You can change your name.
                 </label>
                 <input
@@ -144,7 +145,7 @@ const CheckOut = () => {
 
               {/* User email */}
               <div className="flex flex-col mt-3">
-                <label className="text-base text-gray-200 mb-1">
+                <label className="text-lg text-gray-200 mb-1">
                   You can change your email.
                 </label>
                 <input
@@ -163,13 +164,11 @@ const CheckOut = () => {
 
               {/* User about */}
               <div className="flex flex-col mt-3">
-                <label className="text-base text-gray-200 mb-1">
+                <label className="text-lg text-gray-200 mb-1">
                   You can change your about.
                 </label>
                 <textarea
                   name="about"
-                  cols="30"
-                  rows="10"
                   value={userDetails.about}
                   onChange={(e) =>
                     setUserDetails({
@@ -177,10 +176,15 @@ const CheckOut = () => {
                       [e.target.name]: e.target.value,
                     })
                   }
+                  className="resize-none w-full h-48 py-2 px-4"
                 ></textarea>
               </div>
 
-              <button onClick={handleUserUpdate}>Save Changes</button>
+              <Button
+                onClick={handleUserUpdate}
+                label="Save Changes"
+                className="mt-5"
+              />
             </div>
           </section>
 
@@ -189,13 +193,34 @@ const CheckOut = () => {
               Other Details
             </h2>
 
-            {/* {userData?.data?.map((user) => (
-              <div key={user.id}>
-                {user.attributes.email === emailFromCookies && (
-                  <h3>Grand Total: {user.attributes.grand_total}</h3>
-                )}
-              </div>
-            ))} */}
+            <div className="text-lg text-gray-200 text-center">
+              <p className="mb-2">
+                You ordered for{" "}
+                <span className="text-2xl text-green-600 mx-2">
+                  {
+                    userOrderInfo?.data?.filter(
+                      (user) => user.attributes.email === emailFromCookies
+                    ).length
+                  }
+                </span>{" "}
+                times.
+              </p>
+
+              <p>
+                You bought{" "}
+                <span className="text-2xl text-green-600 mx-2">
+                  {userOrderInfo?.data
+                    ?.filter(
+                      (user) => user.attributes.email === emailFromCookies
+                    )
+                    .reduce(
+                      (total, user) => total + user.attributes.grand_total,
+                      0
+                    )}
+                </span>{" "}
+                taka's products.
+              </p>
+            </div>
           </section>
         </div>
       </div>
