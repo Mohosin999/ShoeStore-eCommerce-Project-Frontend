@@ -2,12 +2,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import ButtonLink from "../UI/button-link";
 
 /**
  * A reusable component to display product information and an image.
  *
  * @param {Object} item - Gives your expected item object.
+ * @param {Function} onRemove - It's a function to remove the item from wishlist.
  * @returns {JSX.Element} - Returns a component to display product card with information.
  */
 const ProductCard = ({ item, onRemove }) => {
@@ -30,44 +32,56 @@ const ProductCard = ({ item, onRemove }) => {
       />
 
       {/* Product details (name, price) - start */}
-      <div class="bg-gray-800 p-4 text-center">
-        <h2 class="text-xl text-gray-200 font-semibold mb-2">
+      <div class="bg-gray-800 p-4">
+        <h2 class="text-xl text-center text-gray-200 font-semibold mb-2">
           {item.attributes.name}
         </h2>
-        <p class="text-lg text-red-400">
-          Original Price:{" "}
-          <span class="font-bold pl-3">${item.attributes.original_price}</span>
-        </p>
-        <p class="text-lg text-green-500">
-          Discounted Price:{" "}
-          <span class="font-bold pl-3">
-            ${item.attributes.discounted_price}
-          </span>
-        </p>
-      </div>
-      {/* Product details (name, price) - start */}
-
-      {/* If the product is hovered, buy_now button will show - start */}
-      {hoveredProduct === item.id && (
-        <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center backdrop-blur-sm">
-          <div class="text-center">
+        <div className="flex items-center">
+          <div>
+            {/* Current price */}
+            <p class="text-base text-green-500">
+              Price:{" "}
+              <span class="font-bold pl-3">
+                ${item.attributes.discounted_price}
+              </span>
+            </p>
+            {/* Original price */}
+            <p class="text-base text-red-400 line-through">
+              Original Price:{" "}
+              <span class="font-bold pl-3">
+                ${item.attributes.original_price}
+              </span>
+            </p>
+          </div>
+          <div className="ml-auto">
             <ButtonLink
               href={`/products/${item.attributes.slug}`}
               label="Buy Now"
               className="bg-orange-400 hover:bg-orange-500"
             />
             {/* If onRemove function exist, then this button will be shown. */}
-            {onRemove && <button onClick={onRemove}>Remove</button>}
+            {onRemove && (
+              // <button onClick={onRemove} className="absolute top-0 right-0">
+              //   Remove
+              // </button>
+              <RiDeleteBin6Line
+                size={24}
+                title="Remove from wishlist !"
+                onClick={onRemove}
+                className="absolute top-3 right-3 cursor-pointer hover:scale-105 active:scale-95"
+              />
+            )}
           </div>
         </div>
-      )}
-      {/* If the product is hovered, buy_now button will show - end */}
+      </div>
+      {/* Product details (name, price) - start */}
     </div>
   );
 };
 
 ProductCard.propTypes = {
   item: PropTypes.object.isRequired,
+  onRemove: PropTypes.func,
 };
 
 export default ProductCard;

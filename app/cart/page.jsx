@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import Wrapper from "../components/wrapper";
-import emptyBox from "../../public/emptyBox.jpg";
 import ButtonLink from "../components/UI/button-link";
 import { getJwtFromLocalCookie } from "../lib/auth";
+import emptyBox from "../../public/emptyBox.jpg";
 
 const CartPage = () => {
   const { items } = useStoreState((state) => state.cartPortion);
@@ -65,7 +65,7 @@ const CartPage = () => {
 
   return (
     <Wrapper>
-      <div className="relative mt-32 h-screen text-gray-200 text-center">
+      <div className="relative mt-32 min-h-screen text-center">
         {items.length > 0 && (
           <>
             <h1 className=" text-4xl font-bold mb-12">Shopping Cart</h1>
@@ -212,7 +212,9 @@ const CartPage = () => {
         {/* This is empty screen */}
         {items.length < 1 && (
           <div className="flex flex-col items-center justify-center my-16">
-            <h1 className="text-4xl font-bold">Empty Product</h1>
+            <h1 className="text-4xl text-gray-100 font-bold">
+              Empty Cartlist 😞
+            </h1>
             <Image
               src={emptyBox}
               alt="empty-box"
