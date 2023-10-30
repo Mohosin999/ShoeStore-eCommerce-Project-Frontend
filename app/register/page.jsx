@@ -48,12 +48,6 @@ const Register = () => {
       const registerResponse = await register.data;
 
       if (registerResponse) {
-        toast.error("Registration Completed", {
-          hideProgressBar: true,
-          autoClose: 2000,
-          type: "success",
-          position: "bottom-left",
-        });
         // setToken for saving data in Cookies.
         setToken(registerResponse);
         // After saving data in Cookies, direct push in dashboard.
@@ -63,7 +57,6 @@ const Register = () => {
       toast.error(error?.response?.data?.error?.message, {
         hideProgressBar: true,
         autoClose: 3000,
-        type: "error",
         position: "bottom-left",
       });
     }

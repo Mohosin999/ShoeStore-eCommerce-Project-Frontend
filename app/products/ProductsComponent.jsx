@@ -186,7 +186,7 @@ const ProductList = () => {
 
         {/* Right side */}
         <div class="w-2/3">
-          <div class="grid grid-cols-2 gap-x-5 gap-y-10">
+          <div class="grid grid-cols-3 gap-x-5 gap-y-10">
             {products?.data?.map((item) => (
               <ProductCard key={item.id} item={item} />
             ))}

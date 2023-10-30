@@ -10,7 +10,7 @@ import ButtonLink from "../UI/button-link";
  * @param {Object} item - Gives your expected item object.
  * @returns {JSX.Element} - Returns a component to display product card with information.
  */
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item, onRemove }) => {
   // State to track whether the product is being hovered.
   const [hoveredProduct, setHoveredProduct] = useState(null);
 
@@ -56,6 +56,8 @@ const ProductCard = ({ item }) => {
               label="Buy Now"
               className="bg-orange-400 hover:bg-orange-500"
             />
+            {/* If onRemove function exist, then this button will be shown. */}
+            {onRemove && <button onClick={onRemove}>Remove</button>}
           </div>
         </div>
       )}

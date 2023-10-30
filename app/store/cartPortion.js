@@ -3,12 +3,14 @@ import { action, persist } from "easy-peasy";
 
 const cartPortion = persist({
   items: [],
+
+  // Action to add item inside the cart.
   addToCart: action((state, payload) => {
     // Check if the item is already exist.
     const existingItem = state.items.find((item) => item.id === payload.id);
 
     /**
-     * If item exists, update the quantity and price.
+     * If item exists, return (no need to do anything).
      * Otherwise set it inside the items.
      */
     if (existingItem) {
@@ -31,6 +33,8 @@ const cartPortion = persist({
       state.items.push(newItem);
     }
   }),
+
+  // Action to update the item.
   updateCart: action((state, payload) => {
     // Find the item that you want to update in the cart.
     const itemToUpdate = state.items.find((item) => item.id === payload.id);
@@ -45,9 +49,13 @@ const cartPortion = persist({
         : itemToUpdate.attributes.original_price * itemToUpdate.quantity;
     }
   }),
+
+  // Action to remove item from the cart.
   removeCart: action((state, payload) => {
     state.items = state.items.filter((item) => item.id !== payload.id);
   }),
+
+  // Action to clear all items inside the cart.
   clearAllCart: action((state, payload) => {
     state.items = []; // Set the items array to an empty array to clear the cart.
   }),

@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import { useStoreState } from "easy-peasy";
 // Icons
 import { FcShop } from "react-icons/fc";
-import { BsCartFill } from "react-icons/bs";
-import { MdFavorite } from "react-icons/md";
+import { BsCart } from "react-icons/bs";
+import { IoMdHeartEmpty } from "react-icons/io";
 // Components
 import CategoryMenu from "../category-menu";
 import NavLink from "../../UI/nav-link";
@@ -21,6 +22,10 @@ const Navbar = () => {
   const [isFixed, setIsFixed] = useState(true);
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Items from store.
+  const { items } = useStoreState((state) => state.cartPortion);
+  const { wishlistItems } = useStoreState((state) => state.wishlistPortion);
 
   const router = useRouter();
   // Current pathname
@@ -74,18 +79,18 @@ const Navbar = () => {
   return (
     <div>
       <nav
-        class={`${
+        className={`${
           isFixed ? "top-0" : "top-[-100px]"
         } text-gray-600 body-font fixed w-full bg-gray-700 z-50`}
       >
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           {/* Left section of the navbar - start */}
           <Link
             href="/"
-            class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+            className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
           >
             <FcShop size={32} /> {/* Shop icon */}
-            <span class="text-gray-300 font-bold text-green-500 ml-3 text-xl hover:scale-105 duration-300">
+            <span className="text-gray-300 font-bold text-green-500 ml-3 text-xl hover:scale-105 duration-300">
               ShoeStore
             </span>{" "}
             {/* Company name */}
@@ -93,7 +98,7 @@ const Navbar = () => {
           {/* Left section of the navbar - end */}
 
           {/* Middle section of the navbar - start */}
-          <div class="md:ml-auto md:mr-auto flex flex-wrap items-center justify-center text-base">
+          <div className="md:ml-auto md:mr-auto flex flex-wrap items-center justify-center text-base">
             <NavLink href="/" label="Home" />
             <NavLink href="/products" label="Products" />
             <NavLink
@@ -123,18 +128,35 @@ const Navbar = () => {
           )}
 
           {/* Favorite & Cart Icons */}
-          <Link
-            href="/favorite"
-            class="text-red-200 hover:text-red-300 px-4 py-2"
-          >
-            <MdFavorite size={22} />
+          {/* Wishlist icon start */}
+          <Link href={"/wishlist"}>
+            <div
+              className={`w-8 md:w-12 h-8 md:h-12 rounded-full mr-4 flex justify-center items-center bg-green-600 hover:bg-green-700 cursor-pointer relative`}
+            >
+              <IoMdHeartEmpty className="text-gray-100 text-[19px] md:text-[24px] active:scale-95" />
+              {wishlistItems.length > 0 && (
+                <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-gray-100 text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
+                  {wishlistItems.length}
+                </div>
+              )}
+            </div>
           </Link>
-          <Link
-            href="/cart"
-            class="text-gray-200 hover:text-gray-100 px-4 py-2"
-          >
-            <BsCartFill size={22} />
+          {/* Wishlist icon end */}
+
+          {/* Cart icon start */}
+          <Link href={"/cart"}>
+            <div
+              className={`w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center bg-green-600 hover:bg-green-700 cursor-pointer relative`}
+            >
+              <BsCart className="text-gray-100 text-[15px] md:text-[20px] active:scale-95" />
+              {items.length > 0 && (
+                <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-gray-100 text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
+                  {items.length}
+                </div>
+              )}
+            </div>
           </Link>
+          {/* Cart icon end */}
           {/* Right section of the navbar - end */}
         </div>
       </nav>

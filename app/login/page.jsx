@@ -46,12 +46,6 @@ const Login = () => {
       const loginResponse = await login.data;
 
       if (loginResponse) {
-        toast.error("Login Successfull!", {
-          hideProgressBar: true,
-          autoClose: 2000,
-          type: "success",
-          position: "bottom-left",
-        });
         // setToken for saving data in Cookies.
         setToken(loginResponse);
         // After saving data in Cookies, direct push in dashboard.
@@ -61,7 +55,6 @@ const Login = () => {
       toast.error(error?.response?.data?.error?.message, {
         hideProgressBar: true,
         autoClose: 3000,
-        type: "error",
         position: "bottom-left",
       });
     }

@@ -2,13 +2,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Link from "next/link";
-
+import { useStoreActions, useStoreState } from "easy-peasy";
+import { toast } from "react-toastify";
 // Swiper related styles.
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
 // Components
 import Wrapper from "@/app/components/wrapper";
 import ProductImagesSlider from "@/app/components/product-images-slider";
@@ -16,8 +15,7 @@ import Title from "@/app/components/UI/title";
 import Heading from "@/app/components/UI/heading";
 import Button from "@/app/components/UI/button";
 import DataSlider from "@/app/components/data-slider";
-
-import { useStoreActions, useStoreState } from "easy-peasy";
+import ButtonLink from "@/app/components/UI/button-link";
 
 /**
  * Single product page component.
@@ -27,12 +25,16 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 const ProductPage = ({ params }) => {
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [isExist, setIsExist] = useState(false);
 
-  // Destructure addToCart from the store.
+  // The following action and state for the cart.
   const { addToCart } = useStoreActions((actions) => actions.cartPortion);
   const { items } = useStoreState((state) => state.cartPortion);
+  // The following action and state for the wishlist.
+  const { addToWishlist } = useStoreActions(
+    (actions) => actions.wishlistPortion
+  );
+  const { wishlistItems } = useStoreState((state) => state.wishlistPortion);
+  console.log("wishlist items -> ", wishlistItems);
 
   /**
    * Define a variable and store your desired slug.
@@ -45,35 +47,68 @@ const ProductPage = ({ params }) => {
   const commonUrl = product?.data?.data?.[0]?.attributes;
 
   /**
-   * The following function is for adding product to a cart.
+   * Add to Cart.
    * Here ( product?.data?.data?.[0] ) is a single product where we are located.
    * When the function is called, product will be added to the cart.
    */
   const addToCartFunc = () => {
-    const addedProduct = product?.data?.data?.[0];
+    // Here ( product?.data?.data?.[0] ) is a single product where we are located.
+    const currentProduct = product?.data?.data?.[0];
 
-    // Check if the product with the same ID is already in the cart
-    const isProductInCart = items.some((item) => item.id === addedProduct.id);
+    /**
+     * Check if the product with the same ID is already in the cart.
+     * Here some() method returns boolean.
+     * The following checkup is only for showing the toast message.
+     */
+    const isProductInCart = items.some((item) => item.id === currentProduct.id);
 
     if (isProductInCart) {
-      // If the product is already in the cart, set isExist to true and hide the success popup
-      setIsExist(true);
-      setShowSuccessPopup(false);
-
-      // Automatically hide the success popup after 3 seconds (3000 milliseconds)
-      // setTimeout(() => {
-      //   setIsExist(false);
-      // }, 9000);
+      toast.error("The product is already present on the cart", {
+        hideProgressBar: true,
+        autoClose: 3000,
+        position: "bottom-right",
+      });
     } else {
-      // If the product is not in the cart, add it to the cart, set isExist to false, and show the success popup
-      addToCart(addedProduct);
-      setIsExist(false);
-      setShowSuccessPopup(true);
+      addToCart(currentProduct);
+      toast.success("The product is added successfully!", {
+        hideProgressBar: true,
+        autoClose: 3000,
+        position: "bottom-right",
+      });
+    }
+  };
 
-      // Automatically hide the success popup after 3 seconds (3000 milliseconds)
-      // setTimeout(() => {
-      //   setShowSuccessPopup(false);
-      // }, 9000);
+  /**
+   * Add to Wishlist.
+   * Here ( product?.data?.data?.[0] ) is a single product where we are located.
+   * When the function is called, product will be added to the wishlist.
+   */
+  const addToWishlistFunc = () => {
+    // Here ( product?.data?.data?.[0] ) is a single product where we are located.
+    const currentProduct = product?.data?.data?.[0];
+
+    /**
+     * Check if the product with the same ID is already in the wishlist.
+     * Here some() method returns boolean.
+     * The following checkup is only for showing the toast message.
+     */
+    const isProductInWishlist = wishlistItems.some(
+      (item) => item.id === currentProduct.id
+    );
+
+    if (isProductInWishlist) {
+      toast.error("The product is already present on the wishlist", {
+        hideProgressBar: true,
+        autoClose: 3000,
+        position: "bottom-right",
+      });
+    } else {
+      addToWishlist(currentProduct);
+      toast.success("The product is added successfully!", {
+        hideProgressBar: true,
+        autoClose: 3000,
+        position: "bottom-right",
+      });
     }
   };
 
@@ -169,22 +204,16 @@ const ProductPage = ({ params }) => {
               {/* Buttons */}
               <div className="relative flex items-center mt-10">
                 <Button label="Add to Cart" onClick={addToCartFunc} />
-                <Button label="Add to Wishlist" className="ml-3" />
-                <Button label="Continue Shopping" className="ml-3" />
-
-                {/* After clicking addToCart button, show success popup message */}
-                {showSuccessPopup && (
-                  <div>
-                    <h2>Hello</h2>
-                  </div>
-                )}
-
-                {/* If product already added, show the following popup */}
-                {isExist && (
-                  <div>
-                    <h2>Hello</h2>
-                  </div>
-                )}
+                <Button
+                  label="Add to Wishlist"
+                  onClick={addToWishlistFunc}
+                  className="ml-3"
+                />
+                <ButtonLink
+                  href="/products"
+                  label="Continue Shopping"
+                  className="ml-3"
+                />
               </div>
             </>
           )}
