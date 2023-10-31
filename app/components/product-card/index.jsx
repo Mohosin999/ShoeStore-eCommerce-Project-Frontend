@@ -13,15 +13,8 @@ import ButtonLink from "../UI/button-link";
  * @returns {JSX.Element} - Returns a component to display product card with information.
  */
 const ProductCard = ({ item, onRemove }) => {
-  // State to track whether the product is being hovered.
-  const [hoveredProduct, setHoveredProduct] = useState(null);
-
   return (
-    <div
-      class="w-full rounded overflow-hidden shadow-lg shadow-gray-900 relative border border-gray-700 select-none"
-      onMouseEnter={() => setHoveredProduct(item.id)}
-      onMouseLeave={() => setHoveredProduct(null)}
-    >
+    <div class="w-full rounded overflow-hidden shadow-lg shadow-gray-900 relative border border-gray-700 select-none">
       {/* Product image */}
       <Image
         src={item.attributes.thumbnail.data.attributes.url}

@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useStoreState } from "easy-peasy";
@@ -22,6 +23,7 @@ const Navbar = () => {
   const [isFixed, setIsFixed] = useState(true);
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [categoryData, setCategoryData] = useState(null);
 
   // Items from store.
   const { items } = useStoreState((state) => state.cartPortion);
@@ -38,6 +40,21 @@ const Navbar = () => {
       setIsLoggedIn(!!token);
     }
   }, [pathname]);
+
+  /**
+   * Fetch category data and set it inside state.
+   * So that, we can use it next time from other page.
+   */
+  useEffect(() => {
+    const FetchCategoryData = async () => {
+      const categoriesData = await axios.get(
+        "http://127.0.0.1:1337/api/categories?populate=*"
+      );
+      setCategoryData(categoriesData.data);
+    };
+
+    FetchCategoryData();
+  }, []);
 
   // Logout function
   const handleLogout = () => {
@@ -106,8 +123,13 @@ const Navbar = () => {
               label="Categories"
               onMouseEnter={() => setShowCatMenu(true)}
               onMouseLeave={() => setShowCatMenu(false)}
-              showSubMenu={showCatMenu}
-              subMenuComponent={<CategoryMenu />}
+              showCatMenu={showCatMenu}
+              catMenuComponent={
+                <CategoryMenu
+                  setShowCatMenu={setShowCatMenu}
+                  categoryData={categoryData}
+                />
+              }
             />
           </div>
           {/* Middle section of the navbar - end */}

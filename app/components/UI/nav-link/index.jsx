@@ -8,21 +8,21 @@ const NavLink = ({
   onClick,
   onMouseEnter,
   onMouseLeave,
-  showSubMenu,
-  subMenuComponent,
+  showCatMenu,
+  catMenuComponent,
 }) => {
   return (
     <div>
       <Link
         href={href}
-        class="text-gray-200 hover:bg-green-700 px-4 py-2 rounded-full relative"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         onClick={onClick}
+        className="text-gray-100 hover:bg-gray-800/75 px-4 py-2 relative"
       >
         {label}
-        {showSubMenu && (
-          <div className="absolute top-8 left-0">{subMenuComponent}</div>
+        {showCatMenu && (
+          <div className="absolute top-8 left-0">{catMenuComponent}</div>
         )}
       </Link>
     </div>
