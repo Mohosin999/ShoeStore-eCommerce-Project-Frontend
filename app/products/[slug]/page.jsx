@@ -34,7 +34,6 @@ const ProductPage = ({ params }) => {
     (actions) => actions.wishlistPortion
   );
   const { wishlistItems } = useStoreState((state) => state.wishlistPortion);
-  console.log("wishlist items -> ", wishlistItems);
 
   /**
    * Define a variable and store your desired slug.

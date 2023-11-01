@@ -35,16 +35,16 @@ const ProductCard = ({ item, onRemove }) => {
       {/* Product details (name, price) - start */}
       <div className="bg-gray-800 p-4">
         {/* Product's title */}
-        <h2 className="text-xl text-center text-gray-100 font-semibold mt-6">
+        <h2 className="text-xl text-center text-gray-100 font-semibold mt-3">
           {item.attributes.name}
         </h2>
 
         {/* Product's price and discount. - start */}
-        <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center justify-center mt-2">
           {/* Price */}
-          <p className="text-base text-gray-100">
+          <p className="text-base text-gray-100 mr-6">
             Price:{" "}
-            <span className="text-yellow-300 font-bold pl-3">
+            <span className="text-yellow-300 font-bold pl-2">
               {/* If there is no discounted price, original price will be the Price. */}
               $
               {item.attributes.discounted_price
@@ -56,34 +56,35 @@ const ProductCard = ({ item, onRemove }) => {
           {/* If there is no discounted price, this portion will not be shown. */}
           {/* Original price */}
           {item.attributes.discounted_price ? (
-            <p className="text-base text-blue-500">
-              <span className="text-gray-100">{discountPercentage}%</span> discount 🔥
+            <p className="text-base text-blue-500 ml-6">
+              <span className="text-gray-100">{discountPercentage}%</span>{" "}
+              discount 🔥
             </p>
           ) : (
-            <p className="text-base text-blue-500">No Discount 💔</p>
+            <p className="text-base text-blue-500 ml-6">No Discount 💔</p>
           )}
         </div>
         {/* </div> */}
-
-        {/* Product card buttons - start */}
-        <div className="ml-auto">
-          <ButtonLink
-            href={`/products/${item.attributes.slug}`}
-            label="Buy Now"
-            className="absolute top-[232px] left-[138px] text-sm"
-          />
-          {/* If onRemove function exist, then this button will be shown. */}
-          {onRemove && (
-            <RiDeleteBin6Line
-              size={24}
-              title="Remove from wishlist !"
-              onClick={onRemove}
-              className="absolute top-3 right-3 cursor-pointer hover:scale-105 active:scale-95"
-            />
-          )}
-        </div>
-        {/* Product card buttons - end */}
       </div>
+
+      {/* Product card buttons - start */}
+      <div className="ml-auto">
+        <ButtonLink
+          href={`/products/${item.attributes.slug}`}
+          label="Buy Now"
+          className="absolute top-2 left-2 text-sm"
+        />
+        {/* If onRemove function exist, then this button will be shown. */}
+        {onRemove && (
+          <RiDeleteBin6Line
+            size={24}
+            title="Remove from wishlist !"
+            onClick={onRemove}
+            className="absolute top-3 right-3 cursor-pointer hover:scale-105 active:scale-95"
+          />
+        )}
+      </div>
+      {/* Product card buttons - end */}
       {/* Product details (name, price) - start */}
     </div>
   );
