@@ -11,11 +11,10 @@ const ProductList = () => {
   const [sortOption, setSortOption] = useState("");
   const [filterOption, setFilterOption] = useState({
     name: "",
-    original_price: "",
-    discounted_price: "",
+    price: "",
   });
-
-  console.log(products);
+  console.log("price", filterOption.price);
+  console.log("products", products);
   const itemsPerPage = 9;
 
   useEffect(() => {
@@ -25,10 +24,10 @@ const ProductList = () => {
 
         if (filterOption.name) {
           url += `&filters[name][$containsi]=${filterOption.name}`;
-        } else if (filterOption.original_price) {
-          url += `&filters[original_price][$lte]=${filterOption.original_price}`;
-        } else if (filterOption.discounted_price) {
-          url += `&filters[discounted_price][$lte]=${filterOption.discounted_price}`;
+        } else if (filterOption.price) {
+          url +=
+            `&filters[discounted_price][$lte]=${filterOption.price}` ||
+            `&filters[original_price][$lte]=${filterOption.price}`;
         } else if (sortOption) {
           url += `&sort[0]=name:${sortOption}`;
         }
@@ -42,6 +41,31 @@ const ProductList = () => {
 
     fetchProducts();
   }, [currentPage, sortOption, filterOption]);
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       let url = `http://127.0.0.1:1337/api/products?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}&populate=*`;
+
+  //       if (filterOption.name) {
+  //         url += `&filters[name][$containsi]=${filterOption.name}`;
+  //       } else if (filterOption.original_price) {
+  //         url += `&filters[original_price][$lte]=${filterOption.original_price}`;
+  //       } else if (filterOption.discounted_price) {
+  //         url += `&filters[discounted_price][$lte]=${filterOption.discounted_price}`;
+  //       } else if (sortOption) {
+  //         url += `&sort[0]=name:${sortOption}`;
+  //       }
+
+  //       const response = await axios.get(url);
+  //       setProducts(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching products:", error);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, [currentPage, sortOption, filterOption]);
 
   const totalProducts = products?.meta?.pagination?.total;
   const totalPages = Math.ceil(totalProducts / itemsPerPage);
@@ -67,67 +91,53 @@ const ProductList = () => {
 
   return (
     <Wrapper>
-      <div className="mt-28">
-        {/* Left side */}
-        <div className="w-full bg-gray-600 p-10">
-          <h1>Left Side</h1>
-          <h1 className="text-gray-200 text-lg">Filtering:</h1>
-          {/* Filtering */}
-          <div>
-            <div>
-              <label htmlFor="nameFilter">Filter by Name:</label>
-              <input
-                type="text"
-                id="nameFilter"
-                name="name"
-                value={filterOption.name}
-                onChange={handleFilterChange}
-              />
-              {filterOption.name && (
-                <button onClick={() => clearFilter("name")}>
-                  &#x2716; {/* Unicode for a cross sign */}
-                </button>
-              )}
-            </div>
+      <div className="mt-32">
+        <h1 className="mb-6 text-4xl text-gray-100 text-center font-bold">
+          Welcome to House of Products 🙂
+        </h1>
 
-            <div>
-              <label htmlFor="originalPriceFilter">
-                Filter by Original Price:
-              </label>
-              <input
-                type="text"
-                id="originalPriceFilter"
-                name="original_price"
-                value={filterOption.original_price}
-                onChange={handleFilterChange}
-              />
-              {filterOption.original_price && (
-                <button onClick={() => clearFilter("original_price")}>
-                  &#x2716; {/* Unicode for a cross sign */}
-                </button>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="discountedPriceFilter">
-                Filter by Discounted Price:
-              </label>
-              <input
-                type="text"
-                id="discountedPriceFilter"
-                name="discounted_price"
-                value={filterOption.discounted_price}
-                onChange={handleFilterChange}
-              />
-              {filterOption.discounted_price && (
-                <button onClick={() => clearFilter("discounted_price")}>
-                  &#x2716; {/* Unicode for a cross sign */}
-                </button>
-              )}
-            </div>
-
-            {/* Your component's content */}
+        {/* Searching, filtering, sorting */}
+        <div className="flex items-center justify-between text-gray-100">
+          {/* Search or filter by name. */}
+          <div className="flex flex-col">
+            <label htmlFor="search" className="text-lg mb-1">
+              Search Product
+            </label>
+            <input
+              type="text"
+              id="search"
+              name="name"
+              value={filterOption.name}
+              onChange={handleFilterChange}
+              className="w-[350px] text-gray-900 text-base py-2 px-1 rounded-sm"
+            />
+            {filterOption.name && (
+              <button onClick={() => clearFilter("name")}>
+                &#x2716; {/* Unicode for a cross sign */}
+              </button>
+            )}
           </div>
+
+          {/* Filter by price */}
+          <div className="flex flex-col">
+            <label htmlFor="filterByPrice" className="text-lg mb-1">
+              Filter by Price
+            </label>
+            <input
+              type="text"
+              id="filterByPrice"
+              name="original_price"
+              value={filterOption.original_price}
+              onChange={handleFilterChange}
+              className="w-[350px] text-gray-900 text-base py-2 px-1 rounded-sm"
+            />
+            {filterOption.original_price && (
+              <button onClick={() => clearFilter("original_price")}>
+                &#x2716; {/* Unicode for a cross sign */}
+              </button>
+            )}
+          </div>
+          {/* Your component's content */}
 
           {/* Sorting */}
           <div className="bg-green-400 mt-10">
