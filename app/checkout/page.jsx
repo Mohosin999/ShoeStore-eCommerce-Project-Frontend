@@ -47,6 +47,7 @@ const CheckOut = () => {
           country: data.country,
           product_quantity: items.length,
           grand_total: grandTotal,
+          products: items,
         },
       };
 
@@ -64,12 +65,88 @@ const CheckOut = () => {
 
       const checkoutResponse = await checkout.data;
 
+      //  Access the order info.
+      const userOrder = await axios.get("http://127.0.0.1:1337/api/orders", {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      const orderInfo = await userOrder.data;
+      console.log("order info among from checkout", orderInfo);
+
       /**
        * If order created -
        * Clear all cart from cart page and
        * Go to products page.
        */
+      // if (checkoutResponse) {
+      //   clearAllCart();
+      //   router.push("/success");
+      // }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCheckout2 = async () => {
+    try {
+      const checkoutInfo = {
+        // ... (Your existing code to create the order)
+      };
+
+      // Create the order
+      const checkout = await axios.post(
+        "http://127.0.0.1:1337/api/orders",
+        checkoutInfo,
+        {
+          // ... (Your headers and authentication)
+        }
+      );
+
+      const checkoutResponse = await checkout.data;
+
       if (checkoutResponse) {
+        // Fetch the recently created order (or you can use the order ID from checkoutResponse)
+        const userOrder = await axios.get(
+          `http://127.0.0.1:1337/api/orders/${checkoutResponse.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const orderInfo = await userOrder.data;
+        console.log("order info from checkout", orderInfo);
+
+        // Now, for each product in the order, you can decrease the quantity in Strapi.
+        for (const product of orderInfo.products) {
+          // Assuming your product has a unique identifier like an ID
+          const productId = product.id;
+          const productQuantity = product.quantity; // You may need to adjust this based on your data structure
+
+          // Send a request to update the product quantity in Strapi
+          await axios.put(
+            `http://127.0.0.1:1337/api/products/${productId}`,
+            {
+              quantity: productQuantity - 1, // Decrease the quantity by 1 (you can adjust as needed)
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        }
+
+        // Clear the cart and redirect to the success page
         clearAllCart();
         router.push("/success");
       }

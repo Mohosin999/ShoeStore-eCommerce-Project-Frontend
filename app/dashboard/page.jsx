@@ -90,7 +90,7 @@ const CheckOut = () => {
   useEffect(() => {
     const getOrderInfo = async () => {
       try {
-        const user = await axios.get("http://127.0.0.1:1337/api/orders", {
+        const userOrder = await axios.get("http://127.0.0.1:1337/api/orders", {
           headers: {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
             Accept: "application/json",
@@ -98,7 +98,7 @@ const CheckOut = () => {
           },
         });
 
-        const orderInfo = await user.data;
+        const orderInfo = await userOrder.data;
 
         if (orderInfo) {
           setUserOrderInfo(orderInfo);
