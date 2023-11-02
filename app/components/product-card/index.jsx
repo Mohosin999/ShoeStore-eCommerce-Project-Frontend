@@ -72,7 +72,7 @@ const ProductCard = ({ item, onRemove }) => {
         <ButtonLink
           href={`/products/${item.attributes.slug}`}
           label="Buy Now"
-          className="absolute top-2 left-2 text-sm"
+          className="absolute top-2 left-2 text-sm !px-4 !py-2"
         />
         {/* If onRemove function exist, then this button will be shown. */}
         {onRemove && (

@@ -11,9 +11,9 @@ const ProductList = () => {
   const [sortOption, setSortOption] = useState("");
   const [filterOption, setFilterOption] = useState({
     name: "",
-    price: "",
+    discounted_price: "",
   });
-  console.log("price", filterOption.price);
+  console.log("discounted_price", filterOption.discounted_price);
   console.log("products", products);
   const itemsPerPage = 9;
 
@@ -24,10 +24,8 @@ const ProductList = () => {
 
         if (filterOption.name) {
           url += `&filters[name][$containsi]=${filterOption.name}`;
-        } else if (filterOption.price) {
-          url +=
-            `&filters[discounted_price][$lte]=${filterOption.price}` ||
-            `&filters[original_price][$lte]=${filterOption.price}`;
+        } else if (filterOption.discounted_price) {
+          url += `&filters[discounted_price][$lte]=${filterOption.discounted_price}`;
         } else if (sortOption) {
           url += `&sort[0]=name:${sortOption}`;
         }
@@ -41,31 +39,6 @@ const ProductList = () => {
 
     fetchProducts();
   }, [currentPage, sortOption, filterOption]);
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       let url = `http://127.0.0.1:1337/api/products?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}&populate=*`;
-
-  //       if (filterOption.name) {
-  //         url += `&filters[name][$containsi]=${filterOption.name}`;
-  //       } else if (filterOption.original_price) {
-  //         url += `&filters[original_price][$lte]=${filterOption.original_price}`;
-  //       } else if (filterOption.discounted_price) {
-  //         url += `&filters[discounted_price][$lte]=${filterOption.discounted_price}`;
-  //       } else if (sortOption) {
-  //         url += `&sort[0]=name:${sortOption}`;
-  //       }
-
-  //       const response = await axios.get(url);
-  //       setProducts(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching products:", error);
-  //     }
-  //   };
-
-  //   fetchProducts();
-  // }, [currentPage, sortOption, filterOption]);
 
   const totalProducts = products?.meta?.pagination?.total;
   const totalPages = Math.ceil(totalProducts / itemsPerPage);
@@ -96,12 +69,12 @@ const ProductList = () => {
           Welcome to House of Products 🙂
         </h1>
 
-        {/* Searching, filtering, sorting */}
+        {/* Searching, filtering, sorting - start */}
         <div className="flex items-center justify-between text-gray-100">
           {/* Search or filter by name. */}
           <div className="flex flex-col">
             <label htmlFor="search" className="text-lg mb-1">
-              Search Product
+              Search Product by Name
             </label>
             <input
               type="text"
@@ -109,7 +82,7 @@ const ProductList = () => {
               name="name"
               value={filterOption.name}
               onChange={handleFilterChange}
-              className="w-[350px] text-gray-900 text-base py-2 px-1 rounded-sm"
+              className="w-[22rem] text-gray-900 text-base py-2 px-1 rounded-sm"
             />
             {filterOption.name && (
               <button onClick={() => clearFilter("name")}>
@@ -118,68 +91,51 @@ const ProductList = () => {
             )}
           </div>
 
-          {/* Filter by price */}
+          {/* Filter by discounted price */}
           <div className="flex flex-col">
-            <label htmlFor="filterByPrice" className="text-lg mb-1">
-              Filter by Price
+            <label htmlFor="discounted_price" className="text-lg mb-1">
+              Filter by Discount Price
             </label>
-            <input
-              type="text"
-              id="filterByPrice"
-              name="original_price"
-              value={filterOption.original_price}
+            <select
+              id="discounted_price"
+              name="discounted_price"
+              value={filterOption.discounted_price}
               onChange={handleFilterChange}
-              className="w-[350px] text-gray-900 text-base py-2 px-1 rounded-sm"
-            />
-            {filterOption.original_price && (
-              <button onClick={() => clearFilter("original_price")}>
-                &#x2716; {/* Unicode for a cross sign */}
-              </button>
-            )}
+              className="w-[14rem] text-gray-900 text-base py-2 px-1 rounded-sm"
+            >
+              <option value="">Select Price</option>
+              <option value="12">12</option>
+              <option value="14">14</option>
+              <option value="16">16</option>
+              <option value="18">18</option>
+              <option value="20">20</option>
+              <option value="25">25</option>
+              <option value="30">30</option>
+            </select>
           </div>
-          {/* Your component's content */}
 
           {/* Sorting */}
-          <div className="bg-green-400 mt-10">
-            <label>Sorting:</label>
-            <div>
-              <input
-                type="radio"
-                id="none"
-                name="sortOption"
-                value=""
-                checked={false}
-                onChange={handleSortChange}
-              />
-              <label htmlFor="none">None</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="ascSort"
-                name="sortOption"
-                value="asc"
-                checked={sortOption === "asc"}
-                onChange={handleSortChange}
-              />
-              <label htmlFor="ascSort">Ascending</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="descSort"
-                name="sortOption"
-                value="desc"
-                checked={sortOption === "desc"}
-                onChange={handleSortChange}
-              />
-              <label htmlFor="descSort">Descending</label>
-            </div>
+          <div className="flex flex-col">
+            <label htmlFor="sortOption" className="text-lg mb-1">
+              Sort Products
+            </label>
+            <select
+              id="sortOption"
+              name="sortOption"
+              value={sortOption}
+              onChange={handleSortChange}
+              className="w-[14rem] text-gray-900 text-base py-2 px-1 rounded-sm"
+            >
+              <option value="">None</option>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
           </div>
         </div>
+        {/* Searching, filtering, sorting - start */}
 
-        {/* Right side */}
-        <div className="w-full">
+        {/* Show all products and pagination */}
+        <div className="w-full mt-6">
           <div className="grid grid-cols-3 gap-x-5 gap-y-10">
             {products?.data?.map((item) => (
               <ProductCard key={item.id} item={item} />
