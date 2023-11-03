@@ -54,6 +54,16 @@ const ProductPage = ({ params }) => {
     // Here ( product?.data?.data?.[0] ) is a single product where we are located.
     const currentProduct = product?.data?.data?.[0];
 
+    if (currentProduct?.attributes?.available_product === 0) {
+      toast.error("Product is not available 😞", {
+        hideProgressBar: true,
+        autoClose: 3000,
+        position: "bottom-right",
+      });
+
+      return;
+    }
+
     /**
      * Check if the product with the same ID is already in the cart.
      * Here some() method returns boolean.

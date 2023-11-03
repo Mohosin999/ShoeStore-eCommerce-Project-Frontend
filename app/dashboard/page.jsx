@@ -104,7 +104,6 @@ const CheckOut = () => {
         });
 
         const orderInfo = await userOrder.data;
-        console.log("dashboard ", orderInfo);
 
         if (orderInfo) {
           setUserOrderInfo(orderInfo);

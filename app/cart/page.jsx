@@ -10,12 +10,13 @@ import { getJwtFromLocalCookie } from "../lib/auth";
 import emptyBox from "../../public/emptyBox.jpg";
 
 const CartPage = () => {
+  const [isUnAvailable, setIsUnAvailable] = useState(false);
+
   const { items } = useStoreState((state) => state.cartPortion);
   const { updateCart, removeCart, clearAllCart } = useStoreActions(
     (actions) => actions.cartPortion
   );
 
-  const [isUnAvailable, setIsUnAvailable] = useState(false);
   const [grandTotal, setGrandTotal] = useState(0);
 
   const calculateGrandTotal = () => {
@@ -39,7 +40,10 @@ const CartPage = () => {
   const token = getJwtFromLocalCookie();
 
   const handleIncrement = (item) => {
-    if (item.quantity === item.attributes.available_product) {
+    if (
+      item.quantity === item.attributes.available_product ||
+      item.attributes.available_product === 0
+    ) {
       setIsUnAvailable(true);
 
       setTimeout(() => {
