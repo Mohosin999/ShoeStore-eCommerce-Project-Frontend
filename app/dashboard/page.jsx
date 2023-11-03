@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useStoreState } from "easy-peasy";
 import Wrapper from "../components/wrapper";
 import { getEmailFromLocalCookie, getUserFromLocalCookie } from "../lib/auth";
 import Button from "../components/UI/button";
@@ -15,8 +17,11 @@ const CheckOut = () => {
     userId: null,
   });
   const [userOrderInfo, setUserOrderInfo] = useState(null);
+  const [userRecentOrderInfo, setUserRecentOrderInfo] = useState(null);
 
-  const user = getUserFromLocalCookie();
+  // Get recent order id.
+  const { recentOrderId } = useStoreState((state) => state.cartPortion);
+
   const emailFromCookies = getEmailFromLocalCookie();
   const router = useRouter();
 
@@ -99,6 +104,7 @@ const CheckOut = () => {
         });
 
         const orderInfo = await userOrder.data;
+        console.log("dashboard ", orderInfo);
 
         if (orderInfo) {
           setUserOrderInfo(orderInfo);
@@ -109,6 +115,34 @@ const CheckOut = () => {
     };
 
     getOrderInfo();
+  }, []);
+
+  // Hook for get user's recent order and it's information.
+  useEffect(() => {
+    const getRecentOrder = async () => {
+      try {
+        const recentOrder = await axios.get(
+          `http://127.0.0.1:1337/api/orders/${recentOrderId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const recentOrderInfo = await recentOrder.data;
+
+        if (recentOrderInfo) {
+          setUserRecentOrderInfo(recentOrderInfo);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getRecentOrder();
   }, []);
 
   return (
@@ -207,7 +241,7 @@ const CheckOut = () => {
               </p>
 
               <p>
-                You bought{" "}
+                You bought products of
                 <span className="text-2xl text-green-600 mx-2">
                   {userOrderInfo?.data
                     ?.filter(
@@ -216,10 +250,64 @@ const CheckOut = () => {
                     .reduce(
                       (total, user) => total + user.attributes.grand_total,
                       0
-                    )}
-                </span>{" "}
-                taka's products.
+                    )
+                    .toFixed(2)}
+                  $
+                </span>
               </p>
+
+              {/* User recent order related info. */}
+              <p>Status: {userRecentOrderInfo?.data?.attributes?.status}</p>
+              <p>
+                Your recent order price is:{" "}
+                {userRecentOrderInfo?.data?.attributes?.grand_total}$
+              </p>
+              <p>
+                Recently you ordered{" "}
+                {userRecentOrderInfo?.data?.attributes?.products.length}{" "}
+                {userRecentOrderInfo?.data?.attributes?.products.length > 1
+                  ? "products"
+                  : "product"}
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4 mt-6">
+                {userRecentOrderInfo?.data?.attributes?.products?.map(
+                  (item) => (
+                    <div
+                      key={item.id}
+                      className="bg-gray-600 p-4 rounded-lg shadow-md"
+                    >
+                      {/* Image and product name. - start */}
+                      <div className="flex items-center justify-center">
+                        <Image
+                          src={
+                            item?.attributes?.thumbnail?.data?.attributes?.url
+                          }
+                          width={200}
+                          height={200}
+                          alt="shoe"
+                          className="w-12 h-auto"
+                        />
+                        <p className="text-xl font-semibold ml-3">
+                          {item?.attributes?.name}
+                        </p>
+                      </div>
+                      {/* Image and product name. - end */}
+
+                      <p className="text-base">
+                        {" "}
+                        Price:
+                        {item?.attributes?.discounted_price
+                          ? `${item?.attributes?.discounted_price}$`
+                          : `${item?.attributes?.original_price}$`}
+                      </p>
+                      <p className="text-gray-100 text-base">
+                        Quantity: {item?.quantity}
+                      </p>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
           </section>
         </div>

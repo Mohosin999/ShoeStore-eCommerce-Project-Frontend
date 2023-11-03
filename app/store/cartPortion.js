@@ -3,6 +3,7 @@ import { action, persist } from "easy-peasy";
 
 const cartPortion = persist({
   items: [],
+  recentOrderId: null,
 
   // Action to add item inside the cart.
   addToCart: action((state, payload) => {
@@ -58,6 +59,12 @@ const cartPortion = persist({
   // Action to clear all items inside the cart.
   clearAllCart: action((state, payload) => {
     state.items = []; // Set the items array to an empty array to clear the cart.
+  }),
+
+  // ===========================================================
+  // Action to add recent order id.
+  addRecentOrderId: action((state, payload) => {
+    state.recentOrderId = payload;
   }),
 });
 

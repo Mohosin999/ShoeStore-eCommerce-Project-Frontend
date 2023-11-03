@@ -21,7 +21,9 @@ const CheckOut = () => {
 
   // Get items and action from  store (easy-peasy).
   const { items } = useStoreState((state) => state.cartPortion);
-  const { clearAllCart } = useStoreActions((actions) => actions.cartPortion);
+  const { clearAllCart, addRecentOrderId } = useStoreActions(
+    (actions) => actions.cartPortion
+  );
 
   // Get user and email from local cookies.
   const username = getUserFromLocalCookie();
@@ -32,7 +34,6 @@ const CheckOut = () => {
     return items.reduce((total, val) => total + val.price, 0);
   }, [items]);
 
-  // Handle register function for handling register activities
   const handleCheckout = async () => {
     try {
       const checkoutInfo = {
@@ -51,6 +52,7 @@ const CheckOut = () => {
         },
       };
 
+      // Create the order
       const checkout = await axios.post(
         "http://127.0.0.1:1337/api/orders",
         checkoutInfo,
@@ -65,53 +67,13 @@ const CheckOut = () => {
 
       const checkoutResponse = await checkout.data;
 
-      //  Access the order info.
-      const userOrder = await axios.get("http://127.0.0.1:1337/api/orders", {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-
-      const orderInfo = await userOrder.data;
-      console.log("order info among from checkout", orderInfo);
-
-      /**
-       * If order created -
-       * Clear all cart from cart page and
-       * Go to products page.
-       */
-      // if (checkoutResponse) {
-      //   clearAllCart();
-      //   router.push("/success");
-      // }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleCheckout2 = async () => {
-    try {
-      const checkoutInfo = {
-        // ... (Your existing code to create the order)
-      };
-
-      // Create the order
-      const checkout = await axios.post(
-        "http://127.0.0.1:1337/api/orders",
-        checkoutInfo,
-        {
-          // ... (Your headers and authentication)
-        }
-      );
-
-      const checkoutResponse = await checkout.data;
-
       if (checkoutResponse) {
+        // Add recent order id.
+        addRecentOrderId(checkoutResponse.data?.id);
+
         // Fetch the recently created order (or you can use the order ID from checkoutResponse)
         const userOrder = await axios.get(
-          `http://127.0.0.1:1337/api/orders/${checkoutResponse.id}`,
+          `http://127.0.0.1:1337/api/orders/${checkoutResponse.data?.id}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
@@ -122,20 +84,28 @@ const CheckOut = () => {
         );
 
         const orderInfo = await userOrder.data;
-        console.log("order info from checkout", orderInfo);
 
         // Now, for each product in the order, you can decrease the quantity in Strapi.
-        for (const product of orderInfo.products) {
-          // Assuming your product has a unique identifier like an ID
+        // orderInfo?.data?.attributes?.products - means products array from orderInfo.
+        for (const product of orderInfo?.data?.attributes?.products) {
           const productId = product.id;
-          const productQuantity = product.quantity; // You may need to adjust this based on your data structure
+          const productQuantity = product.quantity;
+
+          // Calculate the new available quantity
+          const updatedAvailableProduct =
+            product.attributes.available_product - productQuantity;
+
+          // Create the request body with the 'data' key
+          const requestBody = {
+            data: {
+              available_product: updatedAvailableProduct, // Update the available quantity
+            },
+          };
 
           // Send a request to update the product quantity in Strapi
           await axios.put(
             `http://127.0.0.1:1337/api/products/${productId}`,
-            {
-              quantity: productQuantity - 1, // Decrease the quantity by 1 (you can adjust as needed)
-            },
+            requestBody, // Use the updated request body
             {
               headers: {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_BEAREER_TOKEN}`,
