@@ -13,9 +13,9 @@ import Wrapper from "@/app/components/wrapper";
 import ProductImagesSlider from "@/app/components/product-images-slider";
 import Title from "@/app/components/UI/title";
 import Heading from "@/app/components/UI/heading";
-import Button from "@/app/components/UI/button";
+import Button from "@/app/components/UI/button2";
 import DataSlider from "@/app/components/data-slider";
-import ButtonLink from "@/app/components/UI/button-link";
+import ButtonLink from "@/app/components/UI/button";
 
 /**
  * Single product page component.

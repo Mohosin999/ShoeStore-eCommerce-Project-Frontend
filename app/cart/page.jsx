@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import Wrapper from "../components/wrapper";
-import ButtonLink from "../components/UI/button-link";
+import ButtonLink from "../components/UI/button";
 import { getJwtFromLocalCookie } from "../lib/auth";
 import emptyBox from "../../public/emptyBox.jpg";
 

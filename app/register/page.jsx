@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 // Components
-import Button from "../components/UI/button";
+import Button from "../components/UI/button2";
 import Wrapper from "../components/wrapper";
 import Input from "../components/UI/input";
 import { setToken } from "../lib/auth";

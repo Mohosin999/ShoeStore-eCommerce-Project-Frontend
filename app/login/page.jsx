@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 // Components
 import Wrapper from "../components/wrapper";
 import Input from "../components/UI/input";
-import Button from "../components/UI/button";
+import Button from "../components/UI/button2";
 import { setToken } from "../lib/auth";
 
 /**

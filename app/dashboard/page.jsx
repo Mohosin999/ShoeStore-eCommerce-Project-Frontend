@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useStoreState } from "easy-peasy";
 import Wrapper from "../components/wrapper";
 import { getEmailFromLocalCookie, getUserFromLocalCookie } from "../lib/auth";
-import Button from "../components/UI/button";
+import Button from "../components/UI/button2";
 
 const CheckOut = () => {
   const [userDetails, setUserDetails] = useState({

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ButtonLink from "../components/UI/button-link";
+import ButtonLink from "../components/UI/button";
 
 const SuccessPage = () => {
   const [products, setProducts] = useState(null);

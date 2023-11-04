@@ -1,14 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
 // Swiper related
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
 // Components
 import Wrapper from "../wrapper";
 import ProductCard from "../product-card";
@@ -42,7 +40,7 @@ const DataSlider = ({ data, title }) => {
       ) : (
         <div>
           {/* Title component for the swiper carousel */}
-          <Title title={title} class="mt-20" />
+          <Title title={title} className="mt-20" />
           <Swiper
             navigation={true}
             modules={[Navigation, Pagination, A11y]}

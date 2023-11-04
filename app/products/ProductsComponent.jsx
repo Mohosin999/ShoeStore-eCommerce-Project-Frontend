@@ -13,8 +13,7 @@ const ProductList = () => {
     name: "",
     discounted_price: "",
   });
-  console.log("discounted_price", filterOption.discounted_price);
-  console.log("products", products);
+
   const itemsPerPage = 9;
 
   useEffect(() => {

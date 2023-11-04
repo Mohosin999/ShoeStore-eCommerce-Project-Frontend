@@ -1,10 +1,15 @@
 import React from "react";
 import Image from "next/image";
+// Components
 import bannerImage from "../../../public/watch.jpg";
 import Wrapper from "../wrapper";
-import ButtonLink from "../UI/button-link";
+import Button from "../UI/button";
 
-const BannerCard = () => {
+/**
+ * Banner component
+ * @returns {JSX.Element}
+ */
+const Banner = () => {
   return (
     <Wrapper>
       <div className="bg-gradient-to-r from-black via-blue-600 to-emerald-900 mt-8">
@@ -34,11 +39,11 @@ const BannerCard = () => {
               </p>
             </div>
             {/* Banner button */}
-            <div class="text-center pt-5">
-              <ButtonLink
-                href="/"
+            <div className="text-center pt-5">
+              <Button
+                href="https://www.shopz.com.bd/product-category/watches-accessories/"
+                target={"_blank"}
                 label="Shop Now"
-                className="bg-orange-400 hover:bg-orange-500"
               />
             </div>
           </div>
@@ -49,4 +54,4 @@ const BannerCard = () => {
   );
 };
 
-export default BannerCard;
+export default Banner;

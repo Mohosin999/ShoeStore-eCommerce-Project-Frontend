@@ -1,8 +1,8 @@
 import React from "react";
 import HeaderBody from "./components/full-header-area/header-body";
 import HotDiscountSlider from "./components/hot-discount-slider";
-import BannerCard from "./components/banner-card";
-import AllProducts from "./components/all-products";
+import Banner from "./components/banner";
+import AvailableProducts from "./components/available-products";
 import TestimonialSection from "./components/testimonial-section";
 
 const Home = () => {
@@ -10,8 +10,8 @@ const Home = () => {
     <div>
       <HeaderBody />
       <HotDiscountSlider />
-      <BannerCard />
-      <AllProducts />
+      <Banner />
+      <AvailableProducts />
       <TestimonialSection />
     </div>
   );

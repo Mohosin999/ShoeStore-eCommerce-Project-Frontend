@@ -1,25 +1,27 @@
 import React from "react";
+import Link from "next/link";
 import PropTypes from "prop-types";
 
-const Button = ({ label, onClick, className }) => {
+const Button = ({ href, label, onClick, target, className }) => {
   return (
     <div>
-      <button
-        type="button"
+      <Link
+        href={href}
         onClick={onClick}
-        class={`bg-yellow-700 hover:bg-green-600 text-gray-200 px-6 py-3 rounded-full group ${
+        target={target}
+        class={`bg-green-600 hover:bg-green-700 text-gray-200 px-6 py-3 rounded-full ${
           className || ""
         }`}
       >
-        <div className="group-active:scale-95">{label}</div>
-      </button>
+        {label}
+      </Link>
     </div>
   );
 };
 
 Button.propTypes = {
+  href: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
   className: PropTypes.string,
 };
 

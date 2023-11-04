@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import ButtonLink from "../UI/button-link";
 import { calculateDiscountPercentage } from "../../lib/utils";
+import Button from "../UI/button";
 
 /**
  * A reusable component to display product information and an image.
@@ -69,7 +69,7 @@ const ProductCard = ({ item, onRemove }) => {
 
       {/* Product card buttons - start */}
       <div className="ml-auto">
-        <ButtonLink
+        <Button
           href={`/products/${item.attributes.slug}`}
           label="Buy Now"
           className="absolute top-2 left-2 text-sm !px-4 !py-2"

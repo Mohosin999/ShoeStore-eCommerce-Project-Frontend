@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 // Components
 import Navbar from "./components/full-header-area/navbar";
-import Footer from "./components/Footer";
+import Footer from "./components/footer";
 import EasypeasyProvider from "./lib/EasypeasyProvider";
 
 const roboto = Roboto({ weight: ["400", "700"], subsets: ["latin"] });
