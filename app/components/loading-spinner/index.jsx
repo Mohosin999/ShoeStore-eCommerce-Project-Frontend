@@ -1,12 +1,16 @@
 import React from "react";
 
+/**
+ * Loading spinner component.
+ * @returns {JSX.Element}
+ */
 const LoadingSpinner = () => {
   return (
-    <div class="text-center">
+    <div className="text-center">
       <div role="status">
         <svg
           aria-hidden="true"
-          class="inline w-16 h-16 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+          className="inline w-16 h-16 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +24,7 @@ const LoadingSpinner = () => {
             fill="currentFill"
           />
         </svg>
-        <p class="text-sky-400 text-2xl mt-3">Loading...</p>
+        <p className="text-sky-400 text-2xl mt-3">Loading...</p>
       </div>
     </div>
   );

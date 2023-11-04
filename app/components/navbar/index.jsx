@@ -5,22 +5,20 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useStoreState } from "easy-peasy";
 // Icons
-import { FcShop } from "react-icons/fc";
+import { AiOutlineAppstore } from "react-icons/ai";
 import { BsCart } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
 // Components
-import CategoryMenu from "../category-menu";
-import NavLink from "../../UI/nav-link";
+import CategoryMenu from "./CategoryMenu";
+import NavLink from "../UI/nav-link";
 import { getJwtFromLocalCookie, unsetToken } from "@/app/lib/auth";
 
 /**
- * Navbar component.
- *
- * @component
+ * Navbar component
  * @returns {JSX.Element}
  */
 const Navbar = () => {
-  const [isFixed, setIsFixed] = useState(true);
+  const [isFixed, setIsFixed] = useState(true); // State for show and hidden navbar.
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [categoryData, setCategoryData] = useState(null);
@@ -29,15 +27,15 @@ const Navbar = () => {
   const { items } = useStoreState((state) => state.cartPortion);
   const { wishlistItems } = useStoreState((state) => state.wishlistPortion);
 
-  const router = useRouter();
-  // Current pathname
-  const pathname = usePathname();
+  const router = useRouter(); // Router
+  const pathname = usePathname(); // Current pathname
 
-  // Hook for set "isLoggedIn" state's value.
+  // If the user is loggedIn, update the "isLoggedIn" state with user's token.
   useEffect(() => {
     if (pathname === "/dashboard") {
+      // Get token from local cookies
       const token = getJwtFromLocalCookie();
-      setIsLoggedIn(!!token);
+      setIsLoggedIn(!!token); // !! makes the token result boolean.
     }
   }, [pathname]);
 
@@ -46,20 +44,25 @@ const Navbar = () => {
    * So that, we can use it next time from other page.
    */
   useEffect(() => {
+    // Define an asynchronous function to fetch category data
     const FetchCategoryData = async () => {
+      // Send a GET request to retrieve category data.
       const categoriesData = await axios.get(
         "http://127.0.0.1:1337/api/categories?populate=*"
       );
+
+      // Set the fetched category data in the component's state.
       setCategoryData(categoriesData.data);
     };
 
+    // Call the function to fetch and set category data when the component mounts.
     FetchCategoryData();
   }, []);
 
   // Logout function
   const handleLogout = () => {
     unsetToken(); // unsetToken for removing data from Cookies.
-    setIsLoggedIn(false); // Update login status when user logs out
+    setIsLoggedIn(false);
     router.push("/login");
   };
 
@@ -101,23 +104,33 @@ const Navbar = () => {
         } text-gray-600 body-font fixed w-full bg-gray-700 z-50`}
       >
         <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          {/* Left section of the navbar - start */}
+          {/*
+           * ==================================================
+           * Left section of the navbar - start
+           * ==================================================
+           */}
           <Link
             href="/"
             className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
           >
-            <FcShop size={32} /> {/* Shop icon */}
-            <span className="text-gray-300 font-bold text-green-500 ml-3 text-xl hover:scale-105 duration-300">
+            {/* Shop icon */}
+            <AiOutlineAppstore size={32} className="text-green-500" />{" "}
+            {/* Shop brand name */}
+            <span className="text-gray-200 font-bold ml-3 text-xl hover:scale-105 duration-300 active:scale-100">
               ShoeStore
-            </span>{" "}
-            {/* Company name */}
+            </span>
           </Link>
           {/* Left section of the navbar - end */}
 
-          {/* Middle section of the navbar - start */}
+          {/*
+           * ==================================================
+           * Middle section of the navbar - start
+           * ==================================================
+           */}
           <div className="md:ml-auto md:mr-auto flex flex-wrap items-center justify-center text-base">
             <NavLink href="/" label="Home" />
             <NavLink href="/products" label="Products" />
+            {/* Category task related. */}
             <NavLink
               href=""
               label="Categories"
@@ -125,8 +138,11 @@ const Navbar = () => {
               onMouseLeave={() => setShowCatMenu(false)}
               showCatMenu={showCatMenu}
               catMenuComponent={
+                // Component to show category's all menu.
                 <CategoryMenu
+                  // Pass the component's state (boolean) show and hidden cat menu.
                   setShowCatMenu={setShowCatMenu}
+                  // Pass the component's state with the category's data.
                   categoryData={categoryData}
                 />
               }
@@ -134,15 +150,19 @@ const Navbar = () => {
           </div>
           {/* Middle section of the navbar - end */}
 
-          {/* Right section of the navbar - start */}
+          {/*
+           * ==================================================
+           * Right section of the navbar - start
+           * ==================================================
+           */}
           {isLoggedIn ? (
-            // Display "Dashboard" and "Logout" links when logged in
+            // Display "Dashboard" and "Logout" links when the user logged in.
             <>
               <NavLink href="/dashboard" label="Dashboard" />
               <NavLink href="/login" label="Logout" onClick={handleLogout} />
             </>
           ) : (
-            // Display "Login" and "Register" links when not logged in
+            // Display "Login" and "Register" links when the user not logged in.
             <>
               <NavLink href="/login" label="Login" />
               <NavLink href="/register" label="Register" />
@@ -158,7 +178,8 @@ const Navbar = () => {
               <IoMdHeartEmpty className="text-gray-100 text-[19px] md:text-[24px] active:scale-95" />
               {wishlistItems.length > 0 && (
                 <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-gray-100 text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                  {wishlistItems.length}
+                  {wishlistItems.length}{" "}
+                  {/* Show how much items in wishlist. */}
                 </div>
               )}
             </div>
@@ -173,7 +194,7 @@ const Navbar = () => {
               <BsCart className="text-gray-100 text-[15px] md:text-[20px] active:scale-95" />
               {items.length > 0 && (
                 <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-gray-100 text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                  {items.length}
+                  {items.length} {/* Show how much items in cart. */}
                 </div>
               )}
             </div>

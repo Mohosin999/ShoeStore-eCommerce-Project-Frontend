@@ -4,7 +4,7 @@ import { Roboto } from "next/font/google";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 // Components
-import Navbar from "./components/full-header-area/navbar";
+import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import EasypeasyProvider from "./lib/EasypeasyProvider";
 
