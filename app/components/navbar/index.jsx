@@ -10,6 +10,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 // Components
 import CategoryMenu from "./CategoryMenu";
 import NavLink from "../UI/nav-link";
+// Functions
 import { getJwtFromLocalCookie, unsetToken } from "@/app/lib/auth";
 import { fetchedDataFromBackend } from "@/app/lib/utils";
 

@@ -6,7 +6,7 @@ import Wrapper from "../components/wrapper";
 import PaginationComponent from "../components/pagination";
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("");
   const [filterOption, setFilterOption] = useState({
@@ -142,13 +142,15 @@ const ProductList = () => {
           </div>
 
           {/* Bottom Pagination of this page. */}
-          <div className="mt-6">
-            <PaginationComponent
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              totalPages={totalPages}
-            />
-          </div>
+          {totalProducts > itemsPerPage && (
+            <div className="mt-6">
+              <PaginationComponent
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPages={totalPages}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Wrapper>
