@@ -1,18 +1,24 @@
 import React from "react";
+// Components
 import Wrapper from "../wrapper";
 import Title from "../UI/title";
 import TestimonialCard from "./TestimonialCard";
-
 // Import Images
 import A1 from "../../../public/shoe1.jpg";
 import A2 from "../../../public/shoe2.jpg";
 import A3 from "../../../public/shoe3.jpg";
 import A4 from "../../../public/shoe4.jpg";
 
+/**
+ * Testimonial section component.
+ * @returns {JSX.Element}
+ */
 const TestimonialSection = () => {
   return (
     <Wrapper>
+      {/* Section title */}
       <Title title="Some Testimonials" className="mt-8" />
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <TestimonialCard
           img={A1}

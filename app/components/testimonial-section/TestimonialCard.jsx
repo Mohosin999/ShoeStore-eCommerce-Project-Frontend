@@ -8,7 +8,7 @@ import Image from "next/image";
  * @param {string} img - img will be a string.
  * @param {string} name - name will be a string.
  * @param {string} comment - comment will be a string.
- * @returns {JSX.Element} - The TestimonialCard component.
+ * @returns {JSX.Element}
  */
 const TestimonialCard = ({ img, name, comment }) => {
   return (

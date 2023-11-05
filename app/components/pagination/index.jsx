@@ -12,7 +12,6 @@ import { GrPrevious, GrNext } from "react-icons/gr";
 const PaginationComponent = ({ currentPage, setCurrentPage, totalPages }) => {
   /**
    * Handles a page change when a specific page button is clicked.
-   *
    * @param {number} newPage - The page number to navigate to.
    */
   const handlePageChange = (newPage) => {
@@ -21,18 +20,14 @@ const PaginationComponent = ({ currentPage, setCurrentPage, totalPages }) => {
     }
   };
 
-  /**
-   * Handles navigating to the previous page when the "Previous" button is clicked.
-   */
+  // Handles navigating to the previous page when the "Previous" button is clicked.
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  /**
-   * Handles navigating to the next page when the "Next" button is clicked.
-   */
+  // Handles navigating to the next page when the "Next" button is clicked.
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -54,7 +49,10 @@ const PaginationComponent = ({ currentPage, setCurrentPage, totalPages }) => {
         <GrPrevious size={16} />
       </button>
 
-      {/* Pagination pages */}
+      {/*
+       * Pagination pages.
+       * index + 1 because index is start from 0, so index + 1 (0+1)
+       */}
       {Array.from({ length: totalPages }).map((_, index) => (
         <button
           key={index + 1}
@@ -65,7 +63,6 @@ const PaginationComponent = ({ currentPage, setCurrentPage, totalPages }) => {
               : "bg-gray-300 text-gray-700"
           }`}
         >
-          {/* Pagination page will start from 1, that's why index+1 (0+1). */}
           {index + 1}
         </button>
       ))}

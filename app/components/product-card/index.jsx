@@ -1,8 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
+// Icon
 import { RiDeleteBin6Line } from "react-icons/ri";
+// Components
 import { calculateDiscountPercentage } from "../../lib/utils";
 import Button from "../UI/button";
 
@@ -69,6 +71,7 @@ const ProductCard = ({ item, onRemove }) => {
 
       {/* Product card buttons - start */}
       <div className="ml-auto">
+        {/* Buy now button */}
         <Button
           href={`/products/${item.attributes.slug}`}
           label="Buy Now"
@@ -76,6 +79,7 @@ const ProductCard = ({ item, onRemove }) => {
         />
         {/* If onRemove function exist, then this button will be shown. */}
         {onRemove && (
+          // Delete or remove button
           <RiDeleteBin6Line
             size={24}
             title="Remove from wishlist !"
