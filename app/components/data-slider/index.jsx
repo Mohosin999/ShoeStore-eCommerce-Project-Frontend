@@ -23,6 +23,7 @@ import LoadingSpinner from "../loading-spinner";
 const DataSlider = ({ data, title }) => {
   const [isLoading, setIsLoading] = useState(true); // Initially set to true
 
+  // Hook for change 'isLoading' state's value (boolean) based on data.
   useEffect(() => {
     // Check if data is empty (or null, or undefined) and set isLoading accordingly
     if (!data || Object.keys(data).length === 0) {

@@ -4,6 +4,7 @@ import axios from "axios";
 import ProductCard from "../components/product-card";
 import Wrapper from "../components/wrapper";
 import PaginationComponent from "../components/pagination";
+import LoadingSpinner from "../components/loading-spinner";
 
 const ProductList = () => {
   const [products, setProducts] = useState(null);
@@ -13,6 +14,7 @@ const ProductList = () => {
     name: "",
     discounted_price: "",
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   const itemsPerPage = 9;
 
@@ -38,6 +40,16 @@ const ProductList = () => {
 
     fetchProducts();
   }, [currentPage, sortOption, filterOption]);
+
+  // Hook for change 'isLoading' state's value (boolean) based on data.
+  useEffect(() => {
+    // Check if data is empty (or null, or undefined) and set isLoading accordingly
+    if (!products || Object.keys(products).length === 0) {
+      setIsLoading(true); // Set to true when data is empty
+    } else {
+      setIsLoading(false); // Set to false when data is not empty
+    }
+  }, [products]);
 
   const totalProducts = products?.meta?.pagination?.total;
   const totalPages = Math.ceil(totalProducts / itemsPerPage);
@@ -134,24 +146,30 @@ const ProductList = () => {
         {/* Searching, filtering, sorting - start */}
 
         {/* Show all products and pagination */}
-        <div className="w-full mt-6">
-          <div className="grid grid-cols-3 gap-x-5 gap-y-10">
-            {products?.data?.map((item) => (
-              <ProductCard key={item.id} item={item} />
-            ))}
+        {isLoading ? (
+          <div className="mt-20">
+            <LoadingSpinner />
           </div>
-
-          {/* Bottom Pagination of this page. */}
-          {totalProducts > itemsPerPage && (
-            <div className="mt-6">
-              <PaginationComponent
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPages={totalPages}
-              />
+        ) : (
+          <div className="w-full mt-6">
+            <div className="grid grid-cols-3 gap-x-5 gap-y-10">
+              {products?.data?.map((item) => (
+                <ProductCard key={item.id} item={item} />
+              ))}
             </div>
-          )}
-        </div>
+
+            {/* Bottom Pagination of this page. */}
+            {totalProducts > itemsPerPage && (
+              <div className="mt-6">
+                <PaginationComponent
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  totalPages={totalPages}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </Wrapper>
   );

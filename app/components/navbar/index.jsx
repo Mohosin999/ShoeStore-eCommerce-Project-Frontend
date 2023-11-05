@@ -33,11 +33,11 @@ const Navbar = () => {
 
   // If the user is loggedIn, update the "isLoggedIn" state with user's token.
   useEffect(() => {
-    if (pathname === "/dashboard") {
-      // Get token from local cookies
-      const token = getJwtFromLocalCookie();
-      setIsLoggedIn(!!token); // !! makes the token result boolean.
-    }
+    // if (pathname === "/dashboard") {
+    // Get token from local cookies
+    const token = getJwtFromLocalCookie();
+    setIsLoggedIn(!!token); // !! makes the token result boolean.
+    // }
   }, [pathname]);
 
   // Fetch the category data.
