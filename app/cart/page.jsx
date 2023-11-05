@@ -4,51 +4,51 @@ import Image from "next/image";
 import Link from "next/link";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { RiDeleteBack2Fill } from "react-icons/ri";
+import { toast } from "react-toastify";
+// Empty box image
+import emptyBox from "../../public/emptyBox.jpg";
+// Components
 import Wrapper from "../components/wrapper";
 import ButtonLink from "../components/UI/button";
+// Function
 import { getJwtFromLocalCookie } from "../lib/auth";
-import emptyBox from "../../public/emptyBox.jpg";
+import ConfirmationPopup from "../components/confirmation-popup";
 
+/**
+ * Cart page
+ * @returns {JSX.Element}
+ */
 const CartPage = () => {
-  const [isUnAvailable, setIsUnAvailable] = useState(false);
-
+  const [showPopup, setShowPopup] = useState(false);
+  // Take necessary information from store (easy-peasy).
   const { items } = useStoreState((state) => state.cartPortion);
   const { updateCart, removeCart, clearAllCart } = useStoreActions(
     (actions) => actions.cartPortion
   );
 
-  const [grandTotal, setGrandTotal] = useState(0);
-
-  const calculateGrandTotal = () => {
-    let total = 0;
-    items.forEach((item) => {
-      total += item.price;
-    });
-    setGrandTotal(total);
-  };
-
-  useEffect(() => {
-    calculateGrandTotal();
-  }, [items]);
   // Define the calculateGrandTotal function, but don't call it here.
-  // const grandTotal = useMemo(() => {
-  //   return items.reduce((total, val) => total + val.price, 0);
-  // }, [items]);
-  // console.log("use memo", grandTotal);
+  const grandTotal = useMemo(() => {
+    return items.reduce((total, val) => total + val.price, 0);
+  }, [items]);
 
   // Get token from local cookies.
   const token = getJwtFromLocalCookie();
 
+  // Function to increment item quantity.
   const handleIncrement = (item) => {
+    /**
+     * If item's quantity and available product's number is equal or equal to 0 -
+     * show error toast message.
+     */
     if (
       item.quantity === item.attributes.available_product ||
       item.attributes.available_product === 0
     ) {
-      setIsUnAvailable(true);
-
-      setTimeout(() => {
-        setIsUnAvailable(false);
-      }, 3000);
+      toast.error("Sorry! no more product available", {
+        hideProgressBar: true,
+        autoClose: 3000,
+        position: "bottom-right",
+      });
     } else {
       updateCart({
         id: item.id,
@@ -57,6 +57,7 @@ const CartPage = () => {
     }
   };
 
+  // Function to decrement item quantity.
   const handleDecrement = (item) => {
     if (item.quantity > 1) {
       // Check if quantity is greater than 0 before decrementing
@@ -72,9 +73,13 @@ const CartPage = () => {
       <div className="relative mt-32 min-h-screen text-center">
         {items.length > 0 && (
           <>
-            <h1 className=" text-4xl font-bold mb-12">Shopping Cart</h1>
+            {/* Page title */}
+            <h1 className="text-gray-100 text-4xl font-bold mb-12">
+              Shopping Cart
+            </h1>
 
-            <div className="w-4/5 mx-auto">
+            {/* Table of items - start */}
+            <div className="text-gray-100 w-4/5 mx-auto">
               <table className="w-full text-center mt-6">
                 <thead>
                   <tr className="text-2xl text-green-500">
@@ -169,33 +174,28 @@ const CartPage = () => {
                 </tbody>
               </table>
             </div>
-
-            {/* If product already added, show the following popup */}
-            {isUnAvailable && (
-              <div className="absolute bg-red-500 text-gray-100 text-lg py-2 px-4 text-center top-2 right-0 z-10">
-                Sorry! no more product available
-              </div>
-            )}
+            {/* Table of items - end */}
 
             {/* Grand total, clear all and checkout button's portion - start */}
             <div className="mt-12">
               {/* Clear all product button */}
               <button
                 onClick={() => {
-                  const isClearAll = window.confirm(
-                    "Really you want to clear all products?"
+                  const shouldClear = window.confirm(
+                    "Are you sure you want to clear all products?"
                   );
-                  if (isClearAll) {
+                  if (shouldClear) {
                     clearAllCart();
                   }
                 }}
-                className="bg-green-700 hover:bg-green-800 text-gray-100 text-lg py-2 px-4 rounded-md"
+                title="Clear all products"
+                className="bg-green-600 hover:bg-green-700 text-gray-100 text-lg py-2 px-4 rounded-md"
               >
                 Clear All
               </button>
 
               {/* Grand Total Display */}
-              <div className="relative text-2xl font-bold my-6 flex items-center justify-center">
+              <div className="relative text-gray-100 text-2xl font-bold my-6 flex items-center justify-center">
                 Grand Total:{" "}
                 <span className="absolute ml-72 text-4xl text-yellow-400">
                   <span className="text-green-500">$</span>
@@ -226,7 +226,7 @@ const CartPage = () => {
             />
             <Link
               href="/products"
-              className="text-lg bg-green-700 hover:bg-green-800 py-2 px-6 rounded-md"
+              className="text-lg bg-green-600 hover:bg-green-700 py-2 px-6 rounded-md"
             >
               Continue Shopping
             </Link>
