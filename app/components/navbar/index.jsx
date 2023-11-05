@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useStoreState } from "easy-peasy";
@@ -12,6 +11,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import CategoryMenu from "./CategoryMenu";
 import NavLink from "../UI/nav-link";
 import { getJwtFromLocalCookie, unsetToken } from "@/app/lib/auth";
+import { fetchedDataFromBackend } from "@/app/lib/utils";
 
 /**
  * Navbar component
@@ -39,24 +39,10 @@ const Navbar = () => {
     }
   }, [pathname]);
 
-  /**
-   * Fetch category data and set it inside state.
-   * So that, we can use it next time from other page.
-   */
+  // Fetch the category data.
   useEffect(() => {
-    // Define an asynchronous function to fetch category data
-    const FetchCategoryData = async () => {
-      // Send a GET request to retrieve category data.
-      const categoriesData = await axios.get(
-        "http://127.0.0.1:1337/api/categories?populate=*"
-      );
-
-      // Set the fetched category data in the component's state.
-      setCategoryData(categoriesData.data);
-    };
-
-    // Call the function to fetch and set category data when the component mounts.
-    FetchCategoryData();
+    const categoriesDataUrl = "http://127.0.0.1:1337/api/categories?populate=*";
+    fetchedDataFromBackend(categoriesDataUrl, setCategoryData);
   }, []);
 
   // Logout function

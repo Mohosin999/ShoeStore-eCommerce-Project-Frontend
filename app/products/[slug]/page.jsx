@@ -1,4 +1,3 @@
-// comment
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -10,12 +9,12 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 // Components
 import Wrapper from "@/app/components/wrapper";
-import ProductImagesSlider from "@/app/components/product-images-slider";
 import Title from "@/app/components/UI/title";
 import Heading from "@/app/components/UI/heading";
 import Button from "@/app/components/UI/button2";
 import DataSlider from "@/app/components/data-slider";
 import ButtonLink from "@/app/components/UI/button";
+import ProductImagesSlider from "./ProductImagesSlider";
 
 /**
  * Single product page component.
@@ -25,6 +24,7 @@ import ButtonLink from "@/app/components/UI/button";
 const ProductPage = ({ params }) => {
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   // The following action and state for the cart.
   const { addToCart } = useStoreActions((actions) => actions.cartPortion);
