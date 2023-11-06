@@ -4,16 +4,15 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { AiOutlineAppstore } from "react-icons/ai";
 // Components
-import Button from "../components/UI/button2";
 import Wrapper from "../components/wrapper";
 import Input from "../components/UI/input";
 import { setToken } from "../lib/auth";
+import Button from "../components/UI/button";
 
 /**
  * Register component.
- *
- * @component
  * @returns {JSX.Element}
  */
 const Register = () => {
@@ -64,17 +63,13 @@ const Register = () => {
 
   return (
     <Wrapper>
-      <div className="mt-28 text-center">
+      <div className="mt-24 text-center">
         <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-screen">
           <Link
             href="/"
-            className="flex items-center mb-6 text-2xl font-semibold text-gray-100"
+            className="flex items-center mb-6 text-2xl font-semibold text-gray-200"
           >
-            <img
-              className="w-8 h-8 mr-2"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-              alt="logo"
-            />
+            <AiOutlineAppstore size={32} className="text-green-500 mr-2" />
             ShoeStore
           </Link>
 
@@ -116,7 +111,7 @@ const Register = () => {
                 />
 
                 {/* Submit Button */}
-                <Button label="Submit" onClick={handleRegister} />
+                <Button href="" label="Submit" onClick={handleRegister} />
 
                 {/* If already have an account, login now */}
                 <p className="text-sm font-light text-gray-500">

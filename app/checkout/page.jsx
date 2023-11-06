@@ -253,9 +253,9 @@ const CheckOut = () => {
                   className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-[0.6rem] px-3 leading-8 transition-colors duration-200 ease-in-out"
                 >
                   <option value="">Select</option>
-                  <option value="Bangladesh">Bangladesh</option>
-                  <option value="India">India</option>
-                  <option value="Pakistan">Pakistan</option>
+                  <option value="Bangladesh">Mymensingh</option>
+                  <option value="India">Dhaka</option>
+                  <option value="Pakistan">Khulna</option>
                   {/* Add more country options as needed */}
                 </select>
               </div>

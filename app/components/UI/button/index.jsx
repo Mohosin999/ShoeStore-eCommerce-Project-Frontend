@@ -20,7 +20,7 @@ const Button = ({ href, label, onClick, target, className }) => {
 };
 
 Button.propTypes = {
-  href: PropTypes.string.isRequired,
+  href: PropTypes.string,
   label: PropTypes.string.isRequired,
   className: PropTypes.string,
 };

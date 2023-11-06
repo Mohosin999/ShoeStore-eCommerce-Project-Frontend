@@ -4,13 +4,19 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useStoreState } from "easy-peasy";
-import Wrapper from "../components/wrapper";
+// Functions
 import { getEmailFromLocalCookie } from "../lib/auth";
+import { fetchedDataFromBackend, getPrice } from "../lib/utils";
+// Components
+import Wrapper from "../components/wrapper";
 import Button from "../components/UI/button2";
-import { fetchedDataFromBackend } from "../lib/utils";
 import LoadingSpinner from "../components/loading-spinner";
 
-const CheckOut = () => {
+/**
+ * Dashboard page
+ * @returns {JSX.Element}
+ */
+const Dashboard = () => {
   const [userDetails, setUserDetails] = useState({
     username: null,
     email: null,
@@ -22,14 +28,15 @@ const CheckOut = () => {
   const [userRecentOrderInfo, setUserRecentOrderInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Get recent order id.
+  // Get recent order id from store.
   const { recentOrderId } = useStoreState((state) => state.cartPortion);
-
-  const emailFromCookies = getEmailFromLocalCookie(); // get email from cookies.
+  // get email from cookies.
+  const emailFromCookies = getEmailFromLocalCookie();
   const router = useRouter(); // Router
 
   // Hook for get user.
   useEffect(() => {
+    // Asynchronous function for get user.
     const getUser = async () => {
       try {
         const user = await axios.get("http://127.0.0.1:1337/api/users", {
@@ -73,6 +80,7 @@ const CheckOut = () => {
         about: userDetails.about,
       };
 
+      // Update the user info according to user id
       const user = await axios.put(
         `http://127.0.0.1:1337/api/users/${userDetails.userId}`,
         userUpdate,
@@ -86,7 +94,9 @@ const CheckOut = () => {
       );
 
       const userInfo = await user.data;
+
       if (userInfo) {
+        // After updating the user info, refresh the page.
         router.refresh();
       }
     } catch (error) {
@@ -102,8 +112,8 @@ const CheckOut = () => {
 
   // Hook for get user's recent order and it's information.
   useEffect(() => {
-    const recentOrderInfoUrl = `http://127.0.0.1:1337/api/orders/${recentOrderId}`;
-    fetchedDataFromBackend(recentOrderInfoUrl, setUserRecentOrderInfo);
+    const recentOrderInfoUrl = `http://127.0.0.1:1337/api/orders/${recentOrderId}`; // url
+    fetchedDataFromBackend(recentOrderInfoUrl, setUserRecentOrderInfo); // Function
   }, []);
 
   // Hook for change 'isLoading' state's value (boolean) based on data.
@@ -129,17 +139,23 @@ const CheckOut = () => {
         </div>
       ) : (
         <div className="mt-32">
+          {/* Page title */}
           <h2 className="text-gray-200 text-4xl text-center font-bold">
             Dashboard
           </h2>
 
           <div className="flex">
+            {/*
+             * ==========================================================================
+             * Left side of dashboard.
+             * ==========================================================================
+             */}
             <section className="w-1/2">
               <h2 className="text-2xl text-center font-medium text-green-600">
                 Profile Information
               </h2>
               <div>
-                {/* User name */}
+                {/* User name - start */}
                 <div className="flex flex-col mt-3">
                   <label className="text-lg text-gray-200 mb-1">
                     You can change your name.
@@ -157,8 +173,9 @@ const CheckOut = () => {
                     className="w-full py-2 px-4"
                   />
                 </div>
+                {/* User name - end */}
 
-                {/* User email */}
+                {/* User email - start */}
                 <div className="flex flex-col mt-3">
                   <label className="text-lg text-gray-200 mb-1">
                     You can change your email.
@@ -176,8 +193,9 @@ const CheckOut = () => {
                     className="w-full py-2 px-4"
                   />
                 </div>
+                {/* User email - end */}
 
-                {/* User about */}
+                {/* User about - start */}
                 <div className="flex flex-col mt-3">
                   <label className="text-lg text-gray-200 mb-1">
                     You can change your about.
@@ -194,7 +212,9 @@ const CheckOut = () => {
                     className="resize-none w-full h-48 py-2 px-4"
                   ></textarea>
                 </div>
+                {/* User about - end */}
 
+                {/* Button for save all changes. */}
                 <Button
                   onClick={handleUserUpdate}
                   label="Save Changes"
@@ -203,14 +223,20 @@ const CheckOut = () => {
               </div>
             </section>
 
+            {/*
+             * ==========================================================================
+             * Right side of dashboard.
+             * ==========================================================================
+             */}
             <section className="w-1/2">
               <h2 className=" text-2xl text-center font-medium text-green-600">
                 Other Details
               </h2>
 
-              <div className="text-lg text-gray-200 text-center">
-                <p className="mb-2">
-                  You ordered for{" "}
+              <div className="mt-4 ml-20 text-lg text-gray-200 text-start">
+                {/* paragraph for show how much time the user bought from here. */}
+                <p className="mb-1">
+                  You have ordered{" "}
                   <span className="text-2xl text-green-600 mx-2">
                     {
                       userOrderInfo?.data?.filter(
@@ -218,11 +244,12 @@ const CheckOut = () => {
                       ).length
                     }
                   </span>{" "}
-                  times.
+                  times so far.
                 </p>
 
+                {/* paragraph for show how much dollor do I purchased so far. */}
                 <p>
-                  You bought products of
+                  You have purchased items worth
                   <span className="text-2xl text-green-600 mx-2">
                     {userOrderInfo?.data
                       ?.filter(
@@ -234,64 +261,110 @@ const CheckOut = () => {
                       )
                       .toFixed(2)}
                     $
-                  </span>
+                  </span>{" "}
+                  so far.
                 </p>
 
-                {/* User recent order related info. */}
-                <p>Status: {userRecentOrderInfo?.data?.attributes?.status}</p>
-                <p>
-                  Your recent order price is:{" "}
-                  {userRecentOrderInfo?.data?.attributes?.grand_total
-                    ? userRecentOrderInfo?.data?.attributes?.grand_total
-                    : 0}
-                  $
-                </p>
-                <p>
-                  Recently you ordered{" "}
-                  {userRecentOrderInfo?.data?.attributes?.products.length}{" "}
-                  {userRecentOrderInfo?.data?.attributes?.products.length > 1
-                    ? "products"
-                    : "product"}
-                </p>
+                {/*
+                 * ===============================
+                 * User recent order related info.
+                 * ===============================
+                 */}
+                <h2 className="text-gray-200 bg-green-600 my-4 py-1 px-2 inline-block">
+                  Recent Order Related
+                </h2>
+                {/* If there is recent order, only when show the following section. */}
+                {userRecentOrderInfo ? (
+                  <div>
+                    {/* User status (pending, done or cancelled) */}
+                    <p>
+                      {userRecentOrderInfo && (
+                        <span>
+                          Status: {userRecentOrderInfo.data.attributes.status}
+                        </span>
+                      )}
+                    </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4 mt-6">
-                  {userRecentOrderInfo?.data?.attributes?.products?.map(
-                    (item) => (
-                      <div
-                        key={item.id}
-                        className="bg-gray-600 p-4 rounded-lg shadow-md"
-                      >
-                        {/* Image and product name. - start */}
-                        <div className="flex items-center justify-center">
-                          <Image
-                            src={
-                              item?.attributes?.thumbnail?.data?.attributes?.url
-                            }
-                            width={200}
-                            height={200}
-                            alt="shoe"
-                            className="w-12 h-auto"
-                          />
-                          <p className="text-xl font-semibold ml-3">
-                            {item?.attributes?.name}
-                          </p>
-                        </div>
-                        {/* Image and product name. - end */}
+                    {/* Recent order total price. */}
+                    <p>
+                      Your recent order price is:{" "}
+                      <span className="text-xl text-green-600 mx-1">
+                        {userRecentOrderInfo?.data?.attributes?.grand_total
+                          ? userRecentOrderInfo?.data?.attributes?.grand_total
+                          : 0}
+                        $
+                      </span>
+                    </p>
 
-                        <p className="text-base">
-                          {" "}
-                          Price:
-                          {item?.attributes?.discounted_price
-                            ? `${item?.attributes?.discounted_price}$`
-                            : `${item?.attributes?.original_price}$`}
-                        </p>
-                        <p className="text-gray-100 text-base">
-                          Quantity: {item?.quantity}
-                        </p>
-                      </div>
-                    )
-                  )}
-                </div>
+                    {/* Recently how much product I ordered. */}
+                    <p>
+                      Recently you ordered{" "}
+                      <span className="text-xl text-green-600 mx-1">
+                        {userRecentOrderInfo?.data?.attributes?.products.length}
+                      </span>{" "}
+                      {userRecentOrderInfo?.data?.attributes?.products.length >
+                      1
+                        ? "products"
+                        : "product"}
+                    </p>
+
+                    {/* Information of product that I ordered. */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4 mt-6">
+                      {userRecentOrderInfo?.data?.attributes?.products?.map(
+                        (item) => (
+                          <div
+                            key={item.id}
+                            className="bg-gray-600 p-4 rounded-lg shadow-md"
+                          >
+                            {/* Image and product name. - start */}
+                            <div className="flex items-center justify-center">
+                              <Image
+                                src={
+                                  item?.attributes?.thumbnail?.data?.attributes
+                                    ?.url
+                                }
+                                width={200}
+                                height={200}
+                                alt="shoe"
+                                className="w-12 h-auto"
+                              />
+                              {/* Product's name */}
+                              <p className="text-lg font-semibold ml-3">
+                                {item?.attributes?.name}
+                              </p>
+                            </div>
+                            {/* Image and product name. - end */}
+
+                            <div className="flex items-center justify-between mt-4">
+                              {/* Product actual price */}
+                              <p className="text-sm">
+                                Price:
+                                <span className="ml-1 bg-green-600 py-1 px-2 rounded-full">
+                                  {getPrice(
+                                    item?.attributes?.discounted_price,
+                                    item?.attributes?.original_price
+                                  )}
+                                </span>
+                              </p>
+
+                              {/* Product quantity */}
+                              <p className="text-sm">
+                                Quantity:{" "}
+                                <span className="ml-1 bg-green-600 py-1 px-2 rounded-full">
+                                  {item?.quantity}
+                                </span>
+                              </p>
+                            </div>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-3xl text-red-500 text-center">
+                    No Recent Order is Present🙂
+                  </p>
+                )}
               </div>
             </section>
           </div>
@@ -301,4 +374,4 @@ const CheckOut = () => {
   );
 };
 
-export default CheckOut;
+export default Dashboard;

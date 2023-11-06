@@ -4,24 +4,22 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { AiOutlineAppstore } from "react-icons/ai";
 // Components
 import Wrapper from "../components/wrapper";
 import Input from "../components/UI/input";
-import Button from "../components/UI/button2";
 import { setToken } from "../lib/auth";
+import Button from "../components/UI/button";
 
 /**
  * Login component.
- *
- * @component
  * @returns {JSX.Element}
  */
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
-  // Router
-  const router = useRouter();
+  const router = useRouter(); // Router
 
   // Handle login function for handling login activities
   const handleLogin = async () => {
@@ -62,17 +60,13 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <div className="mt-16 text-center">
+      <div className="mt-12 text-center">
         <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-screen">
           <Link
             href="/"
-            className="flex items-center mb-6 text-2xl font-semibold text-gray-100"
+            className="flex items-center mb-6 text-2xl font-semibold text-gray-200"
           >
-            <img
-              className="w-8 h-8 mr-2"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-              alt="logo"
-            />
+            <AiOutlineAppstore size={32} className="text-green-500 mr-2" />
             ShoeStore
           </Link>
 
@@ -104,11 +98,11 @@ const Login = () => {
                 />
 
                 {/* Submit Button */}
-                <Button label="Submit" onClick={handleLogin} />
+                <Button href="" label="Submit" onClick={handleLogin} />
 
                 {/* If not have an account, sign up now */}
                 <p className="text-sm font-light text-gray-500">
-                  If not have an account?
+                  Don't have an account?
                   <Link
                     href="/register"
                     className="font-medium text-primary-600 hover:underline"

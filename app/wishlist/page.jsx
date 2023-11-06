@@ -1,11 +1,16 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { useStoreActions, useStoreState } from "easy-peasy";
+// Components
 import ProductCard from "../components/product-card";
 import Wrapper from "../components/wrapper";
 import emptyBox from "../../public/emptyBox.jpg";
-import Image from "next/image";
 
+/**
+ * Wishlist page
+ * @returns {JSX.Element}
+ */
 const Wishlist = () => {
   const { wishlistItems } = useStoreState((state) => state.wishlistPortion);
   const { removeFromWishlist } = useStoreActions(
@@ -20,6 +25,11 @@ const Wishlist = () => {
   return (
     <Wrapper>
       <div className="mt-32 min-h-screen">
+        {/* Page title */}
+        <h1 className="text-4xl text-gray-100 font-bold text-center mb-4">
+          Wishlist
+        </h1>
+
         {wishlistItems.length > 0 && (
           <div className="grid grid-cols-3 gap-x-5 gap-y-10">
             {wishlistItems?.map((item) => (
