@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useStoreState, useStoreActions } from "easy-peasy";
@@ -7,19 +7,24 @@ import { RiDeleteBack2Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
 // Empty box image
 import emptyBox from "../../public/emptyBox.jpg";
+// Function
+import { getJwtFromLocalCookie } from "../lib/auth";
+import { getPrice } from "../lib/utils";
 // Components
 import Wrapper from "../components/wrapper";
 import ButtonLink from "../components/UI/button";
-// Function
-import { getJwtFromLocalCookie } from "../lib/auth";
 import ConfirmationPopup from "../components/confirmation-popup";
+import Button from "../components/UI/button";
 
 /**
  * Cart page
  * @returns {JSX.Element}
  */
 const CartPage = () => {
-  const [showPopup, setShowPopup] = useState(false);
+  const [actualDeleteItem, setActualDeleteItem] = useState(null);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [showClearAllPopup, setShowClearAllPopup] = useState(false);
+
   // Take necessary information from store (easy-peasy).
   const { items } = useStoreState((state) => state.cartPortion);
   const { updateCart, removeCart, clearAllCart } = useStoreActions(
@@ -47,7 +52,7 @@ const CartPage = () => {
       toast.error("Sorry! no more product available", {
         hideProgressBar: true,
         autoClose: 3000,
-        position: "bottom-right",
+        position: "bottom-left",
       });
     } else {
       updateCart({
@@ -98,6 +103,7 @@ const CartPage = () => {
                       className="text-lg shadow-sm shadow-gray-700"
                     >
                       <td className="py-4 pl-6 flex items-center justify-start">
+                        {/* Item image */}
                         <Image
                           width={200}
                           height={200}
@@ -107,16 +113,20 @@ const CartPage = () => {
                           alt="product-image"
                           className="w-16 h-auto pr-4"
                         />
+                        {/* Item title or name */}
                         {item.attributes.name}
                       </td>
-                      <td className=" py-4">{item.quantity}</td>
+                      <td className=" py-4">{item.quantity}</td>{" "}
+                      {/* Item quantity */}
+                      {/* Item price */}
                       <td className=" py-4">
-                        {item.attributes.discounted_price
-                          ? item.attributes.discounted_price
-                          : item.attributes.original_price}
+                        {/* getPrice function to get item's price. */}
+                        {getPrice(
+                          item.attributes.discounted_price,
+                          item.attributes.original_price
+                        )}
                       </td>
                       <td className=" py-4">{item.price.toFixed(1)}</td>
-
                       {/* Buttons for quantity handle - start */}
                       <td className=" py-4">
                         {/* Decrease quantity button - start */}
@@ -129,7 +139,9 @@ const CartPage = () => {
                           onClick={() => handleDecrement(item)}
                           disabled={item.quantity === 1}
                           className={`px-3 mr-2 text-lg rounded-md ${
-                            item.quantity === 1 ? "bg-gray-400" : "bg-green-700"
+                            item.quantity === 1
+                              ? "bg-gray-400"
+                              : "bg-green-600 hover:scale-105 active:scale-100"
                           }`}
                         >
                           -
@@ -144,29 +156,32 @@ const CartPage = () => {
                               : "Increase the product quantity"
                           }
                           onClick={() => handleIncrement(item)}
-                          className="px-3 mr-2 text-lg rounded-md bg-green-700"
+                          className="px-3 mr-2 text-lg rounded-md bg-green-600 hover:scale-105 active:scale-100"
                         >
                           +
                         </button>
                         {/* Increase quantity button - end */}
                       </td>
                       {/* Buttons for quantity handle - end */}
-
                       <td className="py-4">
                         {/* Button for deleting product - start */}
                         <button
                           onClick={() => {
-                            const shouldDelete = window.confirm(
-                              "Are you sure you want to delete the product?"
-                            );
-                            if (shouldDelete) {
-                              removeCart(item);
-                            }
+                            setShowDeletePopup(true);
+                            setActualDeleteItem(item);
                           }}
                           title="Delete the product"
                         >
                           <RiDeleteBack2Fill />
                         </button>
+                        {/* If state is true, show the confirmation dialog to delete. */}
+                        {showDeletePopup && (
+                          <ConfirmationPopup
+                            item={actualDeleteItem}
+                            removeAction={removeCart}
+                            setShowPopup={setShowDeletePopup}
+                          />
+                        )}
                         {/* Button for deleting product - end */}
                       </td>
                     </tr>
@@ -177,34 +192,38 @@ const CartPage = () => {
             {/* Table of items - end */}
 
             {/* Grand total, clear all and checkout button's portion - start */}
-            <div className="mt-12">
-              {/* Clear all product button */}
-              <button
-                onClick={() => {
-                  const shouldClear = window.confirm(
-                    "Are you sure you want to clear all products?"
-                  );
-                  if (shouldClear) {
-                    clearAllCart();
-                  }
-                }}
-                title="Clear all products"
-                className="bg-green-600 hover:bg-green-700 text-gray-100 text-lg py-2 px-4 rounded-md"
-              >
-                Clear All
-              </button>
-
+            <div className="w-full mt-8">
               {/* Grand Total Display */}
-              <div className="relative text-gray-100 text-2xl font-bold my-6 flex items-center justify-center">
+              <div className="mr-32 text-gray-100 text-2xl font-bold my-6 flex items-center justify-end">
                 Grand Total:{" "}
-                <span className="absolute ml-72 text-4xl text-yellow-400">
-                  <span className="text-green-500">$</span>
-                  {grandTotal.toFixed(2)}
+                <span className="text-green-400 ml-8">
+                  ${grandTotal.toFixed(2)}
                 </span>
               </div>
 
+              {/* Clear all product button - start */}
+              <button
+                onClick={() => setShowClearAllPopup(true)}
+                title="Clear all products"
+                className="bg-green-600 hover:bg-green-700 text-gray-200 px-6 py-2.5 rounded-full mb-6"
+              >
+                Clear All
+              </button>
+              {/* If state is true, show the confirmation dialog to delete. */}
+              {showClearAllPopup && (
+                <ConfirmationPopup
+                  removeAction={clearAllCart}
+                  setShowPopup={setShowClearAllPopup}
+                />
+              )}
+              {/* Clear all product button - end */}
+
               {/* Checkout button */}
-              <ButtonLink
+              <Button
+                /**
+                 * If authenticated user, then go to checkout page.
+                 * Otherwise, go to login page.
+                 */
                 href={token ? "/checkout" : "/login"}
                 label="Checkout"
               />
@@ -213,7 +232,11 @@ const CartPage = () => {
           </>
         )}
 
-        {/* This is empty screen */}
+        {/*
+         * ======================================================
+         * This is empty screen
+         * ======================================================
+         */}
         {items.length < 1 && (
           <div className="flex flex-col items-center justify-center my-16">
             <h1 className="text-4xl text-gray-100 font-bold">
@@ -224,12 +247,8 @@ const CartPage = () => {
               alt="empty-box"
               className="w-96 h-auto my-10"
             />
-            <Link
-              href="/products"
-              className="text-lg bg-green-600 hover:bg-green-700 py-2 px-6 rounded-md"
-            >
-              Continue Shopping
-            </Link>
+
+            <Button href="/products" label="Continue Shopping" />
           </div>
         )}
       </div>

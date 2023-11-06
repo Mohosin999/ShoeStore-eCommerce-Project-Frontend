@@ -17,12 +17,12 @@ const CategoryPage = ({ params }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-  const itemsPerPage = 9;
+  const itemsPerPage = 9; // 9 products I want to show in each page.
 
   // Fetch the category data.
   useEffect(() => {
-    const categoriesDataUrl = `http://127.0.0.1:1337/api/products?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}&populate=*&filters[category][slug][$eq]=${params.slug}`;
-    fetchedDataFromBackend(categoriesDataUrl, setCategoryData);
+    const categoriesDataUrl = `http://127.0.0.1:1337/api/products?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}&populate=*&filters[category][slug][$eq]=${params.slug}`; // url
+    fetchedDataFromBackend(categoriesDataUrl, setCategoryData); // function
   }, [currentPage]);
 
   // Hook for change 'isLoading' state's value (boolean) based on data.
@@ -35,7 +35,7 @@ const CategoryPage = ({ params }) => {
     }
   }, [categoryData]);
 
-  // Calculate total pages
+  // Calculate total pages to show pagination.
   const totalProducts = categoryData?.meta?.pagination?.total;
   const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
@@ -43,7 +43,8 @@ const CategoryPage = ({ params }) => {
     <Wrapper>
       {isLoading ? (
         <div className="mt-32">
-          <LoadingSpinner />
+          <LoadingSpinner />{" "}
+          {/* Show loading spinner if the page is loading. */}
         </div>
       ) : (
         <div className="mt-32">
@@ -53,7 +54,7 @@ const CategoryPage = ({ params }) => {
             ))}
           </div>
 
-          {/* Bottom Pagination of this page. */}
+          {/* Pagination of this page. */}
           {totalProducts > itemsPerPage && (
             <div className="mt-6">
               <PaginationComponent

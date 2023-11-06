@@ -36,6 +36,7 @@ export const fetchedDataFromBackend = async (url, setState) => {
  * @param {number} discountedPrice - The discounted price of the product (must be less than the original price).
  * @returns {number} The calculated discount percentage.
  * @throws {Error} If originalPrice is not greater than zero or discountedPrice is not less than the original price.
+ * @returns {number}
  */
 export const calculateDiscountPercentage = (originalPrice, discountedPrice) => {
   if (originalPrice <= 0) {
@@ -50,4 +51,19 @@ export const calculateDiscountPercentage = (originalPrice, discountedPrice) => {
   const discountPercentage = (discountAmount / originalPrice) * 100;
 
   return discountPercentage;
+};
+
+/**
+ * Get price
+ *
+ * @param {number} discountedPrice - discountedPrice will be a number.
+ * @param {number} originalPrice - originalPrice will be a number.
+ * @returns {number}
+ */
+export const getPrice = (discountedPrice, originalPrice) => {
+  if (discountedPrice) {
+    return discountedPrice;
+  } else {
+    return originalPrice;
+  }
 };

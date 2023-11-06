@@ -9,7 +9,7 @@ const Button = ({ href, label, onClick, target, className }) => {
         href={href}
         onClick={onClick}
         target={target}
-        class={`bg-green-600 hover:bg-green-700 text-gray-200 px-6 py-3 rounded-full ${
+        className={`bg-green-600 hover:bg-green-700 active:scale-95 text-gray-200 px-6 py-3 rounded-full ${
           className || ""
         }`}
       >
