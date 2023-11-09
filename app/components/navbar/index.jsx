@@ -13,7 +13,7 @@ import NavLink from "../UI/nav-link";
 // Functions
 import { getJwtFromLocalCookie, unsetToken } from "@/app/lib/auth";
 import { fetchedDataFromBackend } from "@/app/lib/utils";
-import MobileMenubar from "../mobile-menubar";
+import MobileMenubar from "../mobile-menubar/MobileNavbar";
 
 /**
  * Navbar component
@@ -99,7 +99,7 @@ const Navbar = () => {
       >
         {/*
          * =============================================================================
-         * Navbar div for large sreen. In small and medium screen, it'll be hidden.
+         * Navbar div for large screen. In small and medium screen, it'll be hidden.
          * =============================================================================
          */}
         <div className="container mx-auto hidden lg:flex flex-wrap p-5 flex-col md:flex-row items-center ">
@@ -145,6 +145,20 @@ const Navbar = () => {
                 />
               }
             />
+
+            {isLoggedIn ? (
+              // Display "Dashboard" and "Logout" links when the user logged in.
+              <>
+                <NavLink href="/dashboard" label="Dashboard" />
+                <NavLink href="/login" label="Logout" onClick={handleLogout} />
+              </>
+            ) : (
+              // Display "Login" and "Register" links when the user not logged in.
+              <>
+                <NavLink href="/login" label="Login" />
+                <NavLink href="/register" label="Register" />
+              </>
+            )}
           </div>
 
           {/*
@@ -152,19 +166,6 @@ const Navbar = () => {
            * Right section of the navbar
            * ============================
            */}
-          {isLoggedIn ? (
-            // Display "Dashboard" and "Logout" links when the user logged in.
-            <>
-              <NavLink href="/dashboard" label="Dashboard" />
-              <NavLink href="/login" label="Logout" onClick={handleLogout} />
-            </>
-          ) : (
-            // Display "Login" and "Register" links when the user not logged in.
-            <>
-              <NavLink href="/login" label="Login" />
-              <NavLink href="/register" label="Register" />
-            </>
-          )}
 
           {/* Favorite & Cart Icons */}
           {/* Wishlist icon start */}
@@ -202,9 +203,10 @@ const Navbar = () => {
         {/*
          * =============================================================================
          * Navbar div for small and medium sreen. In large screen, it'll be hidden.
+         * Brand name, icon and Humburger menu.
          * =============================================================================
          */}
-        <div className="lg:hidden container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center justify-between">
+        <div className="lg:hidden container flex flex-wrap items-center justify-between p-5">
           {/*
            * ===========================
            * Left section of the navbar
@@ -212,7 +214,7 @@ const Navbar = () => {
            */}
           <Link
             href="/"
-            className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+            className="flex title-font font-medium items-center text-gray-900"
           >
             {/* Shop icon */}
             <AiOutlineAppstore size={32} className="text-green-500" />{" "}
@@ -228,7 +230,7 @@ const Navbar = () => {
            * =============================
            */}
           <button
-            className="flex-col items-center justify-center"
+            className="lg:hidden flex flex-col items-center justify-center"
             onClick={handleMobileMenu}
           >
             <span

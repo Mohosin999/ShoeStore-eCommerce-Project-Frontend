@@ -10,6 +10,7 @@ const NavLink = ({
   onMouseLeave,
   showCatMenu,
   catMenuComponent,
+  className,
 }) => {
   return (
     <div>
@@ -18,7 +19,7 @@ const NavLink = ({
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         onClick={onClick}
-        className="text-gray-100 hover:bg-gray-800/75 px-4 py-2 relative"
+        className={`text-gray-900 lg:text-gray-200 block hover:bg-gray-300 lg:hover:bg-green-700 px-4 py-2 relative ${className}`}
       >
         {label}
         {showCatMenu && (

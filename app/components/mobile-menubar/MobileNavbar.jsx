@@ -3,14 +3,10 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useStoreState } from "easy-peasy";
-// Icons
-import { AiOutlineAppstore } from "react-icons/ai";
 import { BsCart } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
-// Components
 import CategoryMenu from "../navbar/CategoryMenu";
 import NavLink from "../UI/nav-link";
-// Functions
 import { getJwtFromLocalCookie, unsetToken } from "@/app/lib/auth";
 import { fetchedDataFromBackend } from "@/app/lib/utils";
 
@@ -18,7 +14,7 @@ import { fetchedDataFromBackend } from "@/app/lib/utils";
  * Navbar component
  * @returns {JSX.Element}
  */
-const MobileNavbar = () => {
+export const MobileNavbar = () => {
   const [isFixed, setIsFixed] = useState(true); // State for show and hidden navbar.
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,6 +33,7 @@ const MobileNavbar = () => {
     // Get token from local cookies
     const token = getJwtFromLocalCookie();
     setIsLoggedIn(!!token); // !! makes the token result boolean.
+
     // }
   }, [pathname]);
 
@@ -88,11 +85,7 @@ const MobileNavbar = () => {
     <nav className="w-full h-auto z-30 fixed bg-blue-600/90 rounded-lg backdrop-blur-md">
       <div className="flex items-center justify-between px-8 py-5">
         <div className="w-full flex flex-col font-medium border border-gray-100 rounded-sm bg-gray-100">
-          <NavLink
-            href="/"
-            label="Home"
-            // className={"hover:!bg-green-500 w-full block"}
-          />
+          <NavLink href="/" label="Home" />
           <NavLink href="/products" label="Products" />
           {/* Category task related. */}
           <NavLink
@@ -169,5 +162,3 @@ const MobileNavbar = () => {
     </nav>
   );
 };
-
-export default MobileNavbar;
