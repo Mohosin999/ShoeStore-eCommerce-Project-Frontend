@@ -13,7 +13,7 @@ import NavLink from "../UI/nav-link";
 // Functions
 import { getJwtFromLocalCookie, unsetToken } from "@/app/lib/auth";
 import { fetchedDataFromBackend } from "@/app/lib/utils";
-import MobileMenubar from "../mobile-menubar/MobileNavbar";
+import MobileMenubar from "../mobile-menubar";
 
 /**
  * Navbar component
@@ -132,8 +132,7 @@ const Navbar = () => {
             <NavLink
               href=""
               label="Categories"
-              onMouseEnter={() => setShowCatMenu(true)}
-              onMouseLeave={() => setShowCatMenu(false)}
+              onClick={() => setShowCatMenu(!showCatMenu)}
               showCatMenu={showCatMenu}
               catMenuComponent={
                 // Component to show category's all menu.

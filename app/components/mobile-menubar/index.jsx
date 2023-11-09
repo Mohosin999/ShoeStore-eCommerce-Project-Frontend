@@ -85,9 +85,52 @@ const MobileNavbar = () => {
 
   return (
     // <nav className="min-w-[70vw] flex flex-col z-30 items-center justify-between fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600/90 rounded-lg backdrop-blur-md py-32">
-    <nav className="w-full h-auto z-30 fixed bg-blue-600/90 rounded-lg backdrop-blur-md">
-      <div className="flex items-center justify-between px-8 py-5">
-        <div className="w-full flex flex-col font-medium border border-gray-100 rounded-sm bg-gray-100">
+    <nav className="w-full min-h-screen z-30 fixed bg-fuchsia-900 rounded-lg backdrop-blur-md">
+      {/*
+       * ================================================================================
+       * Cart and Wishlist icons.
+       * ================================================================================
+       */}
+      <div className="flex items-center justify-end mt-4 px-6">
+        {/* Favorite & Cart Icons */}
+        {/* Wishlist icon start */}
+        <Link href={"/wishlist"}>
+          <div
+            className={`w-8 md:w-12 h-8 md:h-12 mr-4 rounded-full flex justify-center items-center bg-green-600 hover:bg-green-700 cursor-pointer relative`}
+          >
+            <IoMdHeartEmpty className="text-gray-100 text-[19px] md:text-[24px] active:scale-95" />
+            {wishlistItems.length > 0 && (
+              <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-gray-100 text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
+                {wishlistItems.length} {/* Show how much items in wishlist. */}
+              </div>
+            )}
+          </div>
+        </Link>
+        {/* Wishlist icon end */}
+
+        {/* Cart icon start */}
+        <Link href={"/cart"}>
+          <div
+            className={`w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center bg-green-600 hover:bg-green-700 cursor-pointer relative`}
+          >
+            <BsCart className="text-gray-100 text-[15px] md:text-[20px] active:scale-95" />
+            {items.length > 0 && (
+              <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-gray-100 text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
+                {items.length} {/* Show how much items in cart. */}
+              </div>
+            )}
+          </div>
+        </Link>
+        {/* Cart icon end */}
+      </div>
+
+      {/*
+       * ================================================================================
+       * Menu link
+       * ================================================================================
+       */}
+      <div className="flex items-center justify-between px-8 py-6">
+        <div className="w-full flex flex-col font-medium">
           <NavLink
             href="/"
             label="Home"
@@ -98,8 +141,7 @@ const MobileNavbar = () => {
           <NavLink
             href=""
             label="Categories"
-            onMouseEnter={() => setShowCatMenu(true)}
-            onMouseLeave={() => setShowCatMenu(false)}
+            onClick={() => setShowCatMenu(!showCatMenu)}
             showCatMenu={showCatMenu}
             catMenuComponent={
               // Component to show category's all menu.
@@ -125,46 +167,8 @@ const MobileNavbar = () => {
             </>
           )}
         </div>
-
-        {/*
-         * ========================================================================================
-         * Cart and Wishlist icons.
-         * ========================================================================================
-         */}
-        <div className="pl-8">
-          {/* Favorite & Cart Icons */}
-          {/* Wishlist icon start */}
-          <Link href={"/wishlist"}>
-            <div
-              className={`w-8 md:w-12 h-8 md:h-12 mb-4 rounded-full flex justify-center items-center bg-green-600 hover:bg-green-700 cursor-pointer relative`}
-            >
-              <IoMdHeartEmpty className="text-gray-100 text-[19px] md:text-[24px] active:scale-95" />
-              {wishlistItems.length > 0 && (
-                <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-gray-100 text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                  {wishlistItems.length}{" "}
-                  {/* Show how much items in wishlist. */}
-                </div>
-              )}
-            </div>
-          </Link>
-          {/* Wishlist icon end */}
-
-          {/* Cart icon start */}
-          <Link href={"/cart"}>
-            <div
-              className={`w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center bg-green-600 hover:bg-green-700 cursor-pointer relative`}
-            >
-              <BsCart className="text-gray-100 text-[15px] md:text-[20px] active:scale-95" />
-              {items.length > 0 && (
-                <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-gray-100 text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                  {items.length} {/* Show how much items in cart. */}
-                </div>
-              )}
-            </div>
-          </Link>
-          {/* Cart icon end */}
-        </div>
       </div>
+
       {/* Right section of the navbar - end */}
     </nav>
   );
