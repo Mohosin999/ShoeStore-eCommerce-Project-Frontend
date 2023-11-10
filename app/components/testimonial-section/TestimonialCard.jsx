@@ -13,9 +13,9 @@ import Image from "next/image";
 const TestimonialCard = ({ img, name, comment }) => {
   return (
     <div className="w-full flex flex-wrap items-center bg-gray-800 shadow-md overflow-hidden">
-      <div className="md:flex items-center">
+      <div className="flex items-center md:py-4 lg:py-0 xl:py-4">
         {/* Product's Image */}
-        <div className="md:flex-shrink-0 pl-4 w-1/3">
+        <div className="flex-shrink-0 pl-4 w-1/3">
           <Image src={img} width={500} alt="shoe" />
         </div>
         <div className="p-3 md:p-8">
@@ -24,7 +24,7 @@ const TestimonialCard = ({ img, name, comment }) => {
             {name}
           </div>
           {/* Commenter's comment */}
-          <p className="mt-2 text-gray-400">{comment}</p>
+          <p className="mt-2 text-gray-400 text-xs">{comment}</p>
         </div>
       </div>
     </div>
