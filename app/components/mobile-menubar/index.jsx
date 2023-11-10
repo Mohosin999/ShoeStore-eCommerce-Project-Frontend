@@ -131,11 +131,7 @@ const MobileNavbar = () => {
        */}
       <div className="flex items-center justify-between px-8 py-6">
         <div className="w-full flex flex-col font-medium">
-          <NavLink
-            href="/"
-            label="Home"
-            // className={"hover:!bg-green-500 w-full block"}
-          />
+          <NavLink href="/" label="Home" />
           <NavLink href="/products" label="Products" />
           {/* Category task related. */}
           <NavLink

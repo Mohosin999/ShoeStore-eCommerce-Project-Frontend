@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
  */
 const CategoryMenu = ({ setShowCatMenu, categoryData }) => {
   return (
-    <ul className="mt-3 min-w-[250px] px-1 shadow-lg absolute ml-28 lg:ml-0 z-40">
+    <ul className="mt-3 min-w-[250px] px-1 shadow-lg absolute ml-24 md:ml-40 lg:ml-0 z-40">
       {/* Map the category data object. */}
       {categoryData?.data?.map((item) => (
         <Link

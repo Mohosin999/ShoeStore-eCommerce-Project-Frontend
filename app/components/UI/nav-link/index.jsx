@@ -16,7 +16,7 @@ const NavLink = ({
       <Link
         href={href}
         onClick={onClick}
-        className={`text-gray-200 block hover:bg-gray-600 lg:hover:bg-green-700 px-4 py-2 border-b lg:border-b-0 border-solid border-gray-600 hover:border-b-none relative ${className}`}
+        className={`text-gray-200 block hover:bg-gray-600 lg:hover:bg-green-700 px-4 py-2 border-b lg:border-b-0 border-solid border-gray-600 hover:border-b-none mb-2 md:mb-4 lg:mb-0 relative ${className}`}
       >
         {/* Give space between label name and icon, if icon exist. */}
         {

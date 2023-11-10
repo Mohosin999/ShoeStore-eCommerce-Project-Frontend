@@ -43,15 +43,15 @@ const HeroAreaCarousel = () => {
       prevSlide === 0 ? images.length - 1 : prevSlide - 1
     );
   };
-  // The following functions are to maintain the slides properly - end
+  // The following functions are to smaintain the slides properly - end
 
   return (
     <div
-      className="relative overflow-hidden w-96 h-96 rounded-full bg-white ml-auto top-[-15rem] right-0"
+      className="relative overflow-hidden w-56 h-56 lg:w-72 lg:h-72 xl:w-96 xl:h-96 rounded-full bg-white md:ml-auto mt-6 md:mt-0 md:top-[-10rem] lg:top-[-13.5rem] xl:top-[-15rem] lg:right-0"
       data-carousel="slide"
     >
       {/* This portion is for the images of the slide - start */}
-      <div className="relative h-56 marker:rounded-lg md:h-96">
+      <div className="relative h-56 marker:rounded-lg xl:h-96">
         {/* Map the images array that is defined above. */}
         {images.map((image, index) => (
           <div
