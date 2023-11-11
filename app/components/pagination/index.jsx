@@ -39,7 +39,7 @@ const PaginationComponent = ({ currentPage, setCurrentPage, totalPages }) => {
       {/* Previous button */}
       <button
         onClick={handlePreviousPage}
-        className={`mx-2 px-3 py-3 rounded-full focus:outline-none ${
+        className={`mx-1 lg:mx-2 px-2 lg:px-3 py-2 lg:py-3 rounded-full focus:outline-none ${
           currentPage === 1
             ? "bg-gray-300 text-gray-700 cursor-not-allowed"
             : "bg-blue-500 text-white"
@@ -57,7 +57,7 @@ const PaginationComponent = ({ currentPage, setCurrentPage, totalPages }) => {
         <button
           key={index + 1}
           onClick={() => handlePageChange(index + 1)}
-          className={`mx-2 px-4 py-2 rounded-full focus:outline-none ${
+          className={`mx-1 lg:mx-2 px-3 lg:px-4 py-2 text-xs lg:text-base rounded-full focus:outline-none ${
             currentPage === index + 1
               ? "bg-blue-500 text-white"
               : "bg-gray-300 text-gray-700"
@@ -70,7 +70,7 @@ const PaginationComponent = ({ currentPage, setCurrentPage, totalPages }) => {
       {/* Next button */}
       <button
         onClick={handleNextPage}
-        className={`mx-2 px-3 py-3 rounded-full focus:outline-none ${
+        className={`mx-1 lg:mx-2 px-2 lg:px-3 py-2 lg:py-3 rounded-full focus:outline-none ${
           currentPage === totalPages
             ? "bg-gray-300 text-gray-700 cursor-not-allowed"
             : "bg-blue-500 text-white"

@@ -11,10 +11,9 @@ import "swiper/css/thumbs";
 import Wrapper from "@/app/components/wrapper";
 import Title from "@/app/components/UI/title";
 import Heading from "@/app/components/UI/heading";
-import Button from "@/app/components/UI/button2";
 import DataSlider from "@/app/components/data-slider";
-import ButtonLink from "@/app/components/UI/button";
 import ProductImagesSlider from "./ProductImagesSlider";
+import Button from "@/app/components/UI/button";
 
 /**
  * Single product page component.
@@ -165,76 +164,83 @@ const ProductPage = ({ params }) => {
   }, []);
 
   return (
-    <Wrapper>
-      <div className="flex mt-24">
-        {/* Left side product's images. */}
-        <div className="w-2/4 px-6 py-3">
-          <ProductImagesSlider images={commonUrl?.images?.data} />
-        </div>
+    <div>
+      <Wrapper>
+        <div className="flex mt-24">
+          {/* Left side product's images. */}
+          <div className="w-2/4 px-6 py-3">
+            <ProductImagesSlider images={commonUrl?.images?.data} />
+          </div>
 
-        {/* Right side product's details - start. */}
-        <div className="w-2/4 px-6 py-3 text-white">
-          {/* If data exist, execute the following codes. */}
-          {product?.data && (
-            <>
-              {/* Product title */}
-              <div>
-                <Title title={commonUrl?.name} />
-              </div>
-
-              {/* Product description */}
-              <div>
-                <Heading name="Description:" />
-                {commonUrl?.description}
-              </div>
-
-              {/* Product price - start */}
-              <div>
-                <Heading name="Price" className="mt-6" />
-                <div className="flex items-center">
-                  {commonUrl?.discounted_price ? (
-                    <p className="line-through">
-                      Original Price: ${commonUrl?.original_price}
-                    </p>
-                  ) : (
-                    <p>Price: ${commonUrl?.original_price}</p>
-                  )}
-
-                  {/* If discounted price exist, this portion will be executed. */}
-                  {commonUrl?.discounted_price && (
-                    <p className="ml-10">
-                      Price: ${commonUrl?.discounted_price}
-                    </p>
-                  )}
+          {/* Right side product's details - start. */}
+          <div className="w-2/4 px-6 py-3 text-white">
+            {/* If data exist, execute the following codes. */}
+            {product?.data && (
+              <>
+                {/* Product title */}
+                <div>
+                  <Title title={commonUrl?.name} />
                 </div>
-              </div>
-              {/* Product price area - end */}
 
-              {/* Buttons */}
-              <div className="relative flex items-center mt-10">
-                <Button label="Add to Cart" onClick={addToCartFunc} />
-                <Button
-                  label="Add to Wishlist"
-                  onClick={addToWishlistFunc}
-                  className="ml-3"
-                />
-                <ButtonLink
-                  href="/products"
-                  label="Continue Shopping"
-                  className="ml-3"
-                />
-              </div>
-            </>
-          )}
+                {/* Product description */}
+                <div>
+                  <Heading name="Description:" />
+                  {commonUrl?.description}
+                </div>
+
+                {/* Product price - start */}
+                <div>
+                  <Heading name="Price" className="mt-6" />
+                  <div className="flex items-center">
+                    {commonUrl?.discounted_price ? (
+                      <p className="line-through">
+                        Original Price: ${commonUrl?.original_price}
+                      </p>
+                    ) : (
+                      <p>Price: ${commonUrl?.original_price}</p>
+                    )}
+
+                    {/* If discounted price exist, this portion will be executed. */}
+                    {commonUrl?.discounted_price && (
+                      <p className="ml-10">
+                        Price: ${commonUrl?.discounted_price}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {/* Product price area - end */}
+
+                {/*
+                 * =====================
+                 * Buttons
+                 * =====================
+                 */}
+                <div className="relative flex items-center mt-10">
+                  <Button href="" label="Add to Cart" onClick={addToCartFunc} />
+                  <Button
+                    href=""
+                    label="Add to Wishlist"
+                    onClick={addToWishlistFunc}
+                    className="ml-3"
+                  />
+                  <Button
+                    href="/products"
+                    label="Continue Shopping"
+                    className="ml-3"
+                  />
+                </div>
+              </>
+            )}
+          </div>
+          {/* Right side product's details - end. */}
         </div>
-        {/* Right side product's details - end. */}
-      </div>
+      </Wrapper>
 
       {/* The following "div" shows the related product part. */}
       <div className="mt-5">
         <DataSlider data={relatedProducts?.data} title="Related Products" />
       </div>
-    </Wrapper>
+    </div>
   );
 };
 

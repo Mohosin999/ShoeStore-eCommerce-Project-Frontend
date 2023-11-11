@@ -38,7 +38,7 @@ const HeroArea = () => {
           <Button href="/contact" label="Contact Us" />
 
           {/* Button above the carousel (HeroAreaCarousel) component */}
-          <div className="absolute ml-auto z-40 top-52 right-24 md:top-6 md:right-32 lg:top-5 lg:right-40 xl:top-24 xl:right-52">
+          <div className="absolute ml-auto z-40 top-52 right-24 md:top-6 md:right-32 lg:top-5 lg:right-44 xl:top-24 xl:right-52">
             <Button href="/products" label="Shop Now" />
           </div>
         </div>

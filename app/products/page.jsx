@@ -90,17 +90,17 @@ const ProductsPage = () => {
 
   return (
     <Wrapper>
-      <div className="mt-32">
+      <div className="mt-[6.5rem] lg:mt-32">
         {/* Page title */}
-        <h1 className="mb-6 text-4xl text-gray-100 text-center font-bold">
+        <h1 className="mb-4 lg:mb-6 text-2xl md:text-3xl lg:text-4xl text-gray-100 text-center font-bold">
           Welcome to House of Products 🙂
         </h1>
 
         {/* Searching, filtering, sorting - start */}
-        <div className="flex items-center justify-between text-gray-100">
+        <div className="flex flex-col lg:flex-row items-center justify-start lg:justify-between text-gray-200">
           {/* Search or filter by name. */}
-          <div className="flex flex-col">
-            <label htmlFor="search" className="text-lg mb-1">
+          <div className="flex flex-col mb-2 lg:mb-0">
+            <label htmlFor="search" className="text-sm lg:text-lg mb-1">
               Search Product by Name
             </label>
             <div className="flex">
@@ -112,7 +112,7 @@ const ProductsPage = () => {
                 name="name"
                 value={filterOption.name}
                 onChange={handleFilterChange}
-                className="w-[22rem] text-gray-900 text-base py-2 px-1 rounded-sm"
+                className="w-[22rem] md:w-[43rem] lg:w-[22rem] text-gray-900 text-sm lg:text-base py-0.5 md:py-2 px-1 rounded-sm"
               />
               {filterOption.name && (
                 <button
@@ -126,8 +126,11 @@ const ProductsPage = () => {
           </div>
 
           {/* Filter by discounted price */}
-          <div className="flex flex-col">
-            <label htmlFor="discounted_price" className="text-lg mb-1">
+          <div className="flex flex-col mb-2 lg:mb-0">
+            <label
+              htmlFor="discounted_price"
+              className="text-sm lg:text-lg mb-1"
+            >
               Filter by Discount Price
             </label>
             <select
@@ -135,7 +138,7 @@ const ProductsPage = () => {
               name="discounted_price"
               value={filterOption.discounted_price}
               onChange={handleFilterChange}
-              className="w-[14rem] text-gray-900 text-base py-2 px-1 rounded-sm"
+              className="w-[22rem] md:w-[43rem] lg:w-[14rem] text-gray-900 text-sm lg:text-base py-0.5 md:py-2 px-1 rounded-sm"
             >
               <option value="">Select Price</option>
               <option value="12">12</option>
@@ -149,8 +152,8 @@ const ProductsPage = () => {
           </div>
 
           {/* Sorting */}
-          <div className="flex flex-col">
-            <label htmlFor="sortOption" className="text-lg mb-1">
+          <div className="flex flex-col mb-2 lg:mb-0">
+            <label htmlFor="sortOption" className="text-sm lg:text-lg mb-1">
               Sort Products
             </label>
             <select
@@ -158,7 +161,7 @@ const ProductsPage = () => {
               name="sortOption"
               value={sortOption}
               onChange={handleSortChange}
-              className="w-[14rem] text-gray-900 text-base py-2 px-1 rounded-sm"
+              className="w-[22rem] md:w-[43rem] lg:w-[14rem] text-gray-900 text-sm lg:text-base py-0.5 md:py-2 px-1 rounded-sm"
             >
               <option value="">None</option>
               <option value="asc">Ascending</option>
@@ -175,7 +178,7 @@ const ProductsPage = () => {
           </div>
         ) : (
           <div className="w-full mt-6">
-            <div className="grid grid-cols-3 gap-x-5 gap-y-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-10">
               {products?.data?.map((item) => (
                 <ProductCard key={item.id} item={item} />
               ))}

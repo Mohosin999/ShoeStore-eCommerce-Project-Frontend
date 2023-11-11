@@ -93,7 +93,7 @@ const HeroAreaCarousel = () => {
       {/* This portion is for the previous button of the slide - start */}
       <button
         type="button"
-        className="absolute top-[18.5rem] left-[18rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-gray-400 hover:bg-gray-700 cursor-pointer group focus:outline-none"
+        className="absolute top-[18.5rem] left-[18rem] z-30 flex items-center justify-center w-10 h-10 rounded-full bg-yellow-500 hover:bg-gray-700 cursor-pointer group focus:outline-none"
         onClick={prevSlide}
         data-carousel-prev
       >
