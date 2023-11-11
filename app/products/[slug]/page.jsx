@@ -215,18 +215,19 @@ const ProductPage = ({ params }) => {
                  * Buttons
                  * =====================
                  */}
-                <div className="relative flex items-center mt-10">
+
+                <div className="relative flex flex-col md:flex-row items-center space-y-4 md:space-y-0 mt-8 md:mt-10">
                   <Button href="" label="Add to Cart" onClick={addToCartFunc} />
                   <Button
                     href=""
                     label="Add to Wishlist"
                     onClick={addToWishlistFunc}
-                    className="ml-3"
+                    className="md:ml-3"
                   />
                   <Button
                     href="/products"
                     label="Continue Shopping"
-                    className="ml-3"
+                    className="md:ml-3"
                   />
                 </div>
               </>
@@ -237,8 +238,12 @@ const ProductPage = ({ params }) => {
       </Wrapper>
 
       {/* The following "div" shows the related product part. */}
-      <div className="mt-5">
-        <DataSlider data={relatedProducts?.data} title="Related Products" />
+      <div>
+        <DataSlider
+          data={relatedProducts?.data}
+          title="Related Products"
+          className="!mt-8 lg:!mt-16"
+        />
       </div>
     </div>
   );

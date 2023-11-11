@@ -20,7 +20,7 @@ import LoadingSpinner from "../loading-spinner";
  * @param {string} title - Give your desire title here.
  * @returns {JSX.Element} - Returns a component to display fetched data.
  */
-const DataSlider = ({ data, title }) => {
+const DataSlider = ({ data, title, className }) => {
   const [isLoading, setIsLoading] = useState(true); // Initially set to true
 
   // Hook for change 'isLoading' state's value (boolean) based on data.
@@ -41,7 +41,7 @@ const DataSlider = ({ data, title }) => {
       ) : (
         <div>
           {/* Title component for the swiper carousel */}
-          <Title title={title} className="mt-20" />
+          <Title title={title} className={`mt-16 ${className}`} />
           <Swiper
             navigation={true}
             modules={[Navigation, Pagination, A11y]}

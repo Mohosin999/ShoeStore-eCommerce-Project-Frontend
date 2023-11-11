@@ -73,13 +73,17 @@ const CartPage = () => {
     }
   };
 
+  const handleClearAll = () => {
+    setShowClearAllPopup(true);
+  };
+
   return (
     <Wrapper>
       <div className="relative mt-[6.5rem] lg:mt-32 min-h-screen text-center">
         {items.length > 0 && (
           <>
             {/* Page title */}
-            <h1 className="text-2xl md:text-3xl lg:text-4xl text-gray-200 font-bold mb-12">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl text-gray-200 font-bold md:mb-8 lg:mb-12">
               Shopping Cart
             </h1>
 
@@ -87,7 +91,7 @@ const CartPage = () => {
             <div className="text-gray-200 w-full py-3 lg:py-0 lg:w-4/5 mx-auto">
               <table className="w-full text-center mt-6">
                 <thead>
-                  <tr className="text-2xl text-green-500">
+                  <tr className="text-xs md:text-xl lg:text-2xl text-green-500">
                     <th>Product</th>
                     <th>Quantity</th>
                     <th>Price</th>
@@ -102,7 +106,7 @@ const CartPage = () => {
                       key={item.id}
                       className="text-lg shadow-sm shadow-gray-700"
                     >
-                      <td className="py-4 lg:pl-6 flex items-center justify-start">
+                      <td className="py-2 lg:py-4 pl-1 md:pl-2 lg:pl-4 flex items-center justify-start">
                         {/* Item image */}
                         <Image
                           width={200}
@@ -111,24 +115,30 @@ const CartPage = () => {
                             item?.attributes?.thumbnail?.data?.attributes?.url
                           }
                           alt="product-image"
-                          className="w-16 h-auto pr-4"
+                          className="w-10 md:w-14 lg:w-16 h-auto pr-2 md:pr-4"
                         />
                         {/* Item title or name */}
-                        {item.attributes.name}
+                        <span className="text-xs md:text-lg lg:text-xl">
+                          {item.attributes.name}
+                        </span>
                       </td>
-                      <td className=" py-4">{item.quantity}</td>{" "}
+                      <td className="text-xs md:text-lg lg:text-xl py-2 lg:py-4">
+                        {item.quantity}
+                      </td>{" "}
                       {/* Item quantity */}
                       {/* Item price */}
-                      <td className=" py-4">
+                      <td className="text-xs md:text-lg lg:text-xl py-2 lg:py-4">
                         {/* getPrice function to get item's price. */}
                         {getPrice(
                           item.attributes.discounted_price,
                           item.attributes.original_price
                         )}
                       </td>
-                      <td className=" py-4">{item.price.toFixed(1)}</td>
+                      <td className="text-xs md:text-lg lg:text-xl py-2 lg:py-4">
+                        {item.price.toFixed(1)}
+                      </td>
                       {/* Buttons for quantity handle - start */}
-                      <td className=" py-4">
+                      <td className="md:py-2 lg:py-4">
                         {/* Decrease quantity button - start */}
                         <button
                           title={
@@ -138,7 +148,7 @@ const CartPage = () => {
                           }
                           onClick={() => handleDecrement(item)}
                           disabled={item.quantity === 1}
-                          className={`px-3 mr-2 text-lg rounded-md ${
+                          className={`px-1.5 md:px-2 lg:px-3 lg:py-1 mr-1 md:mr-2 text-xs md:text-base rounded-full md:rounded-md ${
                             item.quantity === 1
                               ? "bg-gray-400"
                               : "bg-green-600 hover:scale-105 active:scale-100"
@@ -156,14 +166,14 @@ const CartPage = () => {
                               : "Increase the product quantity"
                           }
                           onClick={() => handleIncrement(item)}
-                          className="px-3 mr-2 text-lg rounded-md bg-green-600 hover:scale-105 active:scale-100"
+                          className="px-1 md:px-2 lg:px-3 lg:py-1 mr-1 md:mr-2 text-xs md:text-base rounded-full md:rounded-md bg-green-600 hover:scale-105 active:scale-100"
                         >
                           +
                         </button>
                         {/* Increase quantity button - end */}
                       </td>
                       {/* Buttons for quantity handle - end */}
-                      <td className="py-4">
+                      <td className="text-xs md:text-base lg:text-xl py-2 lg:py-4">
                         {/* Button for deleting product - start */}
                         <button
                           onClick={() => {
@@ -192,23 +202,20 @@ const CartPage = () => {
             {/* Table of items - end */}
 
             {/* Grand total, clear all and checkout button's portion - start */}
-            <div className="w-full mt-8">
+            <div className="w-full md:mt-3 lg:mt-8">
               {/* Grand Total Display */}
-              <div className="mr-32 text-gray-100 text-2xl font-bold my-6 flex items-center justify-end">
+              <div className="mr-3 md:mr-6 lg:mr-32 text-gray-100 text-sm md:text-2xl font-bold my-1 mb-6 md:mb-8 lg:mb-10 md:my-4 lg:my-6 flex items-center justify-end">
                 Grand Total:{" "}
-                <span className="text-green-400 ml-8">
+                <span className="text-green-400 ml-4 md:ml-6 lg:ml-8">
                   ${grandTotal.toFixed(2)}
                 </span>
               </div>
 
               {/* Clear all product button - start */}
-              <button
-                onClick={() => setShowClearAllPopup(true)}
-                title="Clear all products"
-                className="bg-green-600 hover:bg-green-700 text-gray-200 px-6 py-2.5 rounded-full mb-6"
-              >
-                Clear All
-              </button>
+              <div className="mb-4 xl:mb-8">
+                <Button href="" label="Clear All" onClick={handleClearAll} />
+              </div>
+
               {/* If state is true, show the confirmation dialog to delete. */}
               {showClearAllPopup && (
                 <ConfirmationPopup
@@ -219,14 +226,16 @@ const CartPage = () => {
               {/* Clear all product button - end */}
 
               {/* Checkout button */}
-              <Button
-                /**
-                 * If authenticated user, then go to checkout page.
-                 * Otherwise, go to login page.
-                 */
-                href={token ? "/checkout" : "/login"}
-                label="Checkout"
-              />
+              <div>
+                <Button
+                  /**
+                   * If authenticated user, then go to checkout page.
+                   * Otherwise, go to login page.
+                   */
+                  href={token ? "/checkout" : "/login"}
+                  label="Checkout"
+                />
+              </div>
             </div>
             {/* Grand total, clear all and checkout button's portion - end */}
           </>

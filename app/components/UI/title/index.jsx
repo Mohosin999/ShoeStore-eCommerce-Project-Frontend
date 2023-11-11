@@ -10,7 +10,11 @@ import PropTypes from "prop-types";
  */
 const Title = ({ title, className }) => {
   return (
-    <div class={`text-3xl text-orange-400 font-bold mb-6 ${className || ""}`}>
+    <div
+      class={`text-2xl md:text-3xl text-orange-400 font-bold mb-6 ${
+        className || ""
+      }`}
+    >
       {title}
     </div>
   );
