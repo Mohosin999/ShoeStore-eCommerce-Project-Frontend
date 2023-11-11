@@ -75,16 +75,16 @@ const CartPage = () => {
 
   return (
     <Wrapper>
-      <div className="relative mt-32 min-h-screen text-center">
+      <div className="relative mt-[6.5rem] lg:mt-32 min-h-screen text-center">
         {items.length > 0 && (
           <>
             {/* Page title */}
-            <h1 className="text-gray-100 text-4xl font-bold mb-12">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl text-gray-200 font-bold mb-12">
               Shopping Cart
             </h1>
 
             {/* Table of items - start */}
-            <div className="text-gray-100 w-4/5 mx-auto">
+            <div className="text-gray-200 w-full py-3 lg:py-0 lg:w-4/5 mx-auto">
               <table className="w-full text-center mt-6">
                 <thead>
                   <tr className="text-2xl text-green-500">
@@ -102,7 +102,7 @@ const CartPage = () => {
                       key={item.id}
                       className="text-lg shadow-sm shadow-gray-700"
                     >
-                      <td className="py-4 pl-6 flex items-center justify-start">
+                      <td className="py-4 lg:pl-6 flex items-center justify-start">
                         {/* Item image */}
                         <Image
                           width={200}
@@ -239,7 +239,7 @@ const CartPage = () => {
          */}
         {items.length < 1 && (
           <div className="flex flex-col items-center justify-center my-16">
-            <h1 className="text-4xl text-gray-100 font-bold">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl text-gray-200 font-bold">
               Empty Cartlist 😞
             </h1>
             <Image

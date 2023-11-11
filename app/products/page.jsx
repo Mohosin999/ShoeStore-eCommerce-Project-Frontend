@@ -178,7 +178,7 @@ const ProductsPage = () => {
           </div>
         ) : (
           <div className="w-full mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-6 md:gap-y-10">
               {products?.data?.map((item) => (
                 <ProductCard key={item.id} item={item} />
               ))}

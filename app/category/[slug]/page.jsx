@@ -47,8 +47,17 @@ const CategoryPage = ({ params }) => {
           {/* Show loading spinner if the page is loading. */}
         </div>
       ) : (
-        <div className="mt-32">
-          <div className="grid grid-cols-3 gap-x-5 gap-y-10">
+        <div className="mt-[6.5rem] lg:mt-32">
+          {/* Page title */}
+          <h1 className="mb-6 text-2xl md:text-3xl lg:text-4xl text-gray-100 text-center font-bold">
+            {categoryData?.data[0]?.attributes?.category?.data?.attributes
+              ?.title !== undefined &&
+              categoryData?.data[0]?.attributes?.category?.data?.attributes
+                ?.title}
+          </h1>
+
+          {/* Product's card */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-6 md:gap-y-10">
             {categoryData?.data?.map((item) => (
               <ProductCard key={item.id} item={item} />
             ))}
