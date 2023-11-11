@@ -166,14 +166,14 @@ const ProductPage = ({ params }) => {
   return (
     <div>
       <Wrapper>
-        <div className="flex mt-24">
+        <div className="lg:flex mt-24 lg:mt-28">
           {/* Left side product's images. */}
-          <div className="w-2/4 px-6 py-3">
+          <div className="w-full lg:w-2/4 px-4 md:px-6 py-3">
             <ProductImagesSlider images={commonUrl?.images?.data} />
           </div>
 
           {/* Right side product's details - start. */}
-          <div className="w-2/4 px-6 py-3 text-white">
+          <div className="w-full lg:w-2/4 px-4 md:px-6 py-3 text-white">
             {/* If data exist, execute the following codes. */}
             {product?.data && (
               <>
