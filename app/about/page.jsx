@@ -10,7 +10,7 @@ import aboutPageImage from "../../public/aboutPage.jpg";
 const About = () => {
   return (
     <Wrapper>
-      <section className="mt-32 font-poppins">
+      <section className="mt-[6.5rem] lg:mt-32 font-poppins">
         <div className="flex flex-wrap ">
           <div className="w-full px-4 mb-10 lg:w-1/2 lg:mb-0 ">
             <div className="lg:max-w-md">
@@ -18,7 +18,7 @@ const About = () => {
                 <span className="text-sm text-gray-300 uppercase">
                   Who we are?
                 </span>
-                <h1 className="mt-2 text-3xl font-black text-gray-200 md:text-5xl">
+                <h1 className="mt-2 text-2xl md:text-3xl lg:text-5xl font-black text-gray-200">
                   About Us
                 </h1>
               </div>

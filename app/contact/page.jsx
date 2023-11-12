@@ -8,15 +8,15 @@ import Wrapper from "../components/wrapper";
 const ContactPage = () => {
   return (
     <Wrapper>
-      <section className="mt-32">
-        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-200 ">
+      <section className="mt-[6.5rem] lg:mt-32">
+        <h2 className="mb-4 text-2xl md:text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-gray-200 ">
           Contact Us
         </h2>
-        <p className="mb-2 font-light text-center text-gray-400 text-xl">
+        <p className="mb-2 font-light text-center text-gray-400 text-sm md:text-base lg:text-lg">
           Got a technical issue? Want to send feedback about a beta feature?
           Need details about our Business plan? Let us know.
         </p>
-        <p className="mb-8 lg:mb-16 font-light text-center text-gray-400 text-xl">
+        <p className="mb-8 lg:mb-16 font-light text-center text-gray-400  text-sm md:text-base lg:text-lg">
           <span className="text-yellow-400 text-2xl">[Note]: </span>This section
           is not implemented.
         </p>

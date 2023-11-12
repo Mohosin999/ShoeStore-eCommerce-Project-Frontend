@@ -79,7 +79,7 @@ const CartPage = () => {
 
   return (
     <Wrapper>
-      <div className="relative mt-[6.5rem] lg:mt-32 min-h-screen text-center">
+      <div className="relative mt-[6.5rem] lg:mt-32 text-center">
         {items.length > 0 && (
           <>
             {/* Page title */}

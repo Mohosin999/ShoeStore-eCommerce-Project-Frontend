@@ -74,14 +74,14 @@ const ProductPage = ({ params }) => {
       toast.error("The product is already present on the cart", {
         hideProgressBar: true,
         autoClose: 3000,
-        position: "bottom-right",
+        position: "bottom-left",
       });
     } else {
       addToCart(currentProduct);
       toast.success("The product is added successfully!", {
         hideProgressBar: true,
         autoClose: 3000,
-        position: "bottom-right",
+        position: "bottom-left",
       });
     }
   };
@@ -108,14 +108,14 @@ const ProductPage = ({ params }) => {
       toast.error("The product is already present on the wishlist", {
         hideProgressBar: true,
         autoClose: 3000,
-        position: "bottom-right",
+        position: "bottom-left",
       });
     } else {
       addToWishlist(currentProduct);
       toast.success("The product is added successfully!", {
         hideProgressBar: true,
         autoClose: 3000,
-        position: "bottom-right",
+        position: "bottom-left",
       });
     }
   };

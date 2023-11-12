@@ -9,7 +9,7 @@ import { getEmailFromLocalCookie } from "../lib/auth";
 import { fetchedDataFromBackend, getPrice } from "../lib/utils";
 // Components
 import Wrapper from "../components/wrapper";
-import Button from "../components/UI/button2";
+import Button from "../components/UI/button";
 import LoadingSpinner from "../components/loading-spinner";
 
 /**
@@ -138,26 +138,26 @@ const Dashboard = () => {
           <LoadingSpinner />
         </div>
       ) : (
-        <div className="mt-32">
+        <div className="mt-[6.5rem] lg:mt-32">
           {/* Page title */}
-          <h2 className="text-gray-200 text-4xl text-center font-bold">
+          <h2 className="text-gray-200 text-2xl md:text-3xl lg:text-4xl mb-4 lg:mb-6 text-center font-bold">
             Dashboard
           </h2>
 
-          <div className="flex">
+          <div className="flex flex-col lg:flex-row">
             {/*
              * ==========================================================================
              * Left side of dashboard.
              * ==========================================================================
              */}
-            <section className="w-1/2">
-              <h2 className="text-2xl text-center font-medium text-green-600">
+            <section className="w-full lg:w-1/2 mb-6 lg:mb-0">
+              <h2 className="text-xl lg:text-2xl text-center font-medium text-green-600">
                 Profile Information
               </h2>
               <div>
                 {/* User name - start */}
                 <div className="flex flex-col mt-3">
-                  <label className="text-lg text-gray-200 mb-1">
+                  <label className="text-base lg:text-lg text-gray-200 mb-1">
                     You can change your name.
                   </label>
                   <input
@@ -170,14 +170,14 @@ const Dashboard = () => {
                         [e.target.name]: e.target.value,
                       })
                     }
-                    className="w-full py-2 px-4"
+                    className="w-full py-1 lg:py-2 px-4 text-sm lg:text-base"
                   />
                 </div>
                 {/* User name - end */}
 
                 {/* User email - start */}
                 <div className="flex flex-col mt-3">
-                  <label className="text-lg text-gray-200 mb-1">
+                  <label className="text-base lg:text-lg text-gray-200 mb-1">
                     You can change your email.
                   </label>
                   <input
@@ -190,14 +190,14 @@ const Dashboard = () => {
                         [e.target.name]: e.target.value,
                       })
                     }
-                    className="w-full py-2 px-4"
+                    className="w-full py-1 lg:py-2 px-4 text-sm lg:text-base"
                   />
                 </div>
                 {/* User email - end */}
 
                 {/* User about - start */}
                 <div className="flex flex-col mt-3">
-                  <label className="text-lg text-gray-200 mb-1">
+                  <label className="text-base lg:text-lg text-gray-200 mb-1">
                     You can change your about.
                   </label>
                   <textarea
@@ -209,17 +209,19 @@ const Dashboard = () => {
                         [e.target.name]: e.target.value,
                       })
                     }
-                    className="resize-none w-full h-48 py-2 px-4"
+                    className="resize-none w-full h-48 py-1 lg:py-2 px-4 text-sm lg:text-base"
                   ></textarea>
                 </div>
                 {/* User about - end */}
 
                 {/* Button for save all changes. */}
-                <Button
-                  onClick={handleUserUpdate}
-                  label="Save Changes"
-                  className="mt-5"
-                />
+                <div className="mt-6">
+                  <Button
+                    href=""
+                    onClick={handleUserUpdate}
+                    label="Save Changes"
+                  />
+                </div>
               </div>
             </section>
 
@@ -228,16 +230,16 @@ const Dashboard = () => {
              * Right side of dashboard.
              * ==========================================================================
              */}
-            <section className="w-1/2">
-              <h2 className=" text-2xl text-center font-medium text-green-600">
+            <section className="w-full lg:w-1/2">
+              <h2 className="text-xl lg:text-2xl text-center font-medium text-green-600">
                 Other Details
               </h2>
 
-              <div className="mt-4 ml-20 text-lg text-gray-200 text-start">
+              <div className="mt-4 lg:ml-20 text-base lg:text-lg text-gray-200 text-start">
                 {/* paragraph for show how much time the user bought from here. */}
                 <p className="mb-1">
                   You have ordered{" "}
-                  <span className="text-2xl text-green-600 mx-2">
+                  <span className="text-xl lg:text-2xl text-green-600 mx-2">
                     {
                       userOrderInfo?.data?.filter(
                         (user) => user.attributes.email === emailFromCookies
@@ -250,7 +252,7 @@ const Dashboard = () => {
                 {/* paragraph for show how much dollor do I purchased so far. */}
                 <p>
                   You have purchased items worth
-                  <span className="text-2xl text-green-600 mx-2">
+                  <span className="text-xl lg:text-2xl text-green-600 mx-2">
                     {userOrderInfo?.data
                       ?.filter(
                         (user) => user.attributes.email === emailFromCookies
@@ -361,7 +363,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                 ) : (
-                  <p className="text-3xl text-red-500 text-center">
+                  <p className="text-2xl lg:text-3xl text-red-500 text-center">
                     No Recent Order is Present🙂
                   </p>
                 )}

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { getEmailFromLocalCookie, getUserFromLocalCookie } from "../lib/auth";
 import Wrapper from "../components/wrapper";
+import Button from "../components/UI/button";
 
 const CheckOut = () => {
   const [data, setData] = useState({
@@ -131,23 +132,23 @@ const CheckOut = () => {
 
   return (
     <Wrapper>
-      <div className="mt-32 min-h-screen body-font relative">
+      <div className="mt-[6.5rem] lg:mt-32 body-font relative">
         {/* Page title */}
         <div className="flex flex-col text-center w-full mb-6">
-          <h1 className="text-4xl font-medium title-font mb-4 text-gray-200">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-medium title-font mb-4 text-gray-200">
             Checkout Page
           </h1>
         </div>
 
         {/* Table to take user informations - start */}
-        <div className="lg:w-1/2 md:w-2/3 mx-auto">
-          <div className="flex flex-wrap -m-2">
+        <div className="w-full md:w-3/4 xl:w-2/3 px-4 md:px-0 mx-auto">
+          <div className="flex flex-col lg:flex-row flex-wrap -m-2">
             {/* Full name */}
-            <div className="p-2 w-1/2">
+            <div className="py-1 lg:py-2 lg:p-2 w-full lg:w-1/2">
               <div className="relative">
                 <label
                   htmlFor="full_name"
-                  className="leading-7 text-base text-gray-300"
+                  className="leading-7 text-base lg:text-lg text-gray-300"
                 >
                   Full Name
                 </label>
@@ -166,11 +167,11 @@ const CheckOut = () => {
             </div>
 
             {/* Upazila */}
-            <div className="p-2 w-1/2">
+            <div className="py-1 lg:py-2 lg:p-2 w-full lg:w-1/2">
               <div className="relative">
                 <label
                   htmlFor="upazila"
-                  className="leading-7 text-base text-gray-300"
+                  className="leading-7 text-base lg:text-lg text-gray-300"
                 >
                   Upazila
                 </label>
@@ -189,11 +190,11 @@ const CheckOut = () => {
             </div>
 
             {/* Zila */}
-            <div className="p-2 w-1/2">
+            <div className="py-1 lg:py-2 lg:p-2 w-full lg:w-1/2">
               <div className="relative">
                 <label
                   htmlFor="zila"
-                  className="leading-7 text-base text-gray-300"
+                  className="leading-7 text-base lg:text-lg text-gray-300"
                 >
                   Zila
                 </label>
@@ -212,11 +213,11 @@ const CheckOut = () => {
             </div>
 
             {/* Zip Code */}
-            <div className="p-2 w-1/2">
+            <div className="py-1 lg:py-2 lg:p-2 w-full lg:w-1/2">
               <div className="relative">
                 <label
                   htmlFor="zip_code"
-                  className="leading-7 text-base text-gray-300"
+                  className="leading-7 text-base lg:text-lg text-gray-300"
                 >
                   Zip Code
                 </label>
@@ -235,11 +236,11 @@ const CheckOut = () => {
             </div>
 
             {/* Division */}
-            <div className="p-2 w-1/2">
+            <div className="py-1 lg:py-2 lg:p-2 w-full lg:w-1/2">
               <div className="relative">
                 <label
                   htmlFor="division"
-                  className="leading-7 text-base text-gray-300"
+                  className="leading-7 text-base lg:text-lg text-gray-300"
                 >
                   Division
                 </label>
@@ -262,11 +263,11 @@ const CheckOut = () => {
             </div>
 
             {/* Country */}
-            <div className="p-2 w-1/2">
+            <div className="py-1 lg:py-2 lg:p-2 w-full lg:w-1/2">
               <div className="relative">
                 <label
                   htmlFor="country"
-                  className="leading-7 text-base text-gray-300"
+                  className="leading-7 text-base lg:text-lg text-gray-300"
                 >
                   Country
                 </label>
@@ -287,33 +288,12 @@ const CheckOut = () => {
                 </select>
               </div>
             </div>
-
-            {/* <div className="p-2 w-full">
-                <div className="relative">
-                  <label
-                    htmlFor="address"
-                    className="leading-7 text-base text-gray-300"
-                  >
-                    Address
-                  </label>
-                  <textarea
-                    id="address"
-                    name="address"
-                    value={form.address}
-                    onChange={handleChange}
-                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                  ></textarea>
-                </div>
-              </div> */}
-            <div className="p-2 mt-4 w-full">
-              <button
-                onClick={handleCheckout}
-                className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-              >
-                Pay Now
-              </button>
-            </div>
           </div>
+        </div>
+
+        {/* Pay now button */}
+        <div className="text-center mt-6 lg:mt-8 w-full">
+          <Button href="" onClick={handleCheckout} label="Pay Now" />
         </div>
         {/* Table to take user informations - end */}
       </div>

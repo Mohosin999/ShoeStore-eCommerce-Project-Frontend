@@ -92,7 +92,7 @@ const ProductsPage = () => {
     <Wrapper>
       <div className="mt-[6.5rem] lg:mt-32">
         {/* Page title */}
-        <h1 className="mb-4 lg:mb-6 text-2xl md:text-3xl lg:text-4xl text-gray-100 text-center font-bold">
+        <h1 className="mb-4 lg:mb-6 text-2xl md:text-3xl lg:text-4xl text-gray-200 text-center font-bold">
           Welcome to House of Products 🙂
         </h1>
 
@@ -112,7 +112,7 @@ const ProductsPage = () => {
                 name="name"
                 value={filterOption.name}
                 onChange={handleFilterChange}
-                className="w-[22rem] md:w-[43rem] lg:w-[22rem] text-gray-900 text-sm lg:text-base py-0.5 md:py-2 px-1 rounded-sm"
+                className="w-[20rem] md:w-[43rem] lg:w-[22rem] text-gray-900 text-sm lg:text-base py-0.5 md:py-2 px-1 rounded-sm"
               />
               {filterOption.name && (
                 <button
@@ -138,7 +138,7 @@ const ProductsPage = () => {
               name="discounted_price"
               value={filterOption.discounted_price}
               onChange={handleFilterChange}
-              className="w-[22rem] md:w-[43rem] lg:w-[14rem] text-gray-900 text-sm lg:text-base py-0.5 md:py-2 px-1 rounded-sm"
+              className="w-[20rem] md:w-[43rem] lg:w-[14rem] text-gray-900 text-sm lg:text-base py-0.5 md:py-2 px-1 rounded-sm"
             >
               <option value="">Select Price</option>
               <option value="12">12</option>
@@ -161,7 +161,7 @@ const ProductsPage = () => {
               name="sortOption"
               value={sortOption}
               onChange={handleSortChange}
-              className="w-[22rem] md:w-[43rem] lg:w-[14rem] text-gray-900 text-sm lg:text-base py-0.5 md:py-2 px-1 rounded-sm"
+              className="w-[20rem] md:w-[43rem] lg:w-[14rem] text-gray-900 text-sm lg:text-base py-0.5 md:py-2 px-1 rounded-sm"
             >
               <option value="">None</option>
               <option value="asc">Ascending</option>

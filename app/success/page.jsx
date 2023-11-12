@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import Button from "../components/UI/button";
 
 /**
@@ -9,9 +8,9 @@ import Button from "../components/UI/button";
  */
 const SuccessPage = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="flex items-center justify-center h-screen">
       <div className="text-center">
-        <h1 className="text-4xl text-green-600 font-semibold mb-4">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl text-green-600 font-semibold mb-4">
           Payment Successful
         </h1>
         <p className="text-lg text-gray-300 mb-6">

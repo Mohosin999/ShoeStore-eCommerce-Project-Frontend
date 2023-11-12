@@ -60,8 +60,8 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <div className="mt-12 text-center">
-        <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-screen">
+      <div className="mt-24 md:mt-28 lg:mt-32 mb-12 lg:mb-20 text-center">
+        <div className="flex flex-col items-center justify-center px-6 mx-auto">
           <Link
             href="/"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-200"

@@ -24,7 +24,7 @@ const Wishlist = () => {
 
   return (
     <Wrapper>
-      <div className="mt-[6.5rem] lg:mt-32 min-h-screen">
+      <div className="mt-[6.5rem] lg:mt-32">
         {/* Page title */}
         <h1 className="text-2xl md:text-3xl lg:text-4xl text-gray-200 font-bold text-center mb-4">
           Wishlist
