@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 // Components
 import ProductCard from "../components/product-card";
 import Wrapper from "../components/wrapper";
 import PaginationComponent from "../components/pagination";
 import LoadingSpinner from "../components/loading-spinner";
+import GoBackButton from "../components/UI/go-back-button";
 
 /**
  * Products page
@@ -93,7 +95,9 @@ const ProductsPage = () => {
       <div className="mt-[6.5rem] lg:mt-32">
         {/* Page title */}
         <h1 className="mb-4 lg:mb-6 text-2xl md:text-3xl lg:text-4xl text-gray-200 text-center font-bold">
-          Welcome to House of Products 🙂
+          Welcome to House of Products 🙂{" "}
+          <span className="text-blue-500 text-base font-normal">/</span>{" "}
+          <GoBackButton />
         </h1>
 
         {/* Searching, filtering, sorting - start */}

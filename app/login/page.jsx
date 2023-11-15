@@ -4,11 +4,13 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+// Icon
 import { AiOutlineAppstore } from "react-icons/ai";
+// Function
+import { setToken } from "../lib/auth";
 // Components
 import Wrapper from "../components/wrapper";
 import Input from "../components/UI/input";
-import { setToken } from "../lib/auth";
 import Button from "../components/UI/button";
 
 /**

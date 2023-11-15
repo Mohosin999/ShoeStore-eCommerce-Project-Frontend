@@ -8,7 +8,11 @@ import PropTypes from "prop-types";
  * @param {boolean} setShowCatMenu - A function to control the visibility of the category menu.
  * @param {Object} categoryData - It will be an object.
  */
-const CategoryMenu = ({ setShowCatMenu, categoryData }) => {
+const CategoryMenu = ({
+  setShowCatMenu,
+  categoryData,
+  setIsMobileMenuOpen,
+}) => {
   return (
     <ul className="mt-3 min-w-[250px] px-1 shadow-lg absolute ml-24 md:ml-40 lg:ml-0 z-40">
       {/* Map the category data object. */}
@@ -16,7 +20,10 @@ const CategoryMenu = ({ setShowCatMenu, categoryData }) => {
         <Link
           key={item.id}
           href={`/category/${item.attributes.slug}`}
-          onClick={() => setShowCatMenu(false)}
+          onClick={() => {
+            setShowCatMenu(false);
+            setIsMobileMenuOpen(false);
+          }}
           className="flex justify-between items-center bg-green-700 hover:bg-gray-600"
         >
           <li className="w-full h-12 flex justify between items-center px-3">

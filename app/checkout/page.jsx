@@ -3,9 +3,12 @@ import React, { useMemo, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useStoreActions, useStoreState } from "easy-peasy";
+// Function
 import { getEmailFromLocalCookie, getUserFromLocalCookie } from "../lib/auth";
+// Components
 import Wrapper from "../components/wrapper";
 import Button from "../components/UI/button";
+import GoBackButton from "../components/UI/go-back-button";
 
 const CheckOut = () => {
   const [data, setData] = useState({
@@ -136,7 +139,9 @@ const CheckOut = () => {
         {/* Page title */}
         <div className="flex flex-col text-center w-full mb-6">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-medium title-font mb-4 text-gray-200">
-            Checkout Page
+            Checkout Page{" "}
+            <span className="text-blue-500 text-base font-normal">/</span>{" "}
+            <GoBackButton />
           </h1>
         </div>
 

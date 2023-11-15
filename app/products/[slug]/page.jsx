@@ -14,6 +14,7 @@ import Heading from "@/app/components/UI/heading";
 import DataSlider from "@/app/components/data-slider";
 import ProductImagesSlider from "./ProductImagesSlider";
 import Button from "@/app/components/UI/button";
+import GoBackButton from "@/app/components/UI/go-back-button";
 
 /**
  * Single product page component.
@@ -178,8 +179,14 @@ const ProductPage = ({ params }) => {
             {product?.data && (
               <>
                 {/* Product title */}
-                <div>
+                <div className="flex items-center">
                   <Title title={commonUrl?.name} />
+                  <div className="pb-5 lg:pb-4 pl-4">
+                    <span className="text-blue-500 text-base font-normal">
+                      /
+                    </span>{" "}
+                    <GoBackButton />
+                  </div>
                 </div>
 
                 {/* Product description */}

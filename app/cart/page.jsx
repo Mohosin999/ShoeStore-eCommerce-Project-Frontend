@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
@@ -12,9 +11,9 @@ import { getJwtFromLocalCookie } from "../lib/auth";
 import { getPrice } from "../lib/utils";
 // Components
 import Wrapper from "../components/wrapper";
-import ButtonLink from "../components/UI/button";
 import ConfirmationPopup from "../components/confirmation-popup";
 import Button from "../components/UI/button";
+import GoBackButton from "../components/UI/go-back-button";
 
 /**
  * Cart page
@@ -84,7 +83,9 @@ const CartPage = () => {
           <>
             {/* Page title */}
             <h1 className="text-2xl md:text-3xl lg:text-4xl text-gray-200 font-bold md:mb-8 lg:mb-12">
-              Shopping Cart
+              Shopping Cart{" "}
+              <span className="text-blue-500 text-base font-normal">/</span>{" "}
+              <GoBackButton />
             </h1>
 
             {/* Table of items - start */}
@@ -249,7 +250,9 @@ const CartPage = () => {
         {items.length < 1 && (
           <div className="flex flex-col items-center justify-center my-16">
             <h1 className="text-2xl md:text-3xl lg:text-4xl text-gray-200 font-bold">
-              Empty Cartlist 😞
+              Empty Cartlist 😞{" "}
+              <span className="text-blue-500 text-base font-normal">/</span>{" "}
+              <GoBackButton />
             </h1>
             <Image
               src={emptyBox}

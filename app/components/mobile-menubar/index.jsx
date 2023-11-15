@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useStoreState } from "easy-peasy";
 // Icons
-import { AiOutlineAppstore } from "react-icons/ai";
 import { BsCart } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
 // Components
@@ -18,8 +17,7 @@ import { fetchedDataFromBackend } from "@/app/lib/utils";
  * Navbar component
  * @returns {JSX.Element}
  */
-const MobileNavbar = () => {
-  const [isFixed, setIsFixed] = useState(true); // State for show and hidden navbar.
+const MobileNavbar = ({ handleMobileMenu, setIsMobileMenuOpen }) => {
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [categoryData, setCategoryData] = useState(null);
@@ -53,38 +51,7 @@ const MobileNavbar = () => {
     router.push("/login");
   };
 
-  // This hook is for hidden and showing the navbar at the time of scrolling.
-  useEffect(() => {
-    // Initialize 'prevScrollY' to keep track of previous scroll position.
-    let prevScrollY = 0;
-
-    // Define a function to handle scroll events.
-    const handleScroll = () => {
-      // Get the current scroll position.
-      const currentScrollY = window.scrollY;
-
-      // Check if the user has scrolled down and has scrolled past a certain threshold.
-      if (currentScrollY > 200 && currentScrollY > prevScrollY) {
-        setIsFixed(false); // Make the header not fixed.
-      } else if (currentScrollY <= prevScrollY) {
-        setIsFixed(true); // Make the header fixed when scrolling up.
-      }
-
-      // Update 'prevScrollY' with the current scroll position.
-      prevScrollY = currentScrollY;
-    };
-
-    // Add a scroll event listener to the window.
-    window.addEventListener("scroll", handleScroll);
-
-    // Clean up the event listener when the component unmounts.
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
-    // <nav className="min-w-[70vw] flex flex-col z-30 items-center justify-between fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600/90 rounded-lg backdrop-blur-md py-32">
     <nav className="w-full min-h-screen z-30 fixed bg-fuchsia-900 rounded-lg backdrop-blur-md">
       {/*
        * ================================================================================
@@ -94,7 +61,7 @@ const MobileNavbar = () => {
       <div className="flex items-center justify-end mt-4 px-6">
         {/* Favorite & Cart Icons */}
         {/* Wishlist icon start */}
-        <Link href={"/wishlist"}>
+        <Link href={"/wishlist"} onClick={handleMobileMenu}>
           <div
             className={`w-8 md:w-12 h-8 md:h-12 mr-4 rounded-full flex justify-center items-center bg-green-600 hover:bg-green-700 cursor-pointer relative`}
           >
@@ -109,7 +76,7 @@ const MobileNavbar = () => {
         {/* Wishlist icon end */}
 
         {/* Cart icon start */}
-        <Link href={"/cart"}>
+        <Link href={"/cart"} onClick={handleMobileMenu}>
           <div
             className={`w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center bg-green-600 hover:bg-green-700 cursor-pointer relative`}
           >
@@ -131,8 +98,12 @@ const MobileNavbar = () => {
        */}
       <div className="flex items-center justify-between px-8 py-6">
         <div className="w-full flex flex-col font-medium">
-          <NavLink href="/" label="Home" />
-          <NavLink href="/products" label="Products" />
+          <NavLink href="/" label="Home" onClick={handleMobileMenu} />
+          <NavLink
+            href="/products"
+            label="Products"
+            onClick={handleMobileMenu}
+          />
           {/* Category task related. */}
           <NavLink
             href=""
@@ -146,20 +117,36 @@ const MobileNavbar = () => {
                 setShowCatMenu={setShowCatMenu}
                 // Pass the component's state with the category's data.
                 categoryData={categoryData}
+                setIsMobileMenuOpen={setIsMobileMenuOpen}
               />
             }
           />
           {isLoggedIn ? (
             // Display "Dashboard" and "Logout" links when the user logged in.
             <>
-              <NavLink href="/dashboard" label="Dashboard" />
-              <NavLink href="/login" label="Logout" onClick={handleLogout} />
+              <NavLink
+                href="/dashboard"
+                label="Dashboard"
+                onClick={handleMobileMenu}
+              />
+              <NavLink
+                href="/login"
+                label="Logout"
+                onClick={() => {
+                  handleLogout;
+                  handleMobileMenu;
+                }}
+              />
             </>
           ) : (
             // Display "Login" and "Register" links when the user not logged in.
             <>
-              <NavLink href="/login" label="Login" />
-              <NavLink href="/register" label="Register" />
+              <NavLink href="/login" label="Login" onClick={handleMobileMenu} />
+              <NavLink
+                href="/register"
+                label="Register"
+                onClick={handleMobileMenu}
+              />
             </>
           )}
         </div>

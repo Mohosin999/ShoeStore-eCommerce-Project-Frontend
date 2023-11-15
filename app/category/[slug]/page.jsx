@@ -7,6 +7,7 @@ import PaginationComponent from "@/app/components/pagination";
 import LoadingSpinner from "@/app/components/loading-spinner";
 // Function
 import { fetchedDataFromBackend } from "@/app/lib/utils";
+import GoBackButton from "@/app/components/UI/go-back-button";
 
 /**
  * Category page
@@ -53,7 +54,9 @@ const CategoryPage = ({ params }) => {
             {categoryData?.data[0]?.attributes?.category?.data?.attributes
               ?.title !== undefined &&
               categoryData?.data[0]?.attributes?.category?.data?.attributes
-                ?.title}
+                ?.title}{" "}
+            <span className="text-blue-500 text-base font-normal">/</span>{" "}
+            <GoBackButton />
           </h1>
 
           {/* Product's card */}
@@ -62,7 +65,6 @@ const CategoryPage = ({ params }) => {
               <ProductCard key={item.id} item={item} />
             ))}
           </div>
-
           {/* Pagination of this page. */}
           {totalProducts > itemsPerPage && (
             <div className="mt-6">
