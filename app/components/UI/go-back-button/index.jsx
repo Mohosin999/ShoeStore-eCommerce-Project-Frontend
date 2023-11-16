@@ -7,7 +7,7 @@ const GoBackButton = () => {
   return (
     <button
       onClick={() => router.back()}
-      className="ml-1 hover:underline underline-offset-2 text-gray-200 font-normal text-xs md:text-sm text-center "
+      className="hover:underline underline-offset-2 text-gray-200 font-normal text-xs md:text-sm text-center "
     >
       Go Back
     </button>

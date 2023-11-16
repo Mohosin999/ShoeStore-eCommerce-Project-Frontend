@@ -141,6 +141,7 @@ const Navbar = () => {
                   setShowCatMenu={setShowCatMenu}
                   // Pass the component's state with the category's data.
                   categoryData={categoryData}
+                  setIsMobileMenuOpen={setIsMobileMenuOpen}
                 />
               }
             />
