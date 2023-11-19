@@ -13,15 +13,31 @@ ShoeStore, an innovative e-commerce application, is designed to provide users wi
 
 ## 🔆 Features
 
-`**Product Management:**` 
+**`Product Management:`**
 - Users can view detailed information about individual products.
 - Products can be added to a shopping cart for future purchase.
 
-- **User Interaction:** Users can add shoes to their favorites or shopping cart, enhancing the personalization of their shopping experience.
+**`User Preferences:`**
+- Users can add products to a favorites list for quick access.
+- Products can be removed from the favorites list.
 
-- **Authentication:** To make a purchase, users are required to log in or register, ensuring a secure and personalized transaction process.
+**`Cart Management:`**
+- Users can adjust the quantity of products in the cart.
+- Products can be removed individually from the cart.
+- The entire cart can be cleared with a single action.
 
-- **Customized Payment System:** The project incorporates a customized payment system, prioritizing functionality over third-party gateways to streamline the user experience.
+**`User Authentication:`**
+- Authentication is required for accessing certain features, such as the checkout page.
+
+**`Checkout Process:`**
+Authenticated users can proceed to the checkout page.
+
+**`Payment Simulation:`**
+- A simulated payment system is implemented on the checkout page for testing purposes.
+
+**`Inventory Management:`**
+- Product's quantities are updated upon successful purchase.
+
 
 ## 💻 Technology Stack
 
