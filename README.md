@@ -13,9 +13,9 @@ ShoeStore, an innovative e-commerce application, is designed to provide users wi
 
 ## 🔆 Features
 
-- **Product Management:** 
+`**Product Management:**` 
 - Users can view detailed information about individual products.
- - Products can be added to a shopping cart for future purchase.
+- Products can be added to a shopping cart for future purchase.
 
 - **User Interaction:** Users can add shoes to their favorites or shopping cart, enhancing the personalization of their shopping experience.
 
