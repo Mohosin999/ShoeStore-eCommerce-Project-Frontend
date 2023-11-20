@@ -87,12 +87,12 @@ NEXT_PUBLIC_STRAPI_URL=http://127.0.0.1:1337/api
 NEXT_PUBLIC_STRAPI_BEAREER_TOKEN=<your strapi token>
 ```
 
-### 6. `Start the Server:`
+### 5. `Start the Server:`
 
 ```
 yarn dev
 ```
 
-### 7. `Access the Application:`
+### 6. `Access the Application:`
 
 Open your browser and visit [http://localhost:3000](http://localhost:3000).
